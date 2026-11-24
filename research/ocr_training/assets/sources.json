@@ -1,0 +1,20 @@
+[
+  {
+    "name": "rec.onnx",
+    "url": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/resolve/f0ee7fef80bd137483da2d988a1c4a2813066036/models/ComputeVision/OCR/onnx_PP_OCRv4/model/rec.onnx",
+    "bytes": 111573230,
+    "sha256": "ddc1eb79a3c35d9ef894c877510560d016440bb512d96da3f58d464a65df5063"
+  },
+  {
+    "name": "PaddleOCR-release-2.7.zip",
+    "url": "https://codeload.github.com/PaddlePaddle/PaddleOCR/zip/refs/heads/release/2.7",
+    "bytes": 132801258,
+    "sha256": "db42e759f816f2616c3f9728b9b657d8cfd7fb7a61e2e37741971e206ebed23a"
+  },
+  {
+    "name": "MODEL-LICENSE.txt",
+    "url": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/resolve/f0ee7fef80bd137483da2d988a1c4a2813066036/models/ComputeVision/OCR/onnx_PP_OCRv4/model/LICENSE.txt",
+    "bytes": 11357,
+    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "purpose": "NPU execution and synthetic string smoke check; not real LCD accuracy validation",
+  "cases": [
+    {
+      "case": "synthetic_1.34",
+      "expected_synthetic_text": "1.34",
+      "seconds": 0.10971001200050523,
+      "result": {
+        "text": "1.34",
+        "confidence": 0.999765157699585,
+        "backend": "cix-ppocrv4"
+      },
+      "synthetic_exact_match": true
+    },
+    {
+      "case": "synthetic_-0.12",
+      "expected_synthetic_text": "-0.12",
+      "seconds": 0.09788176599977305,
+      "result": {
+        "text": "0.12",
+        "confidence": 0.8578211069107056,
+        "backend": "cix-ppocrv4"
+      },
+      "synthetic_exact_match": false
+    },
+    {
+      "case": "synthetic_0.00",
+      "expected_synthetic_text": "0.00",
+      "seconds": 0.10406857199996011,
+      "result": {
+        "text": "0.00",
+        "confidence": 0.9840388298034668,
+        "backend": "cix-ppocrv4"
+      },
+      "synthetic_exact_match": true
+    },
+    {
+      "case": "blank",
+      "expected_synthetic_text": "",
+      "seconds": 0.06817785700150125,
+      "result": {
+        "text": "",
+        "confidence": 0,
+        "backend": "cix-ppocrv4"
+      },
+      "synthetic_exact_match": true
+    },
+    {
+      "case": "real_unlit_display",
+      "expected_synthetic_text": null,
+      "seconds": 0.06697781399998348,
+      "result": {
+        "text": "",
+        "confidence": 0,
+        "backend": "cix-ppocrv4"
+      }
+    }
+  ],
+  "health": {
+    "ready": true,
+    "backend": "CIX NPU PP-OCRv4"
+  },
+  "npu_device_handles": [
+    "/dev/aipu"
+  ]
+}

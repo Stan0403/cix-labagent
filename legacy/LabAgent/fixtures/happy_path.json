@@ -1,0 +1,19 @@
+{"name":"完整流程 · 正常测量","events":[
+  {"kind":"action","data":{"kind":"read_sop"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"power","data":{"value":"off"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"objects","data":{"objects":["sensor","multimeter","breadboard","wires"]}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"connected","data":{"value":true}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"wiring","data":{"value":true}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"power","data":{"value":"on"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"measurement","data":{"value":1.25}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"action","data":{"kind":"save_measurement"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"action","data":{"kind":"report"}}
+]}

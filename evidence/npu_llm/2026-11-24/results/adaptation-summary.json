@@ -1,0 +1,186 @@
+{
+  "full_model_migrated": false,
+  "production_llm_backend": "llama.cpp CPU, port 8081",
+  "production_application_changed": false,
+  "model_sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+  "scope": "first transformer block only; offload blk.0.attn_q.weight; no generated text",
+  "numerical_gate": "relative L2 < 0.005 per first-block output; experimental, not a quality acceptance standard",
+  "block_probes": {
+    "first-block-quantized-report.json": {
+      "passed": false,
+      "cases": 3,
+      "cpu_prefill_seconds": {
+        "min": 0.2537723600398749,
+        "max": 0.2604039389989339,
+        "median": 0.25434517400572076
+      },
+      "hybrid_prefill_seconds": {
+        "min": 0.24321641202550381,
+        "max": 0.24881678499514237,
+        "median": 0.24566849297843874
+      },
+      "cpu_decode_seconds": {
+        "min": 0.1461290679872036,
+        "max": 0.14965221704915166,
+        "median": 0.14627830201061442
+      },
+      "hybrid_decode_seconds": {
+        "min": 0.1481566890142858,
+        "max": 0.14843797701178119,
+        "median": 0.14841294597135857
+      },
+      "cpu_prefill_q_seconds": {
+        "min": 0.013144204043783247,
+        "max": 0.016823137004394084,
+        "median": 0.014097696985118091
+      },
+      "hybrid_prefill_q_seconds": {
+        "min": 0.004431462963111699,
+        "max": 0.006077774043660611,
+        "median": 0.004469253995921463
+      },
+      "cpu_decode_q_seconds": {
+        "min": 0.0021412750356830657,
+        "max": 0.002229816047474742,
+        "median": 0.002167695027310401
+      },
+      "hybrid_decode_q_seconds": {
+        "min": 0.0037877560243941844,
+        "max": 0.00404826202429831,
+        "median": 0.003824617015197873
+      },
+      "prefill_relative_l2": {
+        "min": 0.007141001954698857,
+        "max": 0.008139258918372557,
+        "median": 0.007684959700964128
+      },
+      "decode_relative_l2": {
+        "min": 0.0029888578752107747,
+        "max": 0.0033059350856270153,
+        "median": 0.0032243910726430613
+      }
+    },
+    "first-block-report.json": {
+      "passed": true,
+      "cases": 3,
+      "cpu_prefill_seconds": {
+        "min": 0.25100618303986266,
+        "max": 0.2623155990149826,
+        "median": 0.25357528997119516
+      },
+      "hybrid_prefill_seconds": {
+        "min": 0.33079003205057234,
+        "max": 0.3369652710389346,
+        "median": 0.33251209696754813
+      },
+      "cpu_decode_seconds": {
+        "min": 0.14637787302490324,
+        "max": 0.14778238197322935,
+        "median": 0.1471081239869818
+      },
+      "hybrid_decode_seconds": {
+        "min": 0.1536123679834418,
+        "max": 0.1566156889894046,
+        "median": 0.15464887605048716
+      },
+      "cpu_prefill_q_seconds": {
+        "min": 0.011784477974288166,
+        "max": 0.016426722984761,
+        "median": 0.012529917003121227
+      },
+      "hybrid_prefill_q_seconds": {
+        "min": 0.08882746298331767,
+        "max": 0.09021539200330153,
+        "median": 0.08885731303598732
+      },
+      "cpu_decode_q_seconds": {
+        "min": 0.0021403279970400035,
+        "max": 0.002184827986638993,
+        "median": 0.0021462879958562553
+      },
+      "hybrid_decode_q_seconds": {
+        "min": 0.009063703997526318,
+        "max": 0.009185618022456765,
+        "median": 0.009142116003204137
+      },
+      "prefill_relative_l2": {
+        "min": 5.1538965835380864e-05,
+        "max": 5.987434952497663e-05,
+        "median": 5.590494902556604e-05
+      },
+      "decode_relative_l2": {
+        "min": 2.9524643418799262e-05,
+        "max": 3.2856545789335586e-05,
+        "median": 3.146113725487379e-05
+      }
+    },
+    "first-block-smooth-report.json": {
+      "passed": false,
+      "cases": 3,
+      "cpu_prefill_seconds": {
+        "min": 0.25942301901523024,
+        "max": 0.2741727320244536,
+        "median": 0.2663211020408198
+      },
+      "hybrid_prefill_seconds": {
+        "min": 0.2537181210354902,
+        "max": 0.2568110300344415,
+        "median": 0.25543453998398036
+      },
+      "cpu_decode_seconds": {
+        "min": 0.1545218019746244,
+        "max": 0.15503104700474069,
+        "median": 0.1548468240071088
+      },
+      "hybrid_decode_seconds": {
+        "min": 0.15726677898783237,
+        "max": 0.16018115897895768,
+        "median": 0.15954948298167437
+      },
+      "cpu_prefill_q_seconds": {
+        "min": 0.011916150979232043,
+        "max": 0.01635829301085323,
+        "median": 0.012352933001238853
+      },
+      "hybrid_prefill_q_seconds": {
+        "min": 0.0053776190034113824,
+        "max": 0.007739005028270185,
+        "median": 0.005535243020858616
+      },
+      "cpu_decode_q_seconds": {
+        "min": 0.002073618001304567,
+        "max": 0.002131738991010934,
+        "median": 0.0021214780281297863
+      },
+      "hybrid_decode_q_seconds": {
+        "min": 0.004222206014674157,
+        "max": 0.004844793991651386,
+        "median": 0.0044189729960635304
+      },
+      "prefill_relative_l2": {
+        "min": 0.008451962763737934,
+        "max": 0.009959548557735594,
+        "median": 0.008825717842411622
+      },
+      "decode_relative_l2": {
+        "min": 0.0024775127418056445,
+        "max": 0.0038526335837287735,
+        "median": 0.003341203314308238
+      }
+    }
+  },
+  "formal_service_checks": {
+    "8081": "HTTP 200",
+    "8001": "HTTP 200",
+    "8031": "HTTP 200",
+    "8011": "HTTP 200"
+  },
+  "actual_yolo_http_seconds": 0.0790047490154393,
+  "remaining_work": [
+    "LLM runtime integration for all 36 layers and the output head",
+    "Variable prompt lengths and long KV cache correctness",
+    "Whole-model generation, Agent tool JSON quality and independent evaluation",
+    "Resolve persistent-context replay timeout and measure end-to-end gains",
+    "INT8 calibration from original float weights and representative activation corpus"
+  ]
+}

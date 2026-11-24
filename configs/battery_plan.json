@@ -1,0 +1,22 @@
+{
+  "id": "battery-voltage-15v",
+  "title": "万用表测量 1.5 V 干电池电压",
+  "objective": "正确设置万用表，测量干电池端电压，保留图像、核对记录和实验报告。",
+  "warning": "本示例仅用于单节 1.5 V 干电池。黑表笔接 COM、红表笔接 V/Ω；使用直流电压档，禁止电流档跨接电池，避免表笔短接两极。",
+  "required_objects": ["battery", "multimeter", "probes"],
+  "object_labels": {"battery": "单节 1.5 V 干电池", "multimeter": "数字万用表", "probes": "红黑表笔"},
+  "measurement": {"quantity": "电池端电压", "unit": "V", "adapter": "voltage", "min_value": -2.0, "max_value": 2.0, "samples": 1, "polarity_check": "positive"},
+  "steps": [
+    {"id": "read", "title": "阅读实验要求", "instruction": "确认使用单节 1.5 V 干电池，阅读操作步骤。测量开路端电压，不能直接推断电池容量。", "gate": "read_sop", "source_line": 8},
+    {"id": "equipment", "title": "检查电池、万用表和表笔", "instruction": "准备电池、数字万用表、红黑表笔，检查电池无漏液或明显损伤。可以先拍照获取器材观察建议，再人工核对清单。", "gate": "equipment", "source_line": 9},
+    {"id": "meter", "title": "核对插孔与直流电压档", "instruction": "黑表笔插 COM、红表笔插 V/Ω，选择直流 2 V 或 20 V 档。确认没有插在 A/mA 孔，禁止用电流档跨接电池。", "gate": "meter_setup", "source_line": 10},
+    {"id": "measure", "title": "连接表笔并读取电池电压", "instruction": "红表笔接电池正极，黑表笔接负极，避免表笔金属部分相碰或短接电池，保持接触稳定。Agent 自动定位显示屏并读取电压；负数提示检查红黑表笔连接，零值或看不清时提示调整；正数通过两张独立画面的稳定性与量程核验后自动记录。", "gate": "measurement", "source_line": 12},
+    {"id": "save", "title": "保存真实测量", "instruction": "核对测量值与来源，点击保存。需要重新测量时使用重测，原记录保留。", "gate": "save", "source_line": 13},
+    {"id": "report", "title": "完成并生成实验报告", "instruction": "确认结果和操作记录，完成实验，导出报告、测量表或完整日志。", "gate": "report", "source_line": 15}
+  ],
+  "source_name": "battery_voltage.md",
+  "source_filename": "battery_voltage.md",
+  "compiler": "reviewed_template",
+  "approved": true,
+  "review_notes": ["电池示例用于验证通用文档计划流程；其他实验请导入要求并审核拆解计划。"]
+}

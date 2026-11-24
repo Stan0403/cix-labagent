@@ -1,0 +1,94 @@
+{
+  "purpose": "fixed 320-square input; CPU/NPU at equal resolution, no experiment/session writes",
+  "variants": [],
+  "reference_answer": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Red panda"
+        }
+      }
+    ],
+    "created": 1794914464,
+    "model": "qwen3-vl-4b-local",
+    "system_fingerprint": "b8323-57819b8d4",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 3,
+      "prompt_tokens": 119,
+      "total_tokens": 122
+    },
+    "id": "chatcmpl-QYyjNv97i84sjCDHBjF197YsPYkI3CDV",
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 119,
+      "prompt_ms": 4787.379,
+      "prompt_per_token_ms": 40.2300756302521,
+      "prompt_per_second": 24.857025107057535,
+      "predicted_n": 3,
+      "predicted_ms": 148.672,
+      "predicted_per_token_ms": 49.55733333333333,
+      "predicted_per_second": 20.17864829961257
+    }
+  },
+  "numerical_equivalence": {
+    "streams": [
+      {
+        "stream": 0,
+        "cosine": 0.8967308701153128,
+        "normalized_rmse": 0.46702979041311843,
+        "passed": false
+      },
+      {
+        "stream": 1,
+        "cosine": 0.7204197962959416,
+        "normalized_rmse": 1.2592573463157537,
+        "passed": false
+      },
+      {
+        "stream": 2,
+        "cosine": 0.9278548148871794,
+        "normalized_rmse": 0.3874392052168833,
+        "passed": false
+      },
+      {
+        "stream": 3,
+        "cosine": 0.9228253674582375,
+        "normalized_rmse": 0.4184471114244488,
+        "passed": false
+      }
+    ],
+    "pairwise_cosine": [
+      [
+        0.8967308701153128,
+        0.04800906693803344,
+        0.13308065213619222,
+        0.14623248198831057
+      ],
+      [
+        0.06625368637045168,
+        0.7204197962959416,
+        0.11825034130493041,
+        0.06742713430453842
+      ],
+      [
+        0.14071534345803507,
+        0.09643887958653617,
+        0.9278548148871794,
+        0.18730094199405128
+      ],
+      [
+        0.14662045701217744,
+        0.05521055261905958,
+        0.1752047806293066,
+        0.9228253674582375
+      ]
+    ],
+    "passed": false
+  },
+  "eligible_for_promotion": false,
+  "status": "diagnostic_complete_numerical_mismatch"
+}

@@ -1,0 +1,358 @@
+[
+  {
+    "variant": "vlm_existing_cpu",
+    "cases": [
+      {
+        "case": "scene",
+        "seconds": 57.50897444400016,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": true,
+            "multimeter": true,
+            "probes": true
+          },
+          "boxes": [
+            {
+              "label": "battery",
+              "bbox": [
+                0.444,
+                0.463,
+                0.088,
+                0.054
+              ]
+            },
+            {
+              "label": "multimeter",
+              "bbox": [
+                0.244,
+                0.345,
+                0.148,
+                0.534
+              ]
+            },
+            {
+              "label": "probes",
+              "bbox": [
+                0.5,
+                0.168,
+                0.062,
+                0.262
+              ]
+            },
+            {
+              "label": "probes",
+              "bbox": [
+                0.567,
+                0.153,
+                0.033,
+                0.292
+              ]
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[\n    {\"label\":\"battery\",\"bbox_2d\": [444, 463, 532, 517]},\n    {\"label\":\"multimeter\",\"bbox_2d\": [244, 345, 392, 879]},\n    {\"label\":\"__labagent_red_0\",\"bbox_2d\": [500, 168, 562, 430]},\n    {\"label\":\"__labagent_black_0\",\"bbox_2d\": [567, 153, 600, 445]}\n]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"black\\\"}\"}]",
+          "backend": "vlm_existing_cpu",
+          "requires_confirmation": true
+        }
+      },
+      {
+        "case": "blank_negative",
+        "seconds": 42.56137525699978,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": false,
+            "multimeter": false,
+            "probes": false
+          },
+          "boxes": [],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[{\"label\":\"battery\",\"present\":false},{\"label\":\"multimeter\",\"present\":false},{\"label\":\"__labagent_red_0\",\"present\":false},{\"label\":\"__labagent_black_0\",\"present\":false}]",
+          "backend": "vlm_existing_cpu",
+          "requires_confirmation": true
+        }
+      },
+      {
+        "case": "unlit_display_negative",
+        "seconds": 3.0254386350006826,
+        "passed": true,
+        "result": {
+          "text": "{\"reading\":null,\"unit\":null}",
+          "confidence": 0,
+          "backend": "vlm_existing_cpu"
+        }
+      },
+      {
+        "case": "missing_black_probe_negative",
+        "seconds": 107.22603770899968,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": true,
+            "multimeter": true,
+            "probes": null
+          },
+          "boxes": [
+            {
+              "label": "battery",
+              "bbox": [
+                0.793,
+                0.46,
+                0.152,
+                0.055
+              ]
+            },
+            {
+              "label": "multimeter",
+              "bbox": [
+                0.418,
+                0.34,
+                0.279,
+                0.543
+              ]
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[\n    {\"label\":\"battery\",\"bbox_2d\": [793, 460, 945, 515]},\n    {\"label\":\"multimeter\",\"bbox_2d\": [418, 340, 697, 883]},\n    {\"label\":\"__labagent_red_0\",\"bbox_2d\": [895, 163, 1000, 430]},\n    {\"label\":\"__labagent_black_0\",\"bbox_2d\": [547, 747, 600, 877]}\n]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":null,\\\"color\\\":null}\"}]",
+          "backend": "vlm_existing_cpu",
+          "requires_confirmation": true
+        }
+      }
+    ],
+    "passed": true
+  },
+  {
+    "variant": "vlm_vulkan_vision",
+    "cases": [
+      {
+        "case": "scene",
+        "seconds": 65.13501181999982,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": true,
+            "multimeter": true,
+            "probes": true
+          },
+          "boxes": [
+            {
+              "label": "battery",
+              "bbox": [
+                0.444,
+                0.463,
+                0.088,
+                0.053
+              ]
+            },
+            {
+              "label": "multimeter",
+              "bbox": [
+                0.244,
+                0.345,
+                0.148,
+                0.534
+              ]
+            },
+            {
+              "label": "probes",
+              "bbox": [
+                0.5,
+                0.168,
+                0.062,
+                0.262
+              ]
+            },
+            {
+              "label": "probes",
+              "bbox": [
+                0.567,
+                0.153,
+                0.033,
+                0.287
+              ]
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[\n    {\"label\":\"battery\",\"bbox_2d\": [444, 463, 532, 516]},\n    {\"label\":\"multimeter\",\"bbox_2d\": [244, 345, 392, 879]},\n    {\"label\":\"__labagent_red_0\",\"bbox_2d\": [500, 168, 562, 430]},\n    {\"label\":\"__labagent_black_0\",\"bbox_2d\": [567, 153, 600, 440]}\n]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"black\\\"}\"}]",
+          "backend": "vlm_vulkan_vision",
+          "requires_confirmation": true
+        }
+      },
+      {
+        "case": "blank_negative",
+        "seconds": 45.247744594000324,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": false,
+            "multimeter": false,
+            "probes": false
+          },
+          "boxes": [],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[{\"label\":\"battery\",\"present\":false},{\"label\":\"multimeter\",\"present\":false},{\"label\":\"__labagent_red_0\",\"present\":false},{\"label\":\"__labagent_black_0\",\"present\":false}]",
+          "backend": "vlm_vulkan_vision",
+          "requires_confirmation": true
+        }
+      },
+      {
+        "case": "unlit_display_negative",
+        "seconds": 4.828377591999924,
+        "passed": true,
+        "result": {
+          "text": "{\"reading\":null,\"unit\":null}",
+          "confidence": 0,
+          "backend": "vlm_vulkan_vision"
+        }
+      },
+      {
+        "case": "missing_black_probe_negative",
+        "seconds": 106.15855910400023,
+        "passed": true,
+        "result": {
+          "present": {
+            "battery": true,
+            "multimeter": true,
+            "probes": null
+          },
+          "boxes": [
+            {
+              "label": "battery",
+              "bbox": [
+                0.793,
+                0.46,
+                0.152,
+                0.055
+              ]
+            },
+            {
+              "label": "multimeter",
+              "bbox": [
+                0.418,
+                0.34,
+                0.279,
+                0.543
+              ]
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "raw_text": "[\n    {\"label\":\"battery\",\"bbox_2d\": [793, 460, 945, 515]},\n    {\"label\":\"multimeter\",\"bbox_2d\": [418, 340, 697, 883]},\n    {\"label\":\"__labagent_red_0\",\"bbox_2d\": [895, 162, 1000, 428]},\n    {\"label\":\"__labagent_black_0\",\"bbox_2d\": [548, 745, 600, 877]}\n]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":null,\\\"color\\\":null}\"}]",
+          "backend": "vlm_vulkan_vision",
+          "requires_confirmation": true
+        }
+      }
+    ],
+    "command": [
+      "taskset",
+      "-c",
+      "0,1,6,7,8,9,10,11",
+      "/home/radxa/llama.cpp/build-codex-vulkan/bin/llama-server",
+      "--model",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "--mmproj",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "--alias",
+      "qwen3-vl-4b-local",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "18032",
+      "--ctx-size",
+      "4096",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "8",
+      "--parallel",
+      "1",
+      "--jinja",
+      "--temp",
+      "0",
+      "--n-predict",
+      "512",
+      "--device",
+      "none",
+      "--n-gpu-layers",
+      "0",
+      "--no-kv-offload",
+      "--no-op-offload"
+    ],
+    "startup_seconds": 3.0112166970002363,
+    "passed": true,
+    "backend_log": [
+      "ggml_vulkan: Found 1 Vulkan devices:",
+      "ggml_vulkan: 0 = Mali-G720-Immortalis (Mali-G720-Immortalis) | uma: 1 | fp16: 1 | bf16: 0 | warp size: 16 | shared memory: 32768 | int dot: 0 | matrix cores: none",
+      "load_tensors: offloading 0 repeating layers to GPU",
+      "load_tensors: offloaded 0/37 layers to GPU",
+      "load_tensors:   CPU_Mapped model buffer size =  2362.55 MiB",
+      "load_tensors:   CPU_REPACK model buffer size =  2375.16 MiB",
+      "clip_ctx: CLIP using Vulkan0 backend",
+      "alloc_compute_meta:    Vulkan0 compute buffer size =   355.55 MiB"
+    ]
+  },
+  {
+    "variant": "vlm_vulkan_all",
+    "cases": [
+      {
+        "case": "scene",
+        "seconds": 220.04233147000014,
+        "passed": false,
+        "error": "HTTPException(status_code=503, detail='本地视觉推理失败或超时，请重试或人工核对')"
+      }
+    ],
+    "command": [
+      "taskset",
+      "-c",
+      "0,1,6,7,8,9,10,11",
+      "/home/radxa/llama.cpp/build-codex-vulkan/bin/llama-server",
+      "--model",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "--mmproj",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "--alias",
+      "qwen3-vl-4b-local",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "18034",
+      "--ctx-size",
+      "4096",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "8",
+      "--parallel",
+      "1",
+      "--jinja",
+      "--temp",
+      "0",
+      "--n-predict",
+      "512",
+      "--device",
+      "Vulkan0",
+      "--n-gpu-layers",
+      "99"
+    ],
+    "startup_seconds": 3.5102844929997445,
+    "selection": "rejected_for_latency_or_inference_failure",
+    "passed": false,
+    "backend_log": [
+      "ggml_vulkan: Found 1 Vulkan devices:",
+      "ggml_vulkan: 0 = Mali-G720-Immortalis (Mali-G720-Immortalis) | uma: 1 | fp16: 1 | bf16: 0 | warp size: 16 | shared memory: 32768 | int dot: 0 | matrix cores: none",
+      "llama_model_load_from_file_impl: using device Vulkan0 (Mali-G720-Immortalis) (unknown id) - 31674 MiB free",
+      "load_tensors: offloading output layer to GPU",
+      "load_tensors: offloading 35 repeating layers to GPU",
+      "load_tensors: offloaded 37/37 layers to GPU",
+      "load_tensors:   CPU_Mapped model buffer size =   304.28 MiB",
+      "load_tensors:      Vulkan0 model buffer size =  2375.91 MiB",
+      "llama_context: Vulkan_Host  output buffer size =     0.58 MiB",
+      "llama_kv_cache:    Vulkan0 KV buffer size =   576.00 MiB",
+      "sched_reserve:    Vulkan0 compute buffer size =   306.75 MiB",
+      "sched_reserve: Vulkan_Host compute buffer size =    33.02 MiB",
+      "clip_ctx: CLIP using Vulkan0 backend",
+      "alloc_compute_meta:    Vulkan0 compute buffer size =   355.55 MiB",
+      "llama_memory_breakdown_print: |   - Vulkan0 (Mali-G720-Immortalis) | 31674 = 31674 + (3258 =  2375 +     576 +     306) + 17592186041157 |"
+    ]
+  }
+]

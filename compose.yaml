@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      LABAGENT_HOST: 0.0.0.0
+      LABAGENT_PORT: "8001"
+      LABAGENT_LOCAL_ONLY: "false"
+      LABAGENT_ACCESS_TOKEN: "${LABAGENT_ACCESS_TOKEN:?Set LABAGENT_ACCESS_TOKEN before starting Docker}"
+      LABAGENT_CHAT_PROVIDER: rules
+      LABAGENT_OCR_PROVIDER: disabled
+      LABAGENT_VISION_PROVIDER: disabled
+    volumes:
+      - labagent-data:/app/data
+    restart: unless-stopped
+volumes:
+  labagent-data:

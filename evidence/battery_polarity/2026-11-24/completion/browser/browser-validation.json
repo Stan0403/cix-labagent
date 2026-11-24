@@ -1,0 +1,59 @@
+{
+  "fixture_models": true,
+  "isolated_data": true,
+  "cases": [
+    {
+      "case": "agent_full_flow_pause_refresh_resume",
+      "passed": true,
+      "normal_start_clicks": 1,
+      "deliberate_pause_resume_clicks": 2,
+      "measurements": 1
+    },
+    {
+      "case": "manual_range_confirm_continues_without_second_click",
+      "passed": true
+    },
+    {
+      "case": "manual_adapter_input_visible_in_auto_mode",
+      "passed": true
+    },
+    {
+      "case": "camera_denial_visible_then_retry_recovers",
+      "passed": true
+    },
+    {
+      "case": "new_experiment_pauses_old_and_keeps_history",
+      "passed": true
+    },
+    {
+      "case": "refresh_and_history_wait_for_explicit_resume",
+      "passed": true
+    },
+    {
+      "case": "delete_confirm_cancel_keep_other_and_clear_current",
+      "passed": true
+    },
+    {
+      "case": "negative_zero_rejected_positive_stable_auto_saved",
+      "passed": true
+    },
+    {
+      "case": "static_identical_frames_then_five_second_notice_without_cleanup_model",
+      "passed": true,
+      "static_video_fixture": true,
+      "seconds_after_notice_observed": 5.64
+    }
+  ],
+  "passed": true,
+  "javascript_errors": [],
+  "tool_counts": {
+    "chat/completions": 25,
+    "inspect": 23,
+    "check_step": 2,
+    "meter_setup": 2,
+    "locate_display": 7,
+    "recognize": 7
+  },
+  "production_records_modified": false,
+  "mobile_overflow": false
+}

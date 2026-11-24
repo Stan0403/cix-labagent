@@ -1,0 +1,34 @@
+{
+  "gpu": "NVIDIA GeForce GTX 1650 Ti",
+  "model": "CIX catalog rec.onnx",
+  "checks": [
+    {
+      "max_abs_error": 1.5556812286376953e-05,
+      "torch_text": [
+        "上公"
+      ],
+      "onnx_text": [
+        "上公"
+      ]
+    },
+    {
+      "max_abs_error": 1.5616416931152344e-05,
+      "torch_text": [
+        "武汉公"
+      ],
+      "onnx_text": [
+        "武汉公"
+      ]
+    },
+    {
+      "max_abs_error": 1.329183578491211e-05,
+      "torch_text": [
+        "皖353"
+      ],
+      "onnx_text": [
+        "皖353"
+      ]
+    }
+  ],
+  "passed": true
+}

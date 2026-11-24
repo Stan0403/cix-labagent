@@ -1,0 +1,341 @@
+{
+  "purpose": "fixed 320-square input; CPU/NPU at equal resolution, no experiment/session writes",
+  "variants": [
+    {
+      "variant": "cpu_fixed_320",
+      "cases": [
+        {
+          "case": "scene",
+          "seconds": 34.971354328001325,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": true,
+              "multimeter": true,
+              "probes": true
+            },
+            "boxes": [
+              {
+                "label": "multimeter",
+                "bbox": [
+                  0.26,
+                  0.388,
+                  0.14,
+                  0.312
+                ]
+              },
+              {
+                "label": "battery",
+                "bbox": [
+                  0.42,
+                  0.438,
+                  0.1,
+                  0.034
+                ]
+              },
+              {
+                "label": "probes",
+                "bbox": [
+                  0.54,
+                  0.322,
+                  0.04,
+                  0.178
+                ]
+              },
+              {
+                "label": "probes",
+                "bbox": [
+                  0.58,
+                  0.338,
+                  0.04,
+                  0.162
+                ]
+              }
+            ],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[\n    {\"label\":\"multimeter\",\"bbox_2d\": [260, 388, 400, 700]},\n    {\"label\":\"battery\",\"bbox_2d\": [420, 438, 520, 472]},\n    {\"label\":\"__labagent_red_0\",\"bbox_2d\": [540, 322, 580, 500]},\n    {\"label\":\"__labagent_black_0\",\"bbox_2d\": [580, 338, 620, 500]}\n]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"black\\\"}\"}]",
+            "backend": "cpu_fixed_320",
+            "requires_confirmation": true
+          }
+        },
+        {
+          "case": "blank_negative",
+          "seconds": 13.41801525200026,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": false,
+              "multimeter": false,
+              "probes": false
+            },
+            "boxes": [],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[{\"label\":\"battery\",\"present\":false},{\"label\":\"multimeter\",\"present\":false},{\"label\":\"__labagent_red_0\",\"present\":false},{\"label\":\"__labagent_black_0\",\"present\":false}]",
+            "backend": "cpu_fixed_320",
+            "requires_confirmation": true
+          }
+        },
+        {
+          "case": "unlit_display_negative",
+          "seconds": 6.795416701999784,
+          "passed": true,
+          "response": {
+            "text": "{\"reading\":null,\"unit\":null}",
+            "confidence": 0,
+            "backend": "cpu_fixed_320"
+          }
+        },
+        {
+          "case": "missing_black_probe_negative",
+          "seconds": 34.643650686999536,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": true,
+              "multimeter": true,
+              "probes": null
+            },
+            "boxes": [
+              {
+                "label": "multimeter",
+                "bbox": [
+                  0.378,
+                  0.346,
+                  0.27,
+                  0.529
+                ]
+              },
+              {
+                "label": "battery",
+                "bbox": [
+                  0.688,
+                  0.458,
+                  0.15,
+                  0.062
+                ]
+              }
+            ],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[{\"label\":\"multimeter\",\"bbox_2d\":[378, 346, 648, 875]},{\"label\":\"battery\",\"bbox_2d\": [688, 458, 838, 520]},{\"label\":\"__labagent_red_0\",\"bbox_2d\": [788, 178, 928, 458]},{\"label\":\"__labagent_black_0\",\"bbox_2d\": [608, 708, 748, 998]}]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":false,\\\"color\\\":\\\"red\\\"}\"}]",
+            "backend": "cpu_fixed_320",
+            "requires_confirmation": true
+          }
+        }
+      ],
+      "passed": true
+    },
+    {
+      "variant": "npu_vision_cpu_text_fixed_320",
+      "cases": [
+        {
+          "case": "scene",
+          "seconds": 29.57824049700139,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": true,
+              "multimeter": true,
+              "probes": true
+            },
+            "boxes": [
+              {
+                "label": "multimeter",
+                "bbox": [
+                  0.238,
+                  0.419,
+                  0.15,
+                  0.309
+                ]
+              },
+              {
+                "label": "battery",
+                "bbox": [
+                  0.438,
+                  0.488,
+                  0.092,
+                  0.05
+                ]
+              },
+              {
+                "label": "probes",
+                "bbox": [
+                  0.5,
+                  0.304,
+                  0.06,
+                  0.196
+                ]
+              },
+              {
+                "label": "probes",
+                "bbox": [
+                  0.572,
+                  0.304,
+                  0.058,
+                  0.196
+                ]
+              }
+            ],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[{\"label\":\"multimeter\",\"bbox_2d\":[238, 419, 388, 728]},{\"label\":\"battery\",\"bbox_2d\": [438, 488, 530, 538]},{\"label\":\"__labagent_red_0\",\"bbox_2d\": [500, 304, 560, 500]},{\"label\":\"__labagent_black_0\",\"bbox_2d\": [572, 304, 630, 500]}]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"black\\\"}\"}]",
+            "backend": "npu_vision_cpu_text_fixed_320",
+            "requires_confirmation": true
+          }
+        },
+        {
+          "case": "blank_negative",
+          "seconds": 11.674911568001335,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": false,
+              "multimeter": false,
+              "probes": false
+            },
+            "boxes": [],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[{\"label\":\"battery\",\"present\":false},{\"label\":\"multimeter\",\"present\":false},{\"label\":\"__labagent_red_0\",\"present\":false},{\"label\":\"__labagent_black_0\",\"present\":false}]",
+            "backend": "npu_vision_cpu_text_fixed_320",
+            "requires_confirmation": true
+          }
+        },
+        {
+          "case": "unlit_display_negative",
+          "seconds": 5.042634044999431,
+          "passed": true,
+          "response": {
+            "text": "{\"reading\":null,\"unit\":null}",
+            "confidence": 0,
+            "backend": "npu_vision_cpu_text_fixed_320"
+          }
+        },
+        {
+          "case": "missing_black_probe_negative",
+          "seconds": 29.51880130900099,
+          "passed": true,
+          "response": {
+            "present": {
+              "battery": true,
+              "multimeter": true,
+              "probes": null
+            },
+            "boxes": [
+              {
+                "label": "multimeter",
+                "bbox": [
+                  0.418,
+                  0.348,
+                  0.27,
+                  0.54
+                ]
+              },
+              {
+                "label": "battery",
+                "bbox": [
+                  0.792,
+                  0.468,
+                  0.156,
+                  0.044
+                ]
+              }
+            ],
+            "coordinate_space": "normalized_xywh",
+            "raw_text": "[{\"label\":\"multimeter\",\"bbox_2d\":[418, 348, 688, 888]},{\"label\":\"battery\",\"bbox_2d\": [792, 468, 948, 512]},{\"label\":\"__labagent_red_0\",\"bbox_2d\": [898, 172, 1000, 438]},{\"label\":\"__labagent_black_0\",\"bbox_2d\": [588, 750, 688, 998]}]\n--- probe crop verification ---\n[{\"label\": \"__labagent_red_0\", \"text\": \"{\\\"handheld_probe\\\":true,\\\"color\\\":\\\"red\\\"}\"}, {\"label\": \"__labagent_black_0\", \"text\": \"{\\\"handheld_probe\\\":false,\\\"color\\\":\\\"red\\\"}\"}]",
+            "backend": "npu_vision_cpu_text_fixed_320",
+            "requires_confirmation": true
+          }
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "reference_answer": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Red panda"
+        }
+      }
+    ],
+    "created": 1794914153,
+    "model": "qwen3-vl-4b-local",
+    "system_fingerprint": "b8323-57819b8d4",
+    "object": "chat.completion",
+    "usage": {
+      "completion_tokens": 3,
+      "prompt_tokens": 119,
+      "total_tokens": 122
+    },
+    "id": "chatcmpl-mB8cBEiNsndoWdOS1mSFjsghheuMAs9E",
+    "timings": {
+      "cache_n": 0,
+      "prompt_n": 119,
+      "prompt_ms": 4636.463,
+      "prompt_per_token_ms": 38.96187394957983,
+      "prompt_per_second": 25.666116606559786,
+      "predicted_n": 3,
+      "predicted_ms": 139.936,
+      "predicted_per_token_ms": 46.64533333333333,
+      "predicted_per_second": 21.438371827120967
+    }
+  },
+  "numerical_equivalence": {
+    "streams": [
+      {
+        "stream": 0,
+        "cosine": 0.8967308701153128,
+        "normalized_rmse": 0.46702979041311843,
+        "passed": false
+      },
+      {
+        "stream": 1,
+        "cosine": 0.7204197962959416,
+        "normalized_rmse": 1.2592573463157537,
+        "passed": false
+      },
+      {
+        "stream": 2,
+        "cosine": 0.9278548148871794,
+        "normalized_rmse": 0.3874392052168833,
+        "passed": false
+      },
+      {
+        "stream": 3,
+        "cosine": 0.9228253674582375,
+        "normalized_rmse": 0.4184471114244488,
+        "passed": false
+      }
+    ],
+    "pairwise_cosine": [
+      [
+        0.8967308701153128,
+        0.04800906693803344,
+        0.13308065213619222,
+        0.14623248198831057
+      ],
+      [
+        0.06625368637045168,
+        0.7204197962959416,
+        0.11825034130493041,
+        0.06742713430453842
+      ],
+      [
+        0.14071534345803507,
+        0.09643887958653617,
+        0.9278548148871794,
+        0.18730094199405128
+      ],
+      [
+        0.14662045701217744,
+        0.05521055261905958,
+        0.1752047806293066,
+        0.9228253674582375
+      ]
+    ],
+    "passed": false
+  },
+  "eligible_for_promotion": false,
+  "status": "diagnostic_complete_numerical_mismatch"
+}

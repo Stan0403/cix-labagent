@@ -1,0 +1,28 @@
+{
+  "status": "verified",
+  "files": [
+    {
+      "path": "/home/radxa/.local/state/codex-model-accel/20261117/npu-vision-candidate/LICENSE.txt",
+      "size": 10311,
+      "sha256": "13af3875688f215f8882c575ce2bffbc74f94b97183528ebc4329dfaeff4e4f6",
+      "revision": "f0ee7fef80bd137483da2d988a1c4a2813066036"
+    },
+    {
+      "path": "/home/radxa/.local/state/codex-model-accel/20261117/npu-vision-candidate/bear_resized.png",
+      "size": 184788,
+      "sha256": "140521b3fa473996c973872147abf11893b3f48ba2125949188eb9c933704893",
+      "revision": "f0ee7fef80bd137483da2d988a1c4a2813066036"
+    },
+    {
+      "path": "/home/radxa/.local/state/codex-model-accel/20261117/npu-vision-candidate/vision.cix",
+      "size": 838765852,
+      "sha256": "fd315596a7028cbc649be09576fbe885ec165ae92881df394fd0036869d7e4d0",
+      "revision": "f0ee7fef80bd137483da2d988a1c4a2813066036"
+    }
+  ],
+  "current": {
+    "file": "vision.cix",
+    "completed": 838765852,
+    "total": 838765852
+  }
+}

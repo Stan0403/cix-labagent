@@ -1,0 +1,18 @@
+[Unit]
+Description=LabAgent Qwen3-VL CIX NPU vision encoder
+PartOf=labagent-demo.target
+
+[Service]
+Type=notify
+NotifyAccess=main
+WorkingDirectory=/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-ocr/bin/python /home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/cix_npu_vision_worker.py
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=60
+TimeoutStopSec=15
+UMask=0077
+
+[Install]
+WantedBy=labagent-demo.target

@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "name": "tinygrad.zip",
+      "url": "https://codeload.github.com/Reonarudo/tinygrad/zip/refs/heads/zhouyi",
+      "commit": "f85bc234df93c92d6a1dab0c7134669ee0db978b",
+      "archive_sha256": "1df704cb4f3023f8b9ed64fd89a849338857d2dd44a430edc3844e01d674f8a2"
+    },
+    {
+      "name": "examples.zip",
+      "url": "https://codeload.github.com/Reonarudo/tinygrad-npu-examples/zip/refs/heads/main",
+      "commit": "e264a1b78ca026494759cdddf2328f8e181324fb",
+      "archive_sha256": "b45a282bb941e2dbfa0d067e2e0c15ac6a0ddc848649cd2e56aa2e0fd4a226aa"
+    }
+  ]
+}

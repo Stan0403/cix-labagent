@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "labagent"
+version = "0.1.0"
+description = "Local-first experimental assistant with auditable safety gates"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.118,<1", "uvicorn>=0.34,<1", "httpx>=0.28,<1",
+  "pydantic>=2.10,<3", "python-dotenv>=1.0,<2", "python-multipart>=0.0.20,<1",
+  "pillow>=11,<13"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1"]
+vision = ["numpy>=2,<3", "onnxruntime>=1.22,<2", "opencv-python-headless>=4.11,<5"]
+serial = ["pyserial>=3.5,<4"]
+
+[tool.setuptools.packages.find]
+include = ["labagent*"]
+
+[tool.setuptools.package-data]
+labagent = ["web/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

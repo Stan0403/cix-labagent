@@ -1,0 +1,149 @@
+{
+  "date": "2026-11-22",
+  "production_changed": false,
+  "training_data": {
+    "synthetic_train": 4000,
+    "synthetic_validation": 400,
+    "camera_train_v2": 48
+  },
+  "baseline": {
+    "synthetic_exact_correct": 5,
+    "synthetic_count": 400,
+    "camera_numeric_correct": 0,
+    "camera_numeric_count": 4,
+    "blank_correct": 0,
+    "blank_count": 4
+  },
+  "runs": [
+    {
+      "run": "lcd-v1",
+      "selected_step": 1000,
+      "training_seconds": 307.55656470000395,
+      "synthetic_validation": {
+        "count": 400,
+        "exact_correct": 274,
+        "exact_accuracy": 0.685,
+        "sign_accuracy": 1.0,
+        "decimal_position_accuracy": 0.7525,
+        "blank_count": 11,
+        "blank_correct": 11,
+        "seconds": 8.438451299996814
+      },
+      "camera_digits": {
+        "count": 4,
+        "exact_correct": 1,
+        "exact_accuracy": 0.25,
+        "sign_accuracy": 1.0,
+        "decimal_position_accuracy": 0.25,
+        "blank_count": 0,
+        "blank_correct": 0,
+        "seconds": 0.1241773999936413,
+        "records": [
+          {
+            "path": "real/candidate-002.png",
+            "truth": "1.34",
+            "prediction": ".34",
+            "correct": false
+          },
+          {
+            "path": "real/candidate-005.png",
+            "truth": "1.353",
+            "prediction": "1.3.53",
+            "correct": false
+          },
+          {
+            "path": "real/candidate-006.png",
+            "truth": "4.19",
+            "prediction": "191.9",
+            "correct": false
+          },
+          {
+            "path": "real/candidate-010.png",
+            "truth": "-0.00",
+            "prediction": "-0.00",
+            "correct": true
+          }
+        ]
+      },
+      "camera_blank": {
+        "count": 4,
+        "correct": 4
+      },
+      "float_onnx_sha256": "56523d55c9560f440c85907eb4403f0b60ac9aa45b2a72d3450b5b79c7e7dda1",
+      "export_parity_passed": true,
+      "npu_compiled": false,
+      "npu_calibration_shape": [
+        108,
+        3,
+        32,
+        400
+      ]
+    },
+    {
+      "run": "lcd-v2",
+      "selected_step": 2800,
+      "training_seconds": 659.7917468999949,
+      "synthetic_validation": {
+        "count": 400,
+        "exact_correct": 332,
+        "exact_accuracy": 0.83,
+        "sign_accuracy": 1.0,
+        "decimal_position_accuracy": 0.8675,
+        "blank_count": 11,
+        "blank_correct": 11,
+        "seconds": 8.287281099997927
+      },
+      "camera_digits": {
+        "count": 4,
+        "exact_correct": 2,
+        "exact_accuracy": 0.5,
+        "sign_accuracy": 1.0,
+        "decimal_position_accuracy": 0.5,
+        "blank_count": 0,
+        "blank_correct": 0,
+        "seconds": 0.12123079999582842,
+        "records": [
+          {
+            "path": "real/candidate-002.png",
+            "truth": "1.34",
+            "prediction": "1.34",
+            "correct": true
+          },
+          {
+            "path": "real/candidate-005.png",
+            "truth": "1.353",
+            "prediction": "1.3.53",
+            "correct": false
+          },
+          {
+            "path": "real/candidate-006.png",
+            "truth": "4.19",
+            "prediction": "41.9",
+            "correct": false
+          },
+          {
+            "path": "real/candidate-010.png",
+            "truth": "-0.00",
+            "prediction": "-0.00",
+            "correct": true
+          }
+        ]
+      },
+      "camera_blank": {
+        "count": 4,
+        "correct": 4
+      },
+      "float_onnx_sha256": "9362ca7bd9c0ac6938975ab432c76e1ae8c807771b19265d443b44b88038280a",
+      "export_parity_passed": true,
+      "npu_compiled": false,
+      "npu_calibration_shape": [
+        112,
+        3,
+        32,
+        400
+      ]
+    }
+  ],
+  "conclusion": "Training and original-graph ONNX export succeeded; decimal errors remain; do not replace production reading.",
+  "limits": "Only four numeric and four blank development diagnostics; same meter/camera; not an independent final accuracy benchmark."
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102d36"><title>LabAgent · 实验工作台</title>
+  <link rel="stylesheet" href="/static/style.css"><script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-icon">L<span>·</span></span><span>LabAgent<small>LOCAL EXPERIMENT WORKSPACE</small></span></a>
+    <div class="top-status"><span id="connection" class="pill">连接中</span><button id="settings-button" class="ghost">接入状态</button></div>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="section-label">EXPERIMENTS <span>实验会话</span></div>
+      <button id="new-session" class="primary full">＋ 新建真实实验</button>
+      <nav id="sessions" aria-label="实验会话"></nav>
+      <div class="sidebar-bottom"><div class="section-label">VALIDATION <span>离线验证</span></div>
+        <p class="muted small">回放创建独立测试会话，不会混入真实测量。</p>
+        <select id="fixture" aria-label="选择回放剧本"></select><button id="run-fixture" class="secondary full">运行测试剧本</button>
+        <label class="file-button">导入回放 JSON<input id="replay-file" type="file" accept=".json"></label>
+      </div>
+    </aside>
+    <main>
+      <section class="page-heading"><div><div class="eyebrow">OBSERVE · REASON · VERIFY</div><h1 id="session-title">让每一步都有依据</h1><p id="session-description">创建实验，或先运行一个独立回放测试。</p></div><span id="mode" class="pill">未选择实验</span></section>
+      <div class="safety-note"><span>!</span><p>仅限已审核的低压直流实验。摄像头不能证明断电或接线安全，关键步骤需要现场人员确认；本软件不控制物理电源。</p></div>
+      <div id="empty" class="empty-state"><div class="empty-symbol">⌁</div><h2>从一个可验证的实验开始</h2><p>左侧新建真实会话，或运行回放查看完整流程。<br>未配置模型时，可使用人工核对和本地知识检索。</p></div>
+      <div id="active" class="hidden">
+        <section class="summary-row"><div><small>当前步骤</small><strong id="step-summary">—</strong></div><div><small>流程状态</small><strong id="run-status">—</strong></div><div><small>最近读数</small><strong id="latest-reading">—</strong></div><div><small>数据来源</small><strong id="latest-source">—</strong></div></section>
+        <div class="main-grid">
+          <section class="panel workflow"><div class="panel-title"><h2>实验计划</h2><span id="step-count" class="muted small"></span></div><ol id="steps"></ol>
+            <div class="current-instruction"><span class="eyebrow">CURRENT TASK</span><h3 id="current-step"></h3><p id="instruction"></p><ul id="blockers"></ul></div>
+            <div class="action-row"><button id="advance" class="primary">验证并进入下一步 →</button><button id="pause" class="ghost">暂停</button></div>
+            <button id="rewire" class="danger-text full">接线发生变化，需要重新检查</button>
+          </section>
+          <section class="panel observation"><div class="panel-title"><h2>观察与记录</h2><span class="pill subtle">真实输入</span></div>
+            <div class="media-area" id="media-area"><div id="media-placeholder"><span>◎</span><p>连接摄像头，或载入图片 / 录像</p></div><video id="camera" class="hidden" autoplay muted playsinline></video><img id="preview" class="hidden" alt="实验图片"><canvas id="roi-overlay" class="hidden"></canvas></div>
+            <p class="muted small">在画面上拖动选中万用表显示屏。ROI：<span id="roi-label">未选择</span></p>
+            <label for="meter-range">无单位显示的万用表：直流电压档位</label>
+            <select id="meter-range"><option value="">未选择（不推断单位）</option><option value="dc_200mv">直流 200m 档（mV）</option><option value="dc_2v">直流 2 档（V）</option><option value="dc_20v">直流 20 档（V）</option></select>
+            <label class="check small"><input id="meter-range-confirm" type="checkbox">我已现场核对旋钮确实处于所选直流电压档位</label>
+            <div class="action-row wrap"><button id="start-camera" class="secondary">打开摄像头</button><button id="stop-camera" class="ghost">关闭</button><label class="file-button compact">载入图片/录像<input id="media-file" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"></label></div>
+            <label class="check small"><input id="cloud-consent" type="checkbox">我同意将本次观察的画面发送到 .env 配置的视觉模型服务（ONNX/Tesseract 在本地处理）</label>
+            <div class="action-row"><button id="detect" class="secondary">检查器材</button><button id="ocr" class="secondary">识别显示屏</button><button id="observe-loop" class="ghost">连续观察</button></div>
+            <pre id="perception-output" class="result-box hidden"></pre>
+            <div class="divider"></div><h3>现场人工核对</h3><p class="muted small">这些操作记录为“人工”，不会显示为自动硬件验证。</p>
+            <div id="equipment-checks" class="equipment-grid"></div>
+            <label class="check"><input id="human-confirm" type="checkbox">我已在现场完成本次检查，确认以上信息属实</label>
+            <div class="action-row wrap"><button class="secondary human-action" data-kind="read_sop">已读 SOP</button><button class="secondary human-action" data-kind="confirm_power_off">已断电</button><button class="secondary human-action" data-kind="confirm_equipment">核对器材</button><button class="secondary human-action" data-kind="confirm_connected">连接完成</button><button class="secondary human-action" data-kind="confirm_wiring">接线复核</button><button class="secondary human-action" data-kind="confirm_power_on">已上电</button><button class="secondary human-action" data-kind="resume">确认恢复</button></div>
+            <div class="measurement-input"><label for="voltage">人工读取电压 / V</label><div><input id="voltage" type="number" step="any" placeholder="输入实测值"><button id="add-measurement" class="secondary">记录读数</button><button id="save-measurement" class="primary">核对并保存</button></div></div>
+            <button id="remeasure" class="ghost full">重新测量 · 保留历史记录</button>
+          </section>
+          <section class="panel conversation"><div class="panel-title"><h2>实验助手</h2><span id="agent-mode" class="pill subtle">本地规则 / 检索</span></div>
+            <div class="quick-questions"><button data-question="现在做到哪一步了？">当前进度</button><button data-question="为什么还不能进入下一步？">为什么阻塞</button><button data-question="为什么需要断电接线？">实验原理</button></div>
+            <div id="messages" class="messages" aria-live="polite"></div><div id="chat-tools" class="small muted"></div>
+            <form id="chat-form"><label class="sr-only" for="chat-input">向实验助手提问</label><textarea id="chat-input" rows="3" placeholder="询问进度、操作原因，或明确输入“下一步”“重新测量”…"></textarea><div class="action-row"><button id="record-audio" type="button" class="ghost">录音转文字</button><button id="send-message" type="submit" class="primary">发送 ↑</button></div></form>
+            <p class="muted small">录音只转文字，核对后再发送。模型与 API 配置保存在本地 .env。</p>
+          </section>
+        </div>
+        <section class="panel bottom-panel"><div class="panel-title"><h2>记录与审计</h2><div class="action-row"><button data-export="md" class="ghost">报告 .md</button><button data-export="csv" class="ghost">数据 .csv</button><button data-export="json" class="ghost">完整日志 .json</button></div></div><div class="bottom-grid"><div><h3>测量历史</h3><div class="table-scroll"><table><thead><tr><th>读数</th><th>来源</th><th>状态</th><th>时间</th></tr></thead><tbody id="measurement-history"></tbody></table></div></div><div><h3>操作轨迹</h3><div id="audit" class="audit"></div></div></div></section>
+      </div>
+      <footer>LabAgent / Research prototype <span>状态驱动 · 来源可追溯 · 不伪造设备能力</span></footer>
+    </main>
+  </div>
+  <dialog id="settings-dialog"><div class="panel-title"><h2>服务与模型接入</h2><button id="close-settings" class="ghost">关闭</button></div><p class="muted">API 密钥只填写在项目根目录的 .env，修改后重启服务。</p><pre id="provider-status"></pre><label for="access-token">本地服务访问令牌（可选，不是模型 API Key）</label><input id="access-token" type="password" autocomplete="off" placeholder="仅配置 ACCESS_TOKEN 时填写"><button id="save-token" class="primary full">应用访问令牌</button><label class="file-button">上传知识库 .md / .txt<input id="knowledge-file" type="file" accept=".md,.txt"></label><p class="small muted">不会自动下载权重，不会自动访问云端。上传实验画面前请确认服务地址与数据使用权限。</p></dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast hidden"></div>
+</body>
+</html>

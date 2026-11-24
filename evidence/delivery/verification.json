@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-24",
+  "primary_source": "current local LabAgent-demo",
+  "baseline_suite": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "344",
+    "time": "113.736",
+    "timestamp": "2026-11-24T22:36:41.360425+08:00"
+  },
+  "baseline_environment": "existing .venv-agent-opt, system-site-packages inherited",
+  "clean_install": {
+    "environment": ".tmp/delivery-clean-venv",
+    "python": "3.12.7",
+    "dependency_install": "passed",
+    "editable_install": "passed",
+    "pip_check": "passed",
+    "full_suite": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "344",
+      "time": "118.685",
+      "timestamp": "2026-11-24T22:56:14.046229+08:00"
+    },
+    "system_site_packages": false
+  },
+  "application_source_changed": false,
+  "pdf_pages": 11,
+  "o6_hardware_deploy": "not run",
+  "docker_build": "not run",
+  "github_published": false,
+  "secret_scan": {
+    "known_token_private_key_patterns": 0
+  },
+  "source_notes": "Three existing LCD diagnostic fixtures included after packaging verification found them missing.",
+  "one_click_install": "passed",
+  "one_click_startup": {
+    "passed": true,
+    "health_status": 200,
+    "page_status": 200,
+    "isolated_data": true
+  },
+  "pdf_visual_review": "all 11 pages rendered with Poppler; architecture/CPU chart/full-page text checked",
+  "delivery_overrides": [
+    "README.md",
+    ".env.example",
+    ".gitignore"
+  ]
+}

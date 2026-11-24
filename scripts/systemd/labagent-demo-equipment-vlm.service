@@ -1,0 +1,18 @@
+[Unit]
+Description=LabAgent equipment VLM with NPU vision and CPU text
+Wants=labagent-demo-npu-vision.service
+After=labagent-demo-npu-vision.service
+PartOf=labagent-demo.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_npu_equipment.sh
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=180
+TimeoutStopSec=30
+
+[Install]
+WantedBy=labagent-demo.target

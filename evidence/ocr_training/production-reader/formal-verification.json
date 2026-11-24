@@ -1,0 +1,435 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "id": 0,
+      "truth": "-0.00",
+      "candidate": {
+        "value": -0.0,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"-0.00\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+        "confidence": 0.9640671014785767,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "-0.00",
+          "confidence": 0.9640671014785767,
+          "accepted": true,
+          "reason": "source_pixels_consistent",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": true,
+            "decimal_after": 1,
+            "angle": 1.3
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.23638091501197778
+        },
+        "fallback_used": false
+      },
+      "locate_seconds": 0.10842942597810179,
+      "recognize_seconds": 0.2462274540157523,
+      "http_pipeline_seconds": 0.3546568799938541
+    },
+    {
+      "id": 1,
+      "truth": "1.25",
+      "candidate": {
+        "value": 1.25,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"1.25\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+        "confidence": 0.9997003078460693,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "1.25",
+          "confidence": 0.9997003078460693,
+          "accepted": true,
+          "reason": "source_pixels_consistent",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": false,
+            "decimal_after": 1,
+            "angle": 0.0
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.23232418700354174
+        },
+        "fallback_used": false
+      },
+      "locate_seconds": 0.04593604599358514,
+      "recognize_seconds": 0.23760525599936955,
+      "http_pipeline_seconds": 0.2835413019929547
+    },
+    {
+      "id": 28,
+      "truth": "-1.34",
+      "candidate": {
+        "value": -1.34,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"-1.34\", \"unit\": null, \"ocr_check\": \"high_confidence_two_resamplings_consistent\"}",
+        "confidence": 0.9998448491096497,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "-1.34",
+          "confidence": 0.9998448491096497,
+          "accepted": true,
+          "reason": "high_confidence_two_resamplings_consistent",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": true,
+            "decimal_after": null,
+            "angle": 3.01
+          },
+          "alternate_text": "-1.34",
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.46051669301232323
+        },
+        "fallback_used": false
+      },
+      "locate_seconds": 0.05485223897267133,
+      "recognize_seconds": 0.47108058401499875,
+      "http_pipeline_seconds": 0.5259328229876701
+    },
+    {
+      "id": 12,
+      "truth": "1.00",
+      "candidate": {
+        "value": 1.0,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"1.00\", \"unit\": null, \"reason\": \"digit_count_mismatch\"}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "fallback_used": true,
+        "ocr": {
+          "text": "1.00",
+          "confidence": 0.8961960077285767,
+          "accepted": false,
+          "reason": "digit_count_mismatch",
+          "evidence": {
+            "certain": true,
+            "digit_count": 2,
+            "minus": false,
+            "decimal_after": null,
+            "angle": 1.19
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.23621238401392475
+        },
+        "vlm_raw_text": "{\"reading\":\"1.00\",\"unit\":null}"
+      },
+      "locate_seconds": 0.05527564600924961,
+      "recognize_seconds": 1.2524953699903563,
+      "http_pipeline_seconds": 1.3077710159996059
+    },
+    {
+      "id": 42,
+      "truth": "-1.24",
+      "candidate": {
+        "value": -1.24,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"-1.24\", \"unit\": null, \"reason\": \"decimal_position_mismatch\"}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "fallback_used": true,
+        "ocr": {
+          "text": "-1.24",
+          "confidence": 0.9180073738098145,
+          "accepted": false,
+          "reason": "decimal_position_mismatch",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": true,
+            "decimal_after": null,
+            "angle": 0.0
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.23741080702166073
+        },
+        "vlm_raw_text": "{\"reading\":\"-1.24\",\"unit\":null}"
+      },
+      "locate_seconds": 0.05641447601374239,
+      "recognize_seconds": 1.332873410981847,
+      "http_pipeline_seconds": 1.3892878869955894
+    },
+    {
+      "id": 64,
+      "truth": "1.24",
+      "candidate": {
+        "value": null,
+        "reason": "模型无法确认读数，请重拍或人工核对"
+      },
+      "result": {
+        "text": "{\"reading\": null, \"unit\": null, \"reason\": \"reader_disagreement_on_digits\"}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "fallback_used": true,
+        "ocr": {
+          "text": "1.24",
+          "confidence": 0.9116310477256775,
+          "accepted": false,
+          "reason": "digit_count_mismatch",
+          "evidence": {
+            "certain": true,
+            "digit_count": 2,
+            "minus": false,
+            "decimal_after": 0,
+            "angle": 3.01
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.2356476709828712
+        },
+        "vlm_raw_text": "{\"reading\":\".24\",\"unit\":null}"
+      },
+      "locate_seconds": 0.055039153987308964,
+      "recognize_seconds": 1.1831449710007291,
+      "http_pipeline_seconds": 1.238184124988038
+    },
+    {
+      "legacy_id": 2,
+      "truth": "1.34",
+      "candidate": {
+        "value": 1.34,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"1.34\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+        "confidence": 0.9956945776939392,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "1.34",
+          "confidence": 0.9956945776939392,
+          "accepted": true,
+          "reason": "source_pixels_consistent",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": false,
+            "decimal_after": 1,
+            "angle": -0.0
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.23802113300189376
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.2563876489875838
+    },
+    {
+      "legacy_id": 5,
+      "truth": "1.353",
+      "candidate": {
+        "value": 1.353,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"1.353\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+        "confidence": 0.9436044692993164,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "1.353",
+          "confidence": 0.9436044692993164,
+          "accepted": true,
+          "reason": "source_pixels_consistent",
+          "evidence": {
+            "certain": true,
+            "digit_count": 4,
+            "minus": false,
+            "decimal_after": 1,
+            "angle": -10.54
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.22899544797837734
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.23617551202187315
+    },
+    {
+      "legacy_id": 6,
+      "truth": ".419",
+      "candidate": {
+        "value": 0.419,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \".419\", \"unit\": null, \"reason\": \"source_pixels_consistent\"}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "fallback_used": true,
+        "ocr": {
+          "text": "41.9",
+          "confidence": 0.9017504453659058,
+          "accepted": false,
+          "reason": "decimal_position_mismatch",
+          "evidence": {
+            "certain": true,
+            "digit_count": 3,
+            "minus": false,
+            "decimal_after": 0,
+            "angle": -6.05
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.22748886301997118
+        },
+        "vlm_raw_text": "{\"reading\":\".419\",\"unit\":null}"
+      },
+      "recognize_seconds": 1.9393594739958644
+    },
+    {
+      "legacy_id": 10,
+      "truth": "-0.00",
+      "candidate": {
+        "value": -0.0,
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存"
+      },
+      "result": {
+        "text": "{\"reading\": \"-0.00\", \"unit\": null, \"ocr_check\": \"high_confidence_two_resamplings_consistent\"}",
+        "confidence": 0.9998518824577332,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "-0.00",
+          "confidence": 0.9998518824577332,
+          "accepted": true,
+          "reason": "high_confidence_two_resamplings_consistent",
+          "evidence": {
+            "certain": false,
+            "reason": "display_angle_uncertain"
+          },
+          "alternate_text": "-0.00",
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.4653046730090864
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.48020097898552194
+    },
+    {
+      "blank_id": 253,
+      "result": {
+        "text": "{\"reading\": null, \"unit\": null, \"ocr_check\": \"numeric_syntax\"}",
+        "confidence": 0.0,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "",
+          "confidence": 0.0,
+          "accepted": false,
+          "reason": "numeric_syntax",
+          "evidence": {
+            "certain": false,
+            "reason": "no_ocr_text"
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.2253143019916024
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.23385380799300037
+    },
+    {
+      "blank_id": 325,
+      "result": {
+        "text": "{\"reading\": null, \"unit\": null, \"ocr_check\": \"numeric_syntax\"}",
+        "confidence": 0.0,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "",
+          "confidence": 0.0,
+          "accepted": false,
+          "reason": "numeric_syntax",
+          "evidence": {
+            "certain": false,
+            "reason": "no_ocr_text"
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.22542883301503025
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.23437984701013193
+    },
+    {
+      "blank_id": 338,
+      "result": {
+        "text": "{\"reading\": null, \"unit\": null, \"ocr_check\": \"numeric_syntax\"}",
+        "confidence": 0.0,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "",
+          "confidence": 0.0,
+          "accepted": false,
+          "reason": "numeric_syntax",
+          "evidence": {
+            "certain": false,
+            "reason": "no_ocr_text"
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.2329530330025591
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.2422722729970701
+    },
+    {
+      "blank_id": 341,
+      "result": {
+        "text": "{\"reading\": null, \"unit\": null, \"ocr_check\": \"numeric_syntax\"}",
+        "confidence": 0.0,
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "ocr": {
+          "text": "",
+          "confidence": 0.0,
+          "accepted": false,
+          "reason": "numeric_syntax",
+          "evidence": {
+            "certain": false,
+            "reason": "no_ocr_text"
+          },
+          "alternate_text": null,
+          "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+          "seconds": 0.22594622400356457
+        },
+        "fallback_used": false
+      },
+      "recognize_seconds": 0.23590344499098137
+    }
+  ],
+  "health": {
+    "ready": true,
+    "busy": false,
+    "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu; equipment=yolo26n-cix-npu",
+    "default_backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+    "equipment_backend": "yolo26n-cix-npu",
+    "equipment_ready": true,
+    "reading_backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+    "reading_ready": true,
+    "reading_model_sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
+    "reading_error": "",
+    "reading_fallback": "qwen3-vl-4b-q4_k_m-llamacpp-cpu"
+  },
+  "production_experiment_records_modified": false,
+  "limit": "Stored user training frames and legacy development images used for formal routing checks; not independent accuracy"
+}

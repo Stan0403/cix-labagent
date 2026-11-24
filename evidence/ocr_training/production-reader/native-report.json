@@ -1,0 +1,2135 @@
+{
+  "native_host": "O6 aarch64",
+  "providers": [
+    "CPUExecutionProvider"
+  ],
+  "model_sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
+  "load_seconds": 0.3224352140096016,
+  "cases": 81,
+  "fast_accepted": 78,
+  "fast_wrong": [],
+  "fast_pipeline_median_seconds": 0.29395719748572446,
+  "fast_pipeline_p90_seconds": 0.5203460645192536,
+  "legacy": [
+    {
+      "id": 2,
+      "truth": "1.34",
+      "text": "1.34",
+      "confidence": 0.9956945776939392,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": -0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.24326429999200627
+    },
+    {
+      "id": 5,
+      "truth": "1.353",
+      "text": "1.353",
+      "confidence": 0.9436044692993164,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 4,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": -10.54
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22812286100815982
+    },
+    {
+      "id": 6,
+      "truth": ".419",
+      "text": "41.9",
+      "confidence": 0.9017504453659058,
+      "accepted": false,
+      "reason": "decimal_position_mismatch",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": -6.05
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22958660899894312
+    },
+    {
+      "id": 10,
+      "truth": "-0.00",
+      "text": "-0.00",
+      "confidence": 0.9998518824577332,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": false,
+        "reason": "display_angle_uncertain"
+      },
+      "alternate_text": "-0.00",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46208458399632946
+    }
+  ],
+  "old_http_reading_baseline": [
+    {
+      "seconds": 3.3857285320118535,
+      "result": {
+        "text": "{\"reading\":\"125\",\"unit\":null}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu"
+      }
+    },
+    {
+      "seconds": 3.349643264984479,
+      "result": {
+        "text": "{\"reading\":\",419\",\"unit\":null}",
+        "confidence": 0,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu"
+      }
+    }
+  ],
+  "records": [
+    {
+      "id": 0,
+      "truth": "-0.00",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "-0.00",
+      "confidence": 0.9640671014785767,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.3
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2534525209921412,
+      "total_seconds": 0.327180574007798
+    },
+    {
+      "id": 1,
+      "truth": "1.25",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11808333333333329,
+        0.13400000000000004
+      ],
+      "text": "1.25",
+      "confidence": 0.9997003078460693,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22832179500255734,
+      "total_seconds": 0.29228644899558276
+    },
+    {
+      "id": 2,
+      "truth": "1.05",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11912499999999995,
+        0.13400000000000004
+      ],
+      "text": "1.05",
+      "confidence": 0.9991757273674011,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": null,
+        "angle": -2.49
+      },
+      "alternate_text": "1.05",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46337282899185084,
+      "total_seconds": 0.5254455860122107
+    },
+    {
+      "id": 3,
+      "truth": "0.00",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "0.00",
+      "confidence": 0.99997878074646,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.27
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2287879409850575,
+      "total_seconds": 0.2931598980212584
+    },
+    {
+      "id": 4,
+      "truth": "0.87",
+      "roi": [
+        0.47533333333333333,
+        0.3718888888888889,
+        0.11912499999999995,
+        0.13400000000000004
+      ],
+      "text": "0.87",
+      "confidence": 0.9982813596725464,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.17
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22798396201687865,
+      "total_seconds": 0.2904032920196187
+    },
+    {
+      "id": 5,
+      "truth": "1.04",
+      "roi": [
+        0.47535416666666663,
+        0.37377777777777776,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "1.04",
+      "confidence": 0.9992245435714722,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": false,
+        "reason": "multiple_decimal_regions",
+        "decimal_regions": [
+          0,
+          2
+        ]
+      },
+      "alternate_text": "1.04",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4559471950051375,
+      "total_seconds": 0.5185172759811394
+    },
+    {
+      "id": 6,
+      "truth": "1.24",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "1.24",
+      "confidence": 0.9997443556785583,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 2.73
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2325859779957682,
+      "total_seconds": 0.30003862897865474
+    },
+    {
+      "id": 7,
+      "truth": "0.76",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "0.76",
+      "confidence": 0.998761773109436,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 0.66
+      },
+      "alternate_text": "0.76",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45437087200116366,
+      "total_seconds": 0.51609457199811
+    },
+    {
+      "id": 8,
+      "truth": "0.88",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "0.88",
+      "confidence": 0.9988687634468079,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23231380901415832,
+      "total_seconds": 0.2941112889966462
+    },
+    {
+      "id": 9,
+      "truth": "0.08",
+      "roi": [
+        0.47222916666666664,
+        0.3728518518518519,
+        0.12064583333333333,
+        0.13300000000000003
+      ],
+      "text": "0.08",
+      "confidence": 0.9949159026145935,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.97
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2326950469869189,
+      "total_seconds": 0.29399924699100666
+    },
+    {
+      "id": 10,
+      "truth": "1.24",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "1.24",
+      "confidence": 0.9994083046913147,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 3.37
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22904501200537197,
+      "total_seconds": 0.29140372699475847
+    },
+    {
+      "id": 11,
+      "truth": "0.86",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "0.86",
+      "confidence": 0.9976340532302856,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": false,
+        "reason": "multiple_decimal_regions",
+        "decimal_regions": [
+          0,
+          1
+        ]
+      },
+      "alternate_text": "0.86",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4588441009982489,
+      "total_seconds": 0.5207205329788849
+    },
+    {
+      "id": 12,
+      "truth": "1.00",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "1.00",
+      "confidence": 0.8961960077285767,
+      "accepted": false,
+      "reason": "digit_count_mismatch",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 1.19
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23044721598853357,
+      "total_seconds": 0.2921759699820541
+    },
+    {
+      "id": 13,
+      "truth": "-0.00",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11804166666666666,
+        0.13300000000000003
+      ],
+      "text": "-0.00",
+      "confidence": 0.9997262954711914,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.9
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.228720777988201,
+      "total_seconds": 0.2908644740236923
+    },
+    {
+      "id": 14,
+      "truth": "-0.00",
+      "roi": [
+        0.47375,
+        0.3727777777777778,
+        0.12020833333333338,
+        0.13499999999999995
+      ],
+      "text": "-0.00",
+      "confidence": 0.9999569654464722,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22855371798505075,
+      "total_seconds": 0.29037544201128185
+    },
+    {
+      "id": 15,
+      "truth": "0.06",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "0.06",
+      "confidence": 0.9976609349250793,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23002621199702844,
+      "total_seconds": 0.29156051701284014
+    },
+    {
+      "id": 16,
+      "truth": "0.09",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11912499999999995,
+        0.13400000000000004
+      ],
+      "text": "0.09",
+      "confidence": 0.9998376369476318,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.06
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2293654180248268,
+      "total_seconds": 0.2912217050034087
+    },
+    {
+      "id": 17,
+      "truth": "0.07",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11808333333333329,
+        0.13400000000000004
+      ],
+      "text": "0.07",
+      "confidence": 0.9984571933746338,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.02
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2294912190118339,
+      "total_seconds": 0.29106920497724786
+    },
+    {
+      "id": 18,
+      "truth": "0.01",
+      "roi": [
+        0.47270833333333334,
+        0.3718518518518519,
+        0.12125000000000004,
+        0.13499999999999995
+      ],
+      "text": "0.01",
+      "confidence": 0.9969109296798706,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 1.15
+      },
+      "alternate_text": "0.01",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4580612879944965,
+      "total_seconds": 0.5193131319829263
+    },
+    {
+      "id": 19,
+      "truth": "-0.00",
+      "roi": [
+        0.4752916666666666,
+        0.36996296296296294,
+        0.11920833333333339,
+        0.13600000000000004
+      ],
+      "text": "-0.00",
+      "confidence": 0.9994878768920898,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": null,
+        "angle": 0.9
+      },
+      "alternate_text": "-0.00",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45535694900900126,
+      "total_seconds": 0.5173351879930124
+    },
+    {
+      "id": 20,
+      "truth": "0.08",
+      "roi": [
+        0.4752916666666666,
+        0.37274074074074076,
+        0.11920833333333339,
+        0.13600000000000004
+      ],
+      "text": "0.08",
+      "confidence": 0.9998362064361572,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.17
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23109956001280807,
+      "total_seconds": 0.2930388390086591
+    },
+    {
+      "id": 21,
+      "truth": "1.65",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "1.65",
+      "confidence": 0.9961985945701599,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": -3.81
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23222102798172273,
+      "total_seconds": 0.29391514798044227
+    },
+    {
+      "id": 22,
+      "truth": "1.66",
+      "roi": [
+        0.47222916666666664,
+        0.3728518518518519,
+        0.12168749999999999,
+        0.13300000000000003
+      ],
+      "text": "1.66",
+      "confidence": 0.9949859976768494,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": -2.6
+      },
+      "alternate_text": "1.66",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45666000997880474,
+      "total_seconds": 0.5184850299847312
+    },
+    {
+      "id": 23,
+      "truth": "1.65",
+      "roi": [
+        0.47533333333333333,
+        0.3718888888888889,
+        0.11912499999999995,
+        0.13400000000000004
+      ],
+      "text": "1.65",
+      "confidence": 0.996881365776062,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23055209699668922,
+      "total_seconds": 0.2927295220142696
+    },
+    {
+      "id": 24,
+      "truth": "-0.00",
+      "roi": [
+        0.4751666666666667,
+        0.3651111111111111,
+        0.11945833333333335,
+        0.14199999999999996
+      ],
+      "text": "-0.00",
+      "confidence": 0.9997695088386536,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.01
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2384672719927039,
+      "total_seconds": 0.3002476140100043
+    },
+    {
+      "id": 25,
+      "truth": "0.00",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "0.00",
+      "confidence": 0.8866832256317139,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.21
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.231340081023518,
+      "total_seconds": 0.2931307340040803
+    },
+    {
+      "id": 26,
+      "truth": "1.66",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "1.66",
+      "confidence": 0.9969900846481323,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": -2.49
+      },
+      "alternate_text": "1.66",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46035530502558686,
+      "total_seconds": 0.5220575169951189
+    },
+    {
+      "id": 27,
+      "truth": "1.65",
+      "roi": [
+        0.47533333333333333,
+        0.3718888888888889,
+        0.11860416666666662,
+        0.13400000000000004
+      ],
+      "text": "1.65",
+      "confidence": 0.9993783235549927,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": -4.67
+      },
+      "alternate_text": "1.65",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4597896940249484,
+      "total_seconds": 0.5212325470056385
+    },
+    {
+      "id": 28,
+      "truth": "-1.34",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11860416666666662,
+        0.13400000000000004
+      ],
+      "text": "-1.34",
+      "confidence": 0.9998448491096497,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": null,
+        "angle": 3.01
+      },
+      "alternate_text": "-1.34",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4568875859840773,
+      "total_seconds": 0.5187596509931609
+    },
+    {
+      "id": 29,
+      "truth": "-0.99",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "-0.99",
+      "confidence": 0.9997601509094238,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.62
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23160614699008875,
+      "total_seconds": 0.2933711340010632
+    },
+    {
+      "id": 30,
+      "truth": "-1.29",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "-1.29",
+      "confidence": 0.9112104177474976,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22972314999788068,
+      "total_seconds": 0.2913677260221448
+    },
+    {
+      "id": 31,
+      "truth": "-1.22",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "-1.22",
+      "confidence": 0.9101272821426392,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23018177898484282,
+      "total_seconds": 0.29230755899334326
+    },
+    {
+      "id": 32,
+      "truth": "-0.27",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "-0.27",
+      "confidence": 0.9472349286079407,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2298402969900053,
+      "total_seconds": 0.2916416260122787
+    },
+    {
+      "id": 33,
+      "truth": "-1.06",
+      "roi": [
+        0.47222916666666664,
+        0.3728518518518519,
+        0.12168749999999999,
+        0.13300000000000003
+      ],
+      "text": "-1.06",
+      "confidence": 0.9998590350151062,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2336635850078892,
+      "total_seconds": 0.2954344440076966
+    },
+    {
+      "id": 34,
+      "truth": "-1.34",
+      "roi": [
+        0.4752708333333333,
+        0.369,
+        0.11872916666666669,
+        0.13700000000000004
+      ],
+      "text": "-1.34",
+      "confidence": 0.9668477177619934,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 4.09
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23043244698783383,
+      "total_seconds": 0.29150595198734663
+    },
+    {
+      "id": 35,
+      "truth": "-1.34",
+      "roi": [
+        0.4752708333333333,
+        0.36992592592592594,
+        0.11925000000000002,
+        0.13700000000000004
+      ],
+      "text": "-1.34",
+      "confidence": 0.9950288534164429,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 4.54
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23076840900466777,
+      "total_seconds": 0.29250038001919165
+    },
+    {
+      "id": 36,
+      "truth": "-0.71",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "-0.71",
+      "confidence": 0.9975658655166626,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.04
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2297968250059057,
+      "total_seconds": 0.29137480398640037
+    },
+    {
+      "id": 37,
+      "truth": "-1.22",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "-1.22",
+      "confidence": 0.9997466802597046,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": 0.0
+      },
+      "alternate_text": "-1.22",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4557816319866106,
+      "total_seconds": 0.5175993230077438
+    },
+    {
+      "id": 38,
+      "truth": "-1.34",
+      "roi": [
+        0.475875,
+        0.3728518518518519,
+        0.11752083333333332,
+        0.13300000000000003
+      ],
+      "text": "-1.34",
+      "confidence": 0.9996517896652222,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 4.29
+      },
+      "alternate_text": "-1.34",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4551243740133941,
+      "total_seconds": 0.5169024470087606
+    },
+    {
+      "id": 39,
+      "truth": "-1.14",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11804166666666666,
+        0.13300000000000003
+      ],
+      "text": "-1.14",
+      "confidence": 0.9982160329818726,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": null,
+        "angle": 0.0
+      },
+      "alternate_text": "-1.14",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45900701300706714,
+      "total_seconds": 0.5206302750157192
+    },
+    {
+      "id": 40,
+      "truth": "-1.16",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "-1.16",
+      "confidence": 0.9863110780715942,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 3.9
+      },
+      "alternate_text": "-1.16",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4570243080088403,
+      "total_seconds": 0.5183848610031419
+    },
+    {
+      "id": 41,
+      "truth": "-0.69",
+      "roi": [
+        0.4674375,
+        0.34581481481481485,
+        0.13179166666666664,
+        0.16299999999999998
+      ],
+      "text": "-0.69",
+      "confidence": 0.9880406260490417,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 4,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": -4.99
+      },
+      "alternate_text": "-0.69",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4638145820063073,
+      "total_seconds": 0.5254852159996517
+    },
+    {
+      "id": 42,
+      "truth": "-1.24",
+      "roi": [
+        0.46958333333333335,
+        0.3727777777777778,
+        0.1238541666666667,
+        0.13499999999999995
+      ],
+      "text": "-1.24",
+      "confidence": 0.9180073738098145,
+      "accepted": false,
+      "reason": "decimal_position_mismatch",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": null,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22981515800347552,
+      "total_seconds": 0.2916104049945716
+    },
+    {
+      "id": 43,
+      "truth": "-0.45",
+      "roi": [
+        0.4753125,
+        0.3718518518518519,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "-0.45",
+      "confidence": 0.9999351501464844,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.35
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2319048679783009,
+      "total_seconds": 0.29342328300117515
+    },
+    {
+      "id": 44,
+      "truth": "-0.08",
+      "roi": [
+        0.4753125,
+        0.3718518518518519,
+        0.11812500000000004,
+        0.13499999999999995
+      ],
+      "text": "-0.08",
+      "confidence": 0.9997469782829285,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.19
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23600441400776617,
+      "total_seconds": 0.2975034709961619
+    },
+    {
+      "id": 45,
+      "truth": "-0.86",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "-0.86",
+      "confidence": 0.9990757703781128,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": 0.0
+      },
+      "alternate_text": "-0.86",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4559367430047132,
+      "total_seconds": 0.5174841120024212
+    },
+    {
+      "id": 46,
+      "truth": "-0.00",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "-0.00",
+      "confidence": 0.9998189806938171,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.19
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23116248397855088,
+      "total_seconds": 0.2924078599899076
+    },
+    {
+      "id": 47,
+      "truth": "-1.25",
+      "roi": [
+        0.4752708333333333,
+        0.3708518518518518,
+        0.11925000000000002,
+        0.13700000000000004
+      ],
+      "text": "-1.25",
+      "confidence": 0.9988296627998352,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": -5.08
+      },
+      "alternate_text": "-1.25",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46652674800134264,
+      "total_seconds": 0.5280577279918361
+    },
+    {
+      "id": 48,
+      "truth": "-1.24",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "-1.24",
+      "confidence": 0.9990764856338501,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 3.01
+      },
+      "alternate_text": "-1.24",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45595709199551493,
+      "total_seconds": 0.5173704710032325
+    },
+    {
+      "id": 49,
+      "truth": "-0.05",
+      "roi": [
+        0.47429166666666667,
+        0.3728148148148148,
+        0.12016666666666662,
+        0.13400000000000004
+      ],
+      "text": "-0.05",
+      "confidence": 0.9998396635055542,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": null,
+        "angle": 0.0
+      },
+      "alternate_text": "-0.05",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46243312399019487,
+      "total_seconds": 0.5239538160094526
+    },
+    {
+      "id": 50,
+      "truth": "-1.24",
+      "roi": [
+        0.4752916666666666,
+        0.3708888888888889,
+        0.11816666666666673,
+        0.13600000000000004
+      ],
+      "text": "-1.24",
+      "confidence": 0.9986728429794312,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": 3.58
+      },
+      "alternate_text": "-1.24",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45431099098641425,
+      "total_seconds": 0.5158439829829149
+    },
+    {
+      "id": 51,
+      "truth": "-1.20",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "-1.20",
+      "confidence": 0.956324577331543,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23075745298410766,
+      "total_seconds": 0.2926846589834895
+    },
+    {
+      "id": 52,
+      "truth": "-0.53",
+      "roi": [
+        0.4752916666666666,
+        0.3708888888888889,
+        0.11868750000000006,
+        0.13600000000000004
+      ],
+      "text": "-0.53",
+      "confidence": 0.9341742396354675,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.23
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22950154700083658,
+      "total_seconds": 0.2909696600108873
+    },
+    {
+      "id": 53,
+      "truth": "-0.01",
+      "roi": [
+        0.4752916666666666,
+        0.3708888888888889,
+        0.11816666666666673,
+        0.13600000000000004
+      ],
+      "text": "-0.01",
+      "confidence": 0.9998918771743774,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": 3.69
+      },
+      "alternate_text": "-0.01",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45689588101231493,
+      "total_seconds": 0.5185711160011124
+    },
+    {
+      "id": 54,
+      "truth": "-0.23",
+      "roi": [
+        0.4752916666666666,
+        0.37274074074074076,
+        0.11868750000000006,
+        0.13600000000000004
+      ],
+      "text": "-0.23",
+      "confidence": 0.9992272257804871,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": true,
+        "decimal_after": 0,
+        "angle": 1.03
+      },
+      "alternate_text": "-0.23",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45634511500247754,
+      "total_seconds": 0.5182964430132415
+    },
+    {
+      "id": 55,
+      "truth": "-0.00",
+      "roi": [
+        0.47535416666666663,
+        0.37377777777777776,
+        0.11804166666666666,
+        0.13300000000000003
+      ],
+      "text": "-0.00",
+      "confidence": 0.9268611073493958,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.02
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23093236397835426,
+      "total_seconds": 0.2925797099887859
+    },
+    {
+      "id": 56,
+      "truth": "0.07",
+      "roi": [
+        0.475375,
+        0.3738148148148148,
+        0.11852083333333331,
+        0.13199999999999995
+      ],
+      "text": "0.07",
+      "confidence": 0.9998763799667358,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": false,
+        "reason": "multiple_decimal_regions",
+        "decimal_regions": [
+          1,
+          3
+        ]
+      },
+      "alternate_text": "0.07",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4569208130124025,
+      "total_seconds": 0.5185872509900946
+    },
+    {
+      "id": 57,
+      "truth": "0.02",
+      "roi": [
+        0.4753125,
+        0.3718518518518519,
+        0.11812500000000004,
+        0.13499999999999995
+      ],
+      "text": "0.02",
+      "confidence": 0.9997921586036682,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.19
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2301993340079207,
+      "total_seconds": 0.2920229049923364
+    },
+    {
+      "id": 58,
+      "truth": "0.22",
+      "roi": [
+        0.47272916666666664,
+        0.3718888888888889,
+        0.12120833333333329,
+        0.13400000000000004
+      ],
+      "text": "0.22",
+      "confidence": 0.9992434978485107,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 1.19
+      },
+      "alternate_text": "0.22",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45570792999933474,
+      "total_seconds": 0.5172154080064502
+    },
+    {
+      "id": 59,
+      "truth": "0.00",
+      "roi": [
+        0.47535416666666663,
+        0.37377777777777776,
+        0.11804166666666666,
+        0.13300000000000003
+      ],
+      "text": "0.00",
+      "confidence": 0.9999734163284302,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.12
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2338981899956707,
+      "total_seconds": 0.2953517589776311
+    },
+    {
+      "id": 60,
+      "truth": "0.00",
+      "roi": [
+        0.4753125,
+        0.3727777777777778,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "0.00",
+      "confidence": 0.8758018612861633,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.09
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23053782401257195,
+      "total_seconds": 0.29188190298737027
+    },
+    {
+      "id": 61,
+      "truth": "-0.00",
+      "roi": [
+        0.47535416666666663,
+        0.37377777777777776,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "-0.00",
+      "confidence": 0.9998553991317749,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": true,
+        "decimal_after": 1,
+        "angle": 1.02
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23066076199756935,
+      "total_seconds": 0.2916222820058465
+    },
+    {
+      "id": 62,
+      "truth": "0.98",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "0.98",
+      "confidence": 0.8954758644104004,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.99
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23179954799707048,
+      "total_seconds": 0.293277079006657
+    },
+    {
+      "id": 63,
+      "truth": "0.31",
+      "roi": [
+        0.475375,
+        0.37474074074074076,
+        0.11799999999999997,
+        0.13199999999999995
+      ],
+      "text": "0.31",
+      "confidence": 0.999775767326355,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 3.58
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23091758298687637,
+      "total_seconds": 0.29206468298798427
+    },
+    {
+      "id": 64,
+      "truth": "1.24",
+      "roi": [
+        0.47535416666666663,
+        0.37377777777777776,
+        0.11908333333333333,
+        0.13300000000000003
+      ],
+      "text": "1.24",
+      "confidence": 0.9116310477256775,
+      "accepted": false,
+      "reason": "digit_count_mismatch",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": 3.01
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23208450397942215,
+      "total_seconds": 0.2938041070010513
+    },
+    {
+      "id": 65,
+      "truth": "0.57",
+      "roi": [
+        0.475875,
+        0.37377777777777776,
+        0.11752083333333332,
+        0.13300000000000003
+      ],
+      "text": "0.57",
+      "confidence": 0.9988977313041687,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.86
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.2368125309876632,
+      "total_seconds": 0.2985002560017165
+    },
+    {
+      "id": 66,
+      "truth": "1.21",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11860416666666662,
+        0.13400000000000004
+      ],
+      "text": "1.21",
+      "confidence": 0.9997315406799316,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": 0,
+        "angle": 0.0
+      },
+      "alternate_text": "1.21",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.46011189301498234,
+      "total_seconds": 0.5202242600207683
+    },
+    {
+      "id": 67,
+      "truth": "0.95",
+      "roi": [
+        0.475375,
+        0.37474074074074076,
+        0.11799999999999997,
+        0.13199999999999995
+      ],
+      "text": "0.95",
+      "confidence": 0.9997007250785828,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.11
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23048353698686697,
+      "total_seconds": 0.2908644659910351
+    },
+    {
+      "id": 68,
+      "truth": "1.25",
+      "roi": [
+        0.4753125,
+        0.37092592592592594,
+        0.1191666666666667,
+        0.13499999999999995
+      ],
+      "text": "1.25",
+      "confidence": 0.9988274574279785,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 0.0
+      },
+      "alternate_text": "1.25",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.455994447984267,
+      "total_seconds": 0.5160105259856209
+    },
+    {
+      "id": 69,
+      "truth": "0.86",
+      "roi": [
+        0.46799999999999997,
+        0.3458888888888889,
+        0.13014583333333338,
+        0.16100000000000006
+      ],
+      "text": "0.86",
+      "confidence": 0.9974204897880554,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": -2.34
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.230691069009481,
+      "total_seconds": 0.29117030001361854
+    },
+    {
+      "id": 70,
+      "truth": "0.26",
+      "roi": [
+        0.47533333333333333,
+        0.3718888888888889,
+        0.11860416666666662,
+        0.13400000000000004
+      ],
+      "text": "0.26",
+      "confidence": 0.999502956867218,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": false,
+        "reason": "multiple_decimal_regions",
+        "decimal_regions": [
+          1,
+          3
+        ]
+      },
+      "alternate_text": "0.26",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4580442330043297,
+      "total_seconds": 0.5185532460163813
+    },
+    {
+      "id": 71,
+      "truth": "0.86",
+      "roi": [
+        0.4753125,
+        0.3718518518518519,
+        0.11864583333333337,
+        0.13499999999999995
+      ],
+      "text": "0.86",
+      "confidence": 0.999714732170105,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 1.17
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23045878400444053,
+      "total_seconds": 0.29055888499715365
+    },
+    {
+      "id": 72,
+      "truth": "0.00",
+      "roi": [
+        0.4721458333333333,
+        0.369,
+        0.12133333333333335,
+        0.13700000000000004
+      ],
+      "text": "0.00",
+      "confidence": 0.9994115829467773,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23157608500332572,
+      "total_seconds": 0.2919704269734211
+    },
+    {
+      "id": 73,
+      "truth": "1.22",
+      "roi": [
+        0.4674375,
+        0.34581481481481485,
+        0.13231249999999997,
+        0.16299999999999998
+      ],
+      "text": "1.22",
+      "confidence": 0.9955050945281982,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": null,
+        "angle": -2.97
+      },
+      "alternate_text": "1.22",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.45609661799971946,
+      "total_seconds": 0.5163143920071889
+    },
+    {
+      "id": 74,
+      "truth": "1.25",
+      "roi": [
+        0.47525,
+        0.368962962962963,
+        0.11929166666666664,
+        0.13799999999999996
+      ],
+      "text": "1.25",
+      "confidence": 0.9968973398208618,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 2,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 0.0
+      },
+      "alternate_text": "1.25",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.4591406300023664,
+      "total_seconds": 0.5190066609939095
+    },
+    {
+      "id": 75,
+      "truth": "0.27",
+      "roi": [
+        0.47533333333333333,
+        0.3728148148148148,
+        0.11860416666666662,
+        0.13400000000000004
+      ],
+      "text": "0.27",
+      "confidence": 0.9994843006134033,
+      "accepted": true,
+      "reason": "high_confidence_two_resamplings_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": null,
+        "angle": 1.3
+      },
+      "alternate_text": "0.27",
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.455775440990692,
+      "total_seconds": 0.5160606369900052
+    },
+    {
+      "id": 76,
+      "truth": "0.21",
+      "roi": [
+        0.4716666666666667,
+        0.3727777777777778,
+        0.1222916666666667,
+        0.13499999999999995
+      ],
+      "text": "0.21",
+      "confidence": 0.9957517385482788,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 5.08
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23009559701313265,
+      "total_seconds": 0.2903985730081331
+    },
+    {
+      "id": 77,
+      "truth": "0.07",
+      "roi": [
+        0.47581249999999997,
+        0.37274074074074076,
+        0.11816666666666673,
+        0.13600000000000004
+      ],
+      "text": "0.07",
+      "confidence": 0.9994903802871704,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23095939800259657,
+      "total_seconds": 0.2912831559951883
+    },
+    {
+      "id": 78,
+      "truth": "0.02",
+      "roi": [
+        0.47218750000000004,
+        0.3718518518518519,
+        0.12177083333333337,
+        0.13499999999999995
+      ],
+      "text": "0.02",
+      "confidence": 0.9790769815444946,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.9
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23211586399702355,
+      "total_seconds": 0.29268090400728397
+    },
+    {
+      "id": 79,
+      "truth": "0.70",
+      "roi": [
+        0.4701458333333333,
+        0.3728518518518519,
+        0.12429166666666666,
+        0.13300000000000003
+      ],
+      "text": "0.70",
+      "confidence": 0.896263599395752,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.0
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.22981339300167747,
+      "total_seconds": 0.2897717079904396
+    },
+    {
+      "id": 80,
+      "truth": "0.20",
+      "roi": [
+        0.47535416666666663,
+        0.3728518518518519,
+        0.11856249999999999,
+        0.13300000000000003
+      ],
+      "text": "0.20",
+      "confidence": 0.9995769262313843,
+      "accepted": true,
+      "reason": "source_pixels_consistent",
+      "evidence": {
+        "certain": true,
+        "digit_count": 3,
+        "minus": false,
+        "decimal_after": 1,
+        "angle": 0.66
+      },
+      "alternate_text": null,
+      "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+      "seconds": 0.23188668000511825,
+      "total_seconds": 0.2917445749917533
+    }
+  ],
+  "limit": "81 training images reused for integration and latency; not independent model accuracy",
+  "production_records_modified": false
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "crop": "data/real/candidate-006.png",
+    "old_label": "4.19",
+    "corrected_label": ".419",
+    "basis": "magnified source pixels show a decimal before the first digit 4, not after 4",
+    "used_for_training": false,
+    "training_weights_affected": false,
+    "diagnostic_counts_changed": false,
+    "historical_reports": "preserved; corrected diagnostic reports are saved alongside each run"
+  }
+]

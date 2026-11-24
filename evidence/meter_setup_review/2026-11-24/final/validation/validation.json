@@ -1,0 +1,55 @@
+{
+  "passed": true,
+  "manifest_sha256": "bc19d896d3f35ebd172e33fea18ad6dcb59fe916622f8bc05f551178613c52bc",
+  "checks": [
+    {
+      "command": [
+        "-m",
+        "pytest",
+        "tests",
+        "-q",
+        "--junitxml=/home/radxa/.local/state/codex-meter-update/20261124-latest-frame-v2/validation/board-junit.xml"
+      ],
+      "exit": 0,
+      "seconds": 36.750101585000266
+    },
+    {
+      "command": [
+        "scripts/browser_task_smoke.py",
+        "--output",
+        "/home/radxa/.local/state/codex-meter-update/20261124-latest-frame-v2/validation/browser"
+      ],
+      "exit": 0,
+      "seconds": 28.439901530000498
+    },
+    {
+      "command": [
+        "scripts/browser_meter_live_smoke.py",
+        "--output",
+        "/home/radxa/.local/state/codex-meter-update/20261124-latest-frame-v2/validation/meter-browser"
+      ],
+      "exit": 0,
+      "seconds": 10.990873771999759
+    },
+    {
+      "command": [
+        "/tmp/codex-meter-probe.py",
+        "/home/radxa/.local/state/codex-meter-update/20261124-latest-frame-v2"
+      ],
+      "exit": 0,
+      "seconds": 8.193956910000452
+    },
+    {
+      "command": [
+        "scripts/verify_readable_report.py",
+        "--output",
+        "/home/radxa/.local/state/codex-meter-update/20261124-latest-frame-v2/validation/report",
+        "--image-dir",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/data/images"
+      ],
+      "exit": 0,
+      "seconds": 1.2194247199995516
+    }
+  ],
+  "formal_records_modified": false
+}

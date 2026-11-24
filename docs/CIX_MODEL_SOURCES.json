@@ -1,0 +1,26 @@
+{
+  "catalog": "https://modelscope.cn/models/cix/ai_model_hub",
+  "checked_date": "2026-10-30",
+  "models": [
+    {
+      "path": "models/Generative_AI/LLM/Qwen3-4B.md",
+      "listed": true,
+      "url": "https://modelscope.cn/models/cix/ai_model_hub/resolve/master/models/Generative_AI/LLM/Qwen3-4B.md"
+    },
+    {
+      "path": "models/MultiModal/Qwen3-VL-4B-Instruct.md",
+      "listed": true,
+      "url": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/resolve/master/models/MultiModal/Qwen3-VL-4B-Instruct.md",
+      "upstream_weights": "Qwen/Qwen3-VL-4B-Instruct-GGUF",
+      "quantization": "Q4_K_M",
+      "vision_projector": "FP16",
+      "execution": "CPU llama.cpp",
+      "deployment_document": "QWEN3_VL_4B_DEPLOYMENT.md"
+    },
+    {
+      "path": "models/Audio/Speech_Recognition/onnx_sensevoice/ReadMe.md",
+      "listed": true,
+      "url": "https://modelscope.cn/models/cix/ai_model_hub/resolve/master/models/Audio/Speech_Recognition/onnx_sensevoice/ReadMe.md"
+    }
+  ]
+}

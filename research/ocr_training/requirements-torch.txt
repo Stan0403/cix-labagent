@@ -1,0 +1,9 @@
+# Python 3.10; install the CUDA wheel using the official PyTorch cu130 index.
+# torch==2.10.0+cu130 was already installed on the training PC.
+torch==2.10.0
+numpy==1.26.4
+onnx==1.17.0
+onnxruntime==1.23.2
+opencv-python==4.6.0.66
+Pillow==12.0.0
+protobuf==7.36.2

@@ -1,0 +1,83 @@
+{
+  "revision_date": "2026-11-24",
+  "models": [
+    {
+      "path": "qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+      "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5",
+      "source": "https://huggingface.co/Qwen/Qwen3-4B-GGUF",
+      "role": "CPU language",
+      "distribution": "upstream"
+    },
+    {
+      "path": "qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "sha256": "66358cb18bb6b3b1b6675aa412c7a88ef01d228f481184d13668e5201c730a0a",
+      "source": "https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct-GGUF/resolve/625828cbd3489786522366e19e22b6f12278e41a/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "role": "CPU visual language",
+      "distribution": "upstream; digest from preserved official downloader"
+    },
+    {
+      "path": "qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "sha256": "256f3a43bd4205ffef48d6b92715e1e70b5b0e9aef06522584967513a9985331",
+      "source": "https://modelscope.cn/models/Qwen/Qwen3-VL-4B-Instruct-GGUF/resolve/625828cbd3489786522366e19e22b6f12278e41a/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "role": "CPU visual projector",
+      "distribution": "upstream; digest from preserved official downloader"
+    },
+    {
+      "path": "qwen3-vl-4b-npu/vision.cix",
+      "sha256": "fd315596a7028cbc649be09576fbe885ec165ae92881df394fd0036869d7e4d0",
+      "source": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/resolve/f0ee7fef80bd137483da2d988a1c4a2813066036/models/MultiModal/Qwen3-VL-4B-Instruct/vision.cix",
+      "role": "NPU fixed 320x320 encoder",
+      "distribution": "upstream"
+    },
+    {
+      "path": "equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32_packed.cix",
+      "sha256": null,
+      "source": "Existing board artifact; not present in this desktop snapshot",
+      "role": "NPU equipment detector",
+      "distribution": "self-trained artifact required"
+    },
+    {
+      "path": "lcd-v3/rec-lcd.onnx",
+      "sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
+      "source": "Separate lcd-reader-v3.zip deliverable",
+      "role": "CPU LCD OCR",
+      "distribution": "self-trained release asset"
+    },
+    {
+      "path": "lcd-v3/ppocr_keys_v1.txt",
+      "sha256": null,
+      "source": "research/ocr_training/assets/ppocr_keys_v1.txt",
+      "role": "OCR dictionary",
+      "distribution": "included text artifact"
+    },
+    {
+      "path": "sensevoice-cix/sense_voice_mask256.cix",
+      "sha256": null,
+      "source": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/tree/f0ee7fef80bd137483da2d988a1c4a2813066036/models/Audio/Speech_Recognition/onnx_sensevoice",
+      "role": "NPU ASR; export entire directory including tokenizer/CMVN/config",
+      "distribution": "upstream"
+    },
+    {
+      "path": "sensevoice-cix/model/config.yaml",
+      "sha256": "6116ed8d9cccfb208959c6c3d075af75669bf3f0d38281a204f15c3717f31f41",
+      "role": "ASR preprocessing/tokenization",
+      "source": "Export complete source-board SenseVoice directory",
+      "distribution": "upstream"
+    },
+    {
+      "path": "sensevoice-cix/model/am.mvn",
+      "sha256": null,
+      "role": "ASR preprocessing/tokenization",
+      "source": "Export complete source-board SenseVoice directory",
+      "distribution": "upstream"
+    },
+    {
+      "path": "sensevoice-cix/model/chn_jpn_yue_eng_ko_spectok.bpe.model",
+      "sha256": null,
+      "role": "ASR preprocessing/tokenization",
+      "source": "Export complete source-board SenseVoice directory",
+      "distribution": "upstream"
+    }
+  ],
+  "null_sha256_means": "Not verified in available desktop evidence; never invent a digest. Export-models produces a complete local artifact lock."
+}

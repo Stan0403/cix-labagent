@@ -1,0 +1,160 @@
+{
+  "clinfo": {
+    "exit": 0,
+    "out": "Platform #0: ARM Platform\n `-- Device #0: Mali-G720-Immortalis r0p0\n",
+    "err": ""
+  },
+  "vulkan": {
+    "exit": 139,
+    "out": "",
+    "err": "'DISPLAY' environment variable not set... skipping surface info\nSegmentation fault\n"
+  },
+  "gpu_libraries": {
+    "exit": 0,
+    "out": "\tlibvulkan_virtio.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_virtio.so\n\tlibvulkan_radeon.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_radeon.so\n\tlibvulkan_panfrost.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_panfrost.so\n\tlibvulkan_lvp.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_lvp.so\n\tlibvulkan_gfxstream.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_gfxstream.so\n\tlibvulkan_freedreno.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_freedreno.so\n\tlibvulkan_broadcom.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan_broadcom.so\n\tlibvulkan.so.1 (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan.so.1\n\tlibvulkan.so (libc6,AArch64) => /lib/aarch64-linux-gnu/libvulkan.so\n\tlibmaliit-plugins.so.2 (libc6,AArch64) => /lib/aarch64-linux-gnu/libmaliit-plugins.so.2\n\tlibmali.so.0 (libc6,AArch64) => /opt/cixgpu-pro/lib/aarch64-linux-gnu/libmali.so.0\n\tlibmali.so (libc6,AArch64) => /opt/cixgpu-pro/lib/aarch64-linux-gnu/libmali.so\n\tlibgstvulkan-1.0.so.0 (libc6,AArch64) => /lib/aarch64-linux-gnu/libgstvulkan-1.0.so.0\n\tlibOpenCL.so.1 (libc6,AArch64) => /opt/cixgpu-pro/lib/aarch64-linux-gnu/libOpenCL.so.1\n\tlibOpenCL.so.1 (libc6,AArch64) => /lib/aarch64-linux-gnu/libOpenCL.so.1\n\tlibOpenCL.so (libc6,AArch64) => /opt/cixgpu-pro/lib/aarch64-linux-gnu/libOpenCL.so\n",
+    "err": ""
+  },
+  "cix_bins": {
+    "exit": 0,
+    "out": "total 132M\n-rwxr-xr-x 1 root root  743 Nov 17  2025 1cam_powerdown.sh\n-rwxr-xr-x 1 root root  920 Nov 17  2025 1cam_powerup.sh\n-rwxr-xr-x 1 root root 201K Nov 17  2025 327.cal\n-rwxr-xr-x 1 root root 107K Nov 17  2025 327_dol2.tun\n-rwxr-xr-x 1 root root 102K Nov 17  2025 327_dol3.tun\n-rwxr-xr-x 1 root root 106K Nov 17  2025 327_nor.tun\n-rwxr-xr-x 1 root root  96K Sep 30  2025 cix_test\n-rwxr-xr-x 1 root root 1.4K Nov 17  2025 clk_reset.sh\n-rwxr-xr-x 1 root root  249 Nov 17  2025 clk.sh\n-rwxr-xr-x 1 root root  380 Nov 17  2025 config_offline_1cam_1080p_nv12_gdc.txt\n-rwxr-xr-x 1 root root  431 Nov 17  2025 config_offline_1cam_1080p_nv12_multi_vout.txt\n-rwxr-xr-x 1 root root  395 Nov 17  2025 config_offline_1cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  396 Nov 17  2025 config_offline_1cam_1080p_rgb24.txt\n-rwxr-xr-x 1 root root  396 Nov 17  2025 config_offline_1cam_1080p_rgb32.txt\n-rwxr-xr-x 1 root root  403 Nov 17  2025 config_offline_1cam_3264_2448_nv12.txt\n-rwxr-xr-x 1 root root  403 Nov 17  2025 config_offline_1cam_4224_3136_nv12.txt\n-rwxr-xr-x 1 root root  598 Nov 17  2025 config_offline_2cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  965 Nov 17  2025 config_offline_4cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  450 Nov 17  2025 config_online_1cam_1080p_nv12_3a_log.txt\n-rwxr-xr-x 1 root root  412 Nov 17  2025 config_online_1cam_1080p_nv12_display.txt\n-rwxr-xr-x 1 root root  321 Nov 17  2025 config_online_1cam_1080p_nv12_gdc.txt\n-rwxr-xr-x 1 root root  347 Nov 17  2025 config_online_1cam_1080p_nv12_multi_vout.txt\n-rwxr-xr-x 1 root root  311 Nov 17  2025 config_online_1cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  312 Nov 17  2025 config_online_1cam_1080p_raw12.txt\n-rwxr-xr-x 1 root root  312 Nov 17  2025 config_online_1cam_1080p_rgb24.txt\n-rwxr-xr-x 1 root root  312 Nov 17  2025 config_online_1cam_1080p_rgb32.txt\n-rwxr-xr-x 1 root root  335 Nov 17  2025 config_online_1cam_3264_2448_nv12.txt\n-rwxr-xr-x 1 root root  335 Nov 17  2025 config_online_1cam_4224_3136_nv12.txt\n-rwxr-xr-x 1 root root  466 Nov 17  2025 config_online_2cam_1080p_720p_nv12.txt\n-rwxr-xr-x 1 root root  462 Nov 17  2025 config_online_2cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  462 Nov 17  2025 config_online_2cam_3264_2448_nv12.txt\n-rwxr-xr-x 1 root root  449 Nov 17  2025 config_online_2cam_4224_3136_nv12.txt\n-rwxr-xr-x 1 root root  837 Nov 17  2025 config_online_4cam_1080p_nv12_display.txt\n-rwxr-xr-x 1 root root  705 Nov 17  2025 config_online_4cam_1080p_nv12.txt\n-rwxr-xr-x 1 root root  705 Nov 17  2025 config_online_4cam_3264_2448_nv12.txt\n-rwxr-xr-x 1 root root  671 Nov 17  2025 csi_ddr_4kRaw.sh\n-rwxr-xr-x 1 root root  642 Nov 17  2025 csi_ddr_4kRGB.sh\n-rwxr-xr-x 1 root root  410 Nov 17  2025 csi_ddr_4kyuv422_10bit.sh\n-rwxr-xr-x 1 root root  680 Nov 17  2025 csi_ddr_4kyuv422_8bit.sh\n-rwxr-xr-x 1 root root  244 Nov 17  2025 csi_isp_2lane.sh\n-rwxr-xr-x 1 root root  244 Nov 17  2025 csi_isp.sh\n-rwxr-xr-x 1 root root 4.0M Nov 17  2025 DDR0.IMG\n-rwxr-xr-x 1 root root 201K Nov 17  2025 dummy.cal\n-rwxr-xr-x 1 root root 107K Nov 17  2025 dummy_dol2.tun\n-rwxr-xr-x 1 root root 103K Nov 17  2025 dummy_dol3.tun\n-rwxr-xr-x 1 root root 107K Nov 17  2025 dummy_nor.tun\n-rwxr-xr-x 1 root root  14K Nov 17  2025 isp_ai_demo.py\n-rwxr-xr-x 1 root root 5.6M Nov 17  2025 isp_app\n-rwxr-xr-x 1 root root 2.9M Sep 30  2025 llama-bench\n-rwxr-xr-x 1 root root  17M Sep 30  2025 llama-bench-vulkan\n-rwxr-xr-x 1 root root 4.3M Sep 30  2025 llama-cli\n-rwxr-xr-x 1 root root  18M Sep 30  2025 llama-cli-vulkan\n-rwxr-xr-x 1 root root  77K Sep 30  2025 llama-llava-cli\n-rwxr-xr-x 1 root root  77K Sep 30  2025 llama-minicpmv-cli\n-rwxr-xr-x 1 root root 5.0M Sep 30  2025 llama-mtmd-cli\n-rwxr-xr-x 1 root root  19M Sep 30  2025 llama-mtmd-cli-vulkan\n-rwxr-xr-x 1 root root 4.4M Sep 30  2025 llama-perplexity\n-rwxr-xr-x 1 root root  18M Sep 30  2025 llama-perplexity-vulkan\n-rwxr-xr-x 1 root root 2.9M Sep 30  2025 llama-quantize\n-rwxr-xr-x 1 root root  77K Sep 30  2025 llama-qwen2vl-cli\n-rwxr-xr-x 1 root root 7.4M Sep 30  2025 llama-server\n-rwxr-xr-x 1 root root  21M Sep 30  2025 llama-server-vulkan\n-rwxr-xr-x 1 root root  529 Nov 17  2025 lt7911_powerdown.sh\n-rwxr-xr-x 1 root root  615 Nov 17  2025 lt7911_powerup.sh\ndrwxr-xr-x 2 root root 4.0K Dec 25  2025 mnn\n-rwxr-xr-x 1 root root 224K Sep 30  2025 modetest\n-rwxr-xr-x 1 root root 1.9K Nov 17  2025 multi_clk_reset.sh\n-rwxr-xr-x 1 root root 1.8K Nov 17  2025 multi_RGB.sh\n-rwxr-xr-x 1 root root 1.7K Nov 17  2025 multivlab.sh\n-rwxr-xr-x 1 root root 490K Oct 10  2025 mvx_decoder\n-rwxr-xr-x 1 root root 587K Oct 10  2025 mvx_encoder\n-rwxr-xr-x 1 root root 482K Oct 10  2025 mvx_info\n-rwxr-xr-x 1 root root  88K Oct 10  2025 mvx_logd\ndrwxr-xr-x 2 root root 4.0K Dec 25  2025 onnxruntime\n-rwxr-xr-x 1 root root 286K Nov 17  2025 ov08d10.cal\n-rwxr-xr-x 1 root root 104K Nov 17  2025 ov08d10_dol2.tun\n-rwxr-xr-x 1 root root 104K Nov 17  2025 ov08d10_dol3.tun\n-rwxr-xr-x 1 root root 106K Nov 17  2025 ov08d10_nor.tun\n-rwxr-xr-x 1 root root 201K Nov 17  2025 ov13850.cal\n-rwxr-xr-x 1 root root  97K Nov 17  2025 ov13850_nor.tun\n-rwxr-xr-x 1 root root 297K Nov 17  2025 ov13855.cal\n-rwxr-xr-x 1 root root  97K Nov 17  2025 ov13855_nor.tun\n-rwxr-xr-x 1 root root 297K Nov 17  2025 ov13858.cal\n-rwxr-xr-x 1 root root  97K Nov 17  2025 ov13858_nor.tun\n-rwxr-xr-x 1 root root 214K Nov 17  2025 params_parser\n",
+    "err": ""
+  },
+  "llama_gpu_build": {
+    "exit": 0,
+    "out": "CMAKE_BUILD_TYPE:STRING=Release\nGGML_CPU_ARM_ARCH:STRING=armv9-a+i8mm+dotprod+sve\nGGML_CPU_KLEIDIAI:BOOL=ON\nGGML_OPENCL:BOOL=OFF\nGGML_OPENCL_EMBED_KERNELS:BOOL=ON\nGGML_OPENCL_PROFILING:BOOL=OFF\nGGML_OPENCL_TARGET_VERSION:STRING=300\nGGML_OPENCL_USE_ADRENO_KERNELS:BOOL=ON\nGGML_VULKAN:BOOL=OFF\nGGML_VULKAN_CHECK_RESULTS:BOOL=OFF\nGGML_VULKAN_DEBUG:BOOL=OFF\nGGML_VULKAN_MEMORY_DEBUG:BOOL=OFF\nGGML_VULKAN_RUN_TESTS:BOOL=OFF\nGGML_VULKAN_SHADERS_GEN_TOOLCHAIN:FILEPATH=\nGGML_VULKAN_SHADER_DEBUG_INFO:BOOL=OFF\nGGML_VULKAN_VALIDATE:BOOL=OFF\n//STRINGS property for variable: CMAKE_BUILD_TYPE\nCMAKE_BUILD_TYPE-STRINGS:INTERNAL=Debug;Release;MinSizeRel;RelWithDebInfo\n/home/radxa/llama.cpp/build/bin/llama-server\n",
+    "err": ""
+  },
+  "llama_devices": {
+    "exit": 0,
+    "out": "Available devices:\n",
+    "err": ""
+  },
+  "npu_packages": {
+    "exit": 0,
+    "out": "ii  cix-drivers-dkms                           0.2.1-4                             all          dkms sources for CIX XPU drivers\nii  cix-noe-umd                                2.0.2                               arm64        cix-noe-umd package\nii  cix-npu-onnxruntime                        1.1.0                               arm64        cix-npu-onnxruntime package\nii  clinfo                                     3.0.23.01.25-1                      arm64        Query OpenCL system information\nii  foot-terminfo                              1.13.1-2+deb12u1                    all          Fast, lightweight and minimalistic Wayland terminal emulator (terminfo files)\nii  gir1.2-ibus-1.0:arm64                      1.5.27-5                            arm64        Intelligent Input Bus - introspection data\nii  gpg                                        2.2.40-1.1+deb12u2                  arm64        GNU Privacy Guard -- minimalist public key operations\nii  libchewing3:arm64                          0.5.1-5                             arm64        intelligent phonetic input method library\nii  libchewing3-data                           0.5.1-5                             all          intelligent phonetic input method library - data files\nii  libibus-1.0-5:arm64                        1.5.27-5                            arm64        Intelligent Input Bus - shared library\nii  libinput-bin                               1.22.1-1+deb12u1                    arm64        input device management and event handling library - udev quirks\nii  libinput10:arm64                           1.22.1-1+deb12u1                    arm64        input device management and event handling library - shared library\nii  libmaliit-plugins2                         2.3.0-3.2+b2                        arm64        Maliit Input Method Framework - Plugin Library\nii  libmnl0:arm64                              1.0.4-3                             arm64        minimalistic Netlink communication library\nii  libpinyin-data:arm64                       2.8.1-1                             arm64        Data for PinYin / zhuyin input method library\nii  libtry-tiny-perl                           0.31-2                              all          module providing minimalistic try/catch\nii  libvulkan-dev:arm64                        1.3.239.0-1                         arm64        Vulkan loader library -- development files\nii  libvulkan1:arm64                           1.3.239.0-1                         arm64        Vulkan loader library\nii  libxcb-xinput0:arm64                       1.15-1                              arm64        X C Binding, xinput extension\nii  libxi6:arm64                               2:1.8-1+b1                          arm64        X11 Input extension library\nii  maliit-framework                           2.3.0-3.2+b2                        arm64        Maliit Input Method Framework\nii  maliit-keyboard                            2.3.1-3.1                           arm64        virtual on-screen keyboard based on the Maliit Framework\nii  mesa-vulkan-drivers:arm64                  25.0.7-2~bpo12+1                    arm64        Mesa Vulkan graphics drivers\nii  ocl-icd-libopencl1:arm64                   2.3.1-1                             arm64        Generic OpenCL ICD Loader\nii  systemd-timesyncd                          252.39-1~deb12u2                    arm64        minimalistic service to synchronize local time with NTP servers\nii  task-cix-npu                               0.3.8                               all          Metapackages for CIX NPU\nii  vulkan-tools                               1.3.239.0+dfsg1-1                   arm64        Miscellaneous Vulkan utilities\nii  xserver-xorg-input-all                     1:7.7+23                            arm64        X.Org X server -- input driver metapackage\nii  xserver-xorg-input-libinput                1.2.1-1+b1                          arm64        X.Org X server -- libinput input driver\n",
+    "err": ""
+  },
+  "build_packages": {
+    "exit": 0,
+    "out": "ii  cmake                                      3.25.1-1                            arm64        cross-platform, open-source make system\nii  cmake-data                                 3.25.1-1                            all          CMake data files (modules, templates and documentation)\nii  glslc                                      2023.2-1                            arm64        Command line compiler for GLSL/HLSL to SPIR-V\nii  libshaderc1:arm64                          2023.2-1                            arm64        Library API for accessing glslc functionality - shared libraries\nii  libvulkan-dev:arm64                        1.3.239.0-1                         arm64        Vulkan loader library -- development files\n",
+    "err": ""
+  },
+  "llama_source": {
+    "exit": 0,
+    "out": "57819b8d4b39d893408e51520dff3d47d1ebb757\n",
+    "err": ""
+  },
+  "models": [
+    {
+      "path": "qwen25vl-mnn/config.json",
+      "bytes": 344
+    },
+    {
+      "path": "sensevoice-cix/sense_voice_mask256.cix",
+      "bytes": 495032896
+    },
+    {
+      "path": "qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "bytes": 2497281664
+    },
+    {
+      "path": "qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "bytes": 836180256
+    },
+    {
+      "path": "qwen3-vl-2b-mnn/config.json",
+      "bytes": 560
+    },
+    {
+      "path": "ppocr-cix/cls.cix",
+      "bytes": 763888
+    },
+    {
+      "path": "ppocr-cix/rec.cix",
+      "bytes": 20049100
+    },
+    {
+      "path": "ppocr-cix/PP-OCRv4_det.cix",
+      "bytes": 72889600
+    },
+    {
+      "path": "qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+      "bytes": 2497280256
+    }
+  ],
+  "configured_endpoints": {
+    "LABAGENT_LLM_BASE_URL": "http://127.0.0.1:8081/v1",
+    "LABAGENT_LLM_MODEL": "qwen3-4b-local",
+    "LABAGENT_ASR_BASE_URL": "http://127.0.0.1:8011/v1",
+    "LABAGENT_ASR_MODEL": "sensevoice-small-cix",
+    "LABAGENT_OCR_PROVIDER": "mnn",
+    "LABAGENT_OCR_BASE_URL": "http://127.0.0.1:8031"
+  },
+  "services": {
+    "labagent-demo-llm": {
+      "pid": 1726,
+      "args": [
+        "/usr/share/cix/bin/llama-server",
+        "--model",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+        "--alias",
+        "qwen3-4b-local",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8081",
+        "--ctx-size",
+        "8192",
+        "--threads",
+        "8",
+        "--threads-batch",
+        "8",
+        "--parallel",
+        "1"
+      ]
+    },
+    "labagent-demo-asr": {
+      "pid": 1725,
+      "args": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-asr/bin/python"
+      ]
+    },
+    "labagent-demo-vlm": {
+      "pid": 1728,
+      "args": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.venv-app/bin/python",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8031"
+      ]
+    },
+    "labagent-qwen3vl4b": {
+      "pid": 1727,
+      "args": [
+        "/home/radxa/llama.cpp/build/bin/llama-server",
+        "--model",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+        "--mmproj",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+        "--alias",
+        "qwen3-vl-4b-local",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8032",
+        "--ctx-size",
+        "4096",
+        "--threads",
+        "8",
+        "--threads-batch",
+        "8",
+        "--parallel",
+        "1",
+        "--n-gpu-layers",
+        "0",
+        "--no-mmproj-offload"
+      ]
+    }
+  }
+}

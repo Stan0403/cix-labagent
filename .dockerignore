@@ -1,0 +1,12 @@
+.git
+.venv*
+data
+models
+.env*
+research
+legacy
+maintenance
+evidence
+output
+.deps
+__pycache__

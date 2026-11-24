@@ -1,0 +1,61 @@
+{
+  "recorded_after_formatting": true,
+  "sources": [
+    {
+      "path": "annotate_extra.py",
+      "sha256": "6e8e7d0066d5971f4a6e1cc7442a441e05d79b2304237ac79f692662219364a9"
+    },
+    {
+      "path": "annotate_reviewed.py",
+      "sha256": "5055c68f08621b6e2bc2ced1a031a51a8a7ab506ef4fdc51a5c6354b200536fb"
+    },
+    {
+      "path": "build_dataset.py",
+      "sha256": "6c6ae44bbfea499e05a14ed81fba4801c4fc385f4c1d9a8baf74c432a0763ed2"
+    },
+    {
+      "path": "cix_rec_model.py",
+      "sha256": "d4bf23b64cf9bcbd0d1eb230c8197b55cc697a41b4b61b4813730bd2d27020d2"
+    },
+    {
+      "path": "crop_board.py",
+      "sha256": "e567d2fb513baa425ddfc01c2f92645e668f9691ed24af1eaf4e3f5d8c40ce0d"
+    },
+    {
+      "path": "evaluate_blank.py",
+      "sha256": "ff014a4d51af75621d5d1777b6433ee045398d168305b4fea2d8680da2c5ac96"
+    },
+    {
+      "path": "export_blank_diagnostic_board.py",
+      "sha256": "58932f22f882398c4bbd79e77700223b2c75d05e86a5eea8d45a5ab8b6964be1"
+    },
+    {
+      "path": "export_extra_board.py",
+      "sha256": "b362db6b02f8efac059d22a95f122dc94a4b0f44ab6a0b7b053be7fc1b38ee35"
+    },
+    {
+      "path": "fetch_sources.py",
+      "sha256": "dcbe749d7293cdce08f814ef76475ffb1714b0cde76b8650a8da9796279f53ee"
+    },
+    {
+      "path": "infer_lcd.py",
+      "sha256": "1d8f466fe4616ebf8e878752cd01ae9e706e895d5f569513990e1eea97fc08cf"
+    },
+    {
+      "path": "inventory_board.py",
+      "sha256": "c2a2a66a2c8b02f9f7a73cf11ad8bcb7a209766d28068b1e921aa55741621fd3"
+    },
+    {
+      "path": "ocr_common.py",
+      "sha256": "4d7b04f07dbfb247123cf907b09ad9ab68c5d124bb0d34c2f1dd3c3023159ffb"
+    },
+    {
+      "path": "prepare_npu.py",
+      "sha256": "95b0a733821fdc709a18e85e38b909e986c76b9cea4c5302031865a567c9fcf9"
+    },
+    {
+      "path": "train_lcd.py",
+      "sha256": "a8b4c8487683a661a8e57a424f21bd515d6da56671149f7f34fd07a378f46e32"
+    }
+  ]
+}

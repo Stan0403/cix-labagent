@@ -1,0 +1,11 @@
+# Training paths for this Windows computer. Change path when moving to Linux.
+path: E:/codex_projext/cix-agent/equipment_detector/dataset
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: battery
+  1: multimeter
+  2: red_probe
+  3: black_probe

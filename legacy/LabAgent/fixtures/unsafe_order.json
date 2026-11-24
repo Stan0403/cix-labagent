@@ -1,0 +1,7 @@
+{"name":"安全阻断 · 未确认断电","events":[
+  {"kind":"action","data":{"kind":"read_sop"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"connected","data":{"value":true}},
+  {"kind":"power","data":{"value":"on"}}
+]}

@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "case": "fast-positive",
+      "candidate": {
+        "id": "27f1dbf672e741c3b8e137bcfa09fb1f",
+        "value": 1.25,
+        "unit": "V",
+        "at": "2026-11-22T12:19:47.039311+00:00",
+        "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "raw_text": "{\"reading\": \"1.25\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+        "reference": "image:c6f4732f1b5d484e44301e0763ff17a46916faba3a78e21bcfd0c8b6dfb2cc72",
+        "roi": [
+          0.47533333333333333,
+          0.3728148148148148,
+          0.11808333333333329,
+          0.13400000000000004
+        ],
+        "meter_range": "dc_20v",
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存",
+        "status": "pending",
+        "confirmed_value": null,
+        "step_id": "measure",
+        "confirmation_method": ""
+      },
+      "seconds": 0.3723881670157425,
+      "auto_roi": true
+    },
+    {
+      "case": "disagreement-rejected",
+      "candidate": {
+        "id": "90119d8c84694b38be0b66bc82f748d9",
+        "value": null,
+        "unit": "V",
+        "at": "2026-11-22T12:19:47.587607+00:00",
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "raw_text": "{\"reading\": null, \"unit\": null, \"reason\": \"reader_disagreement_on_digits\"}",
+        "reference": "image:a2a60cc742c68f815af74108524a10e55cff8e4756f56d30f05740eee41fcf1b",
+        "roi": [
+          0.47535416666666663,
+          0.37377777777777776,
+          0.11908333333333333,
+          0.13300000000000003
+        ],
+        "meter_range": "dc_20v",
+        "reason": "模型无法确认读数，请重拍或人工核对",
+        "status": "pending",
+        "confirmed_value": null,
+        "step_id": "measure",
+        "confirmation_method": ""
+      },
+      "seconds": 1.3330850949860178,
+      "auto_roi": true
+    },
+    {
+      "case": "leading-decimal-fallback",
+      "candidate": {
+        "id": "f95ce219985440e9b3c44cf09624ca3e",
+        "value": 0.419,
+        "unit": "V",
+        "at": "2026-11-22T12:19:49.163275+00:00",
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "raw_text": "{\"reading\": \".419\", \"unit\": null, \"reason\": \"source_pixels_consistent\"}",
+        "reference": "image:2d2f2b0edf33071ffb37b677ceb175f3a0116d7493e27687a4eb5300069ed628",
+        "roi": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "meter_range": "dc_20v",
+        "reason": "待人工核对符号、小数点及量程；识别成功不代表已保存",
+        "status": "pending",
+        "confirmed_value": null,
+        "step_id": "measure",
+        "confirmation_method": ""
+      },
+      "seconds": 1.2910041430150159,
+      "auto_roi": false
+    }
+  ],
+  "data_directory": "/tmp/codex-lcd-reader-workflow-5f0w124a",
+  "production_experiment_records_modified": false,
+  "limits": "Stored development photos, workflow prerequisites simulated only in isolated DB; actual HTTP model calls, no model mocks, no physical experiment validation"
+}

@@ -1,0 +1,8 @@
+{"name":"异常分支 · 缺少万用表","events":[
+  {"kind":"action","data":{"kind":"read_sop"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"power","data":{"value":"off"}},
+  {"kind":"action","data":{"kind":"advance"}},
+  {"kind":"objects","data":{"objects":["sensor","breadboard","wires"]}},
+  {"kind":"action","data":{"kind":"advance"}}
+]}

@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "formal_records_modified": false,
+  "accuracy_benchmark": false,
+  "cases": [
+    {
+      "case": "retained_meter",
+      "seconds": 3.657,
+      "status": 200,
+      "result": {
+        "checks": {
+          "black_in_com": false,
+          "red_in_voltage": null,
+          "dc_voltage_mode": false
+        },
+        "meter_range": "dc_20v",
+        "inference_ms": 3494.2,
+        "roi": [
+          0.4367220425605774,
+          0.35633783221244814,
+          0.24704023718833928,
+          0.6436621677875518
+        ],
+        "backend": "qwen3-vl-cix-npu-vision-cpu-text-320",
+        "model_used": true,
+        "vision_ms": 494.665,
+        "total_ms": 3596.9
+      }
+    },
+    {
+      "case": "retained_occlusion",
+      "seconds": 3.61,
+      "status": 200,
+      "result": {
+        "checks": {
+          "black_in_com": null,
+          "red_in_voltage": false,
+          "dc_voltage_mode": null
+        },
+        "meter_range": "dc_200mv",
+        "inference_ms": 3484.1,
+        "roi": [
+          0.6084415340423583,
+          0.28738238573074343,
+          0.248883719444275,
+          0.6456639933586121
+        ],
+        "backend": "qwen3-vl-cix-npu-vision-cpu-text-320",
+        "model_used": true,
+        "vision_ms": 488.803,
+        "total_ms": 3585.3
+      }
+    },
+    {
+      "case": "no_instrument_does_not_run_vlm_or_invent_settings",
+      "status": 200,
+      "result": {
+        "checks": {
+          "black_in_com": null,
+          "red_in_voltage": null,
+          "dc_voltage_mode": null
+        },
+        "meter_range": null,
+        "roi": null,
+        "backend": "qwen3-vl-cix-npu-vision-cpu-text-320",
+        "model_used": false,
+        "hint": "请将一台万用表完整、清晰地放近镜头，避免遮挡旋钮和插孔。"
+      }
+    }
+  ]
+}

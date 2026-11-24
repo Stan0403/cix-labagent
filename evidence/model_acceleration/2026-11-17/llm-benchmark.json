@@ -1,0 +1,626 @@
+[
+  {
+    "variant": "llm_existing_cpu",
+    "requests": [
+      {
+        "case": "short",
+        "repeat": 0,
+        "seconds": 4.5899406170001384,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表拨至直流电压档，红表笔接正极，黑表笔接负极，然后用导线短接测试点，观察读数是否为0V。"
+        },
+        "usage": {
+          "completion_tokens": 42,
+          "prompt_tokens": 41,
+          "total_tokens": 83
+        },
+        "timings": {
+          "prompt_n": 41,
+          "prompt_ms": 1646.584,
+          "prompt_per_token_ms": 40.16058536585366,
+          "prompt_per_second": 24.90003546736759,
+          "predicted_n": 42,
+          "predicted_ms": 2919.925,
+          "predicted_per_token_ms": 69.52202380952382,
+          "predicted_per_second": 14.383931094120568
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 0,
+        "seconds": 23.171454913999696,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "prompt_n": 499,
+          "prompt_ms": 20639.145,
+          "prompt_per_token_ms": 41.361012024048094,
+          "prompt_per_second": 24.177358122150892,
+          "predicted_n": 34,
+          "predicted_ms": 2504.564,
+          "predicted_per_token_ms": 73.66364705882353,
+          "predicted_per_second": 13.575217083692014
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 0,
+        "seconds": 7.664521421000245,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "zdfwp7yswSK6GUUGDfwLi7pC0uoDV9cA"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "prompt_n": 163,
+          "prompt_ms": 6513.909,
+          "prompt_per_token_ms": 39.96263190184049,
+          "prompt_per_second": 25.02337690010714,
+          "predicted_n": 16,
+          "predicted_ms": 1085.403,
+          "predicted_per_token_ms": 67.8376875,
+          "predicted_per_second": 14.741068524778354
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "case": "short",
+        "repeat": 1,
+        "seconds": 4.562327415000254,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表拨至直流电压档，红表笔接正极，黑表笔接负极，然后用导线短接测试点，观察读数是否为0V。"
+        },
+        "usage": {
+          "completion_tokens": 42,
+          "prompt_tokens": 41,
+          "total_tokens": 83
+        },
+        "timings": {
+          "prompt_n": 41,
+          "prompt_ms": 1644.91,
+          "prompt_per_token_ms": 40.11975609756098,
+          "prompt_per_second": 24.925375856429834,
+          "predicted_n": 42,
+          "predicted_ms": 2894.34,
+          "predicted_per_token_ms": 68.91285714285715,
+          "predicted_per_second": 14.51108024627376
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 1,
+        "seconds": 23.20176509599969,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "prompt_n": 499,
+          "prompt_ms": 20629.879,
+          "prompt_per_token_ms": 41.34244288577155,
+          "prompt_per_second": 24.188217487848572,
+          "predicted_n": 34,
+          "predicted_ms": 2543.766,
+          "predicted_per_token_ms": 74.81664705882353,
+          "predicted_per_second": 13.366009294880111
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 1,
+        "seconds": 7.656080649000614,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": null,
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "L46StkIJhbMi2prHrlCL9IxNHFWjwGlh"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "prompt_n": 163,
+          "prompt_ms": 6518.472,
+          "prompt_per_token_ms": 39.99062576687116,
+          "prompt_per_second": 25.00586026909374,
+          "predicted_n": 16,
+          "predicted_ms": 1076.737,
+          "predicted_per_token_ms": 67.2960625,
+          "predicted_per_second": 14.859710402818886
+        },
+        "finish_reason": "tool_calls"
+      }
+    ],
+    "startup_seconds": 0,
+    "passed": true
+  },
+  {
+    "variant": "llm_optimized_cpu",
+    "requests": [
+      {
+        "case": "short",
+        "repeat": 0,
+        "seconds": 2.7140497259997574,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表红黑表笔分别接在已知直流电压源的正负极，调至直流电压档进行测量。"
+        },
+        "usage": {
+          "completion_tokens": 30,
+          "prompt_tokens": 41,
+          "total_tokens": 71
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 675.058,
+          "prompt_per_token_ms": 16.464829268292682,
+          "prompt_per_second": 60.7355219847776,
+          "predicted_n": 30,
+          "predicted_ms": 2023.368,
+          "predicted_per_token_ms": 67.4456,
+          "predicted_per_second": 14.826764088391238
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 0,
+        "seconds": 14.648473546999412,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 499,
+          "prompt_ms": 12137.467,
+          "prompt_per_token_ms": 24.32358116232465,
+          "prompt_per_second": 41.1123671850148,
+          "predicted_n": 34,
+          "predicted_ms": 2493.674,
+          "predicted_per_token_ms": 73.34335294117648,
+          "predicted_per_second": 13.634500740674202
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 0,
+        "seconds": 4.409471514999495,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "vHUAdSomjIZl8FsTKZHxq6GJFxEkshZA"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 163,
+          "prompt_ms": 3331.936,
+          "prompt_per_token_ms": 20.441325153374233,
+          "prompt_per_second": 48.920507476734244,
+          "predicted_n": 16,
+          "predicted_ms": 1054.201,
+          "predicted_per_token_ms": 65.8875625,
+          "predicted_per_second": 15.177371298262855
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "case": "short",
+        "repeat": 1,
+        "seconds": 2.696018021999407,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表红黑表笔分别接在已知直流电压源的正负极，调至直流电压档进行测量。"
+        },
+        "usage": {
+          "completion_tokens": 30,
+          "prompt_tokens": 41,
+          "total_tokens": 71
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 678.177,
+          "prompt_per_token_ms": 16.54090243902439,
+          "prompt_per_second": 60.45619358957912,
+          "predicted_n": 30,
+          "predicted_ms": 2000.795,
+          "predicted_per_token_ms": 66.69316666666667,
+          "predicted_per_second": 14.994039869152012
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 1,
+        "seconds": 14.65959258300063,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 499,
+          "prompt_ms": 12162.396,
+          "prompt_per_token_ms": 24.373539078156313,
+          "prompt_per_second": 41.02810005528516,
+          "predicted_n": 34,
+          "predicted_ms": 2477.125,
+          "predicted_per_token_ms": 72.85661764705883,
+          "predicted_per_second": 13.725589140636828
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 1,
+        "seconds": 4.3871874679998655,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "N737dVrBVwZ1f5DypqYc1YpgXf1Q4lrL"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 163,
+          "prompt_ms": 3304.558,
+          "prompt_per_token_ms": 20.273361963190183,
+          "prompt_per_second": 49.32580998729634,
+          "predicted_n": 16,
+          "predicted_ms": 1052.743,
+          "predicted_per_token_ms": 65.7964375,
+          "predicted_per_second": 15.198391250286159
+        },
+        "finish_reason": "tool_calls"
+      }
+    ],
+    "command": [
+      "taskset",
+      "-c",
+      "0,1,6,7,8,9,10,11",
+      "/home/radxa/llama.cpp/build-codex-vulkan/bin/llama-server",
+      "--model",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+      "--alias",
+      "qwen3-4b-local",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "18081",
+      "--ctx-size",
+      "8192",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "8",
+      "--parallel",
+      "1",
+      "--jinja",
+      "--chat-template-kwargs",
+      "{\"enable_thinking\":false}",
+      "--temp",
+      "0",
+      "--device",
+      "none",
+      "--n-gpu-layers",
+      "0",
+      "--no-kv-offload"
+    ],
+    "startup_seconds": 3.0262156569997387,
+    "passed": true
+  },
+  {
+    "variant": "llm_vulkan",
+    "requests": [
+      {
+        "case": "short",
+        "repeat": 0,
+        "seconds": 12.465153527000439,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表拨至直流电压档，红表笔接正极，黑表笔接负极，然后用导线短接测试点，观察表盘是否归零。"
+        },
+        "usage": {
+          "completion_tokens": 41,
+          "prompt_tokens": 41,
+          "total_tokens": 82
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 9043.648,
+          "prompt_per_token_ms": 220.57678048780485,
+          "prompt_per_second": 4.533568754555684,
+          "predicted_n": 41,
+          "predicted_ms": 3398.387,
+          "predicted_per_token_ms": 82.88748780487805,
+          "predicted_per_second": 12.064547092488288
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 0,
+        "seconds": 104.76908004599954,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 499,
+          "prompt_ms": 101545.416,
+          "prompt_per_token_ms": 203.49782765531063,
+          "prompt_per_second": 4.9140573711372655,
+          "predicted_n": 34,
+          "predicted_ms": 3200.821,
+          "predicted_per_token_ms": 94.14179411764705,
+          "predicted_per_second": 10.622274722641473
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 0,
+        "seconds": 49.16000920700026,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "CWKxdj5KLeJJFsdbIYav7tnfU6zoWd8v"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 163,
+          "prompt_ms": 47824.85,
+          "prompt_per_token_ms": 293.4039877300613,
+          "prompt_per_second": 3.408269968436911,
+          "predicted_n": 16,
+          "predicted_ms": 1283.268,
+          "predicted_per_token_ms": 80.20425,
+          "predicted_per_second": 12.468167210590462
+        },
+        "finish_reason": "tool_calls"
+      },
+      {
+        "case": "short",
+        "repeat": 1,
+        "seconds": 11.84774830600054,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "将万用表拨至直流电压档，红表笔接正极，黑表笔接负极，然后用导线短接测试点，观察表盘是否归零。"
+        },
+        "usage": {
+          "completion_tokens": 41,
+          "prompt_tokens": 41,
+          "total_tokens": 82
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 41,
+          "prompt_ms": 8411.71,
+          "prompt_per_token_ms": 205.16365853658533,
+          "prompt_per_second": 4.874157573192609,
+          "predicted_n": 41,
+          "predicted_ms": 3394.781,
+          "predicted_per_token_ms": 82.79953658536586,
+          "predicted_per_second": 12.077362280512352
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "manual",
+        "repeat": 1,
+        "seconds": 104.59354293200067,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "读不清万用表显示时，应重新调整角度、光照和ROI（感兴趣区域），仍无法判断则人工核对或暂停请求教师介入。"
+        },
+        "usage": {
+          "completion_tokens": 34,
+          "prompt_tokens": 499,
+          "total_tokens": 533
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 499,
+          "prompt_ms": 101336.338,
+          "prompt_per_token_ms": 203.07883366733466,
+          "prompt_per_second": 4.924196096369695,
+          "predicted_n": 34,
+          "predicted_ms": 3221.788,
+          "predicted_per_token_ms": 94.7584705882353,
+          "predicted_per_second": 10.553146265365692
+        },
+        "finish_reason": "stop"
+      },
+      {
+        "case": "tool",
+        "repeat": 1,
+        "seconds": 48.88606740999967,
+        "passed": true,
+        "message": {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_status",
+                "arguments": "{}"
+              },
+              "id": "wUjg1WYwdd6E6nsO0sReV7hyV1Q34Pfn"
+            }
+          ]
+        },
+        "usage": {
+          "completion_tokens": 16,
+          "prompt_tokens": 163,
+          "total_tokens": 179
+        },
+        "timings": {
+          "cache_n": 0,
+          "prompt_n": 163,
+          "prompt_ms": 47546.706,
+          "prompt_per_token_ms": 291.6975828220859,
+          "prompt_per_second": 3.4282080445278376,
+          "predicted_n": 16,
+          "predicted_ms": 1277.447,
+          "predicted_per_token_ms": 79.8404375,
+          "predicted_per_second": 12.524981466941487
+        },
+        "finish_reason": "tool_calls"
+      }
+    ],
+    "command": [
+      "taskset",
+      "-c",
+      "0,1,6,7,8,9,10,11",
+      "/home/radxa/llama.cpp/build-codex-vulkan/bin/llama-server",
+      "--model",
+      "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+      "--alias",
+      "qwen3-4b-local",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "18081",
+      "--ctx-size",
+      "8192",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "8",
+      "--parallel",
+      "1",
+      "--jinja",
+      "--chat-template-kwargs",
+      "{\"enable_thinking\":false}",
+      "--temp",
+      "0",
+      "--device",
+      "Vulkan0",
+      "--n-gpu-layers",
+      "99"
+    ],
+    "startup_seconds": 4.012766742999702,
+    "passed": true
+  }
+]

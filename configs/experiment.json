@@ -1,0 +1,20 @@
+{
+  "id": "analog-voltage-v1",
+  "title": "低压模拟传感器电压实验",
+  "warning": "仅限教师审核的低压直流实验；本系统不能替代断电测量、人工接线复核或保护装置。",
+  "voltage_min": 0.0,
+  "voltage_max": 3.3,
+  "required_objects": ["sensor", "multimeter", "breadboard", "wires"],
+  "object_labels": {"sensor": "模拟传感器", "multimeter": "万用表", "breadboard": "面包板", "wires": "连接线"},
+  "steps": [
+    {"id": "read_sop", "title": "阅读实验说明", "instruction": "确认具体传感器型号、供电电压、引脚和允许测量范围后，阅读并确认 SOP。", "gate": "sop"},
+    {"id": "power_off", "title": "确认断电", "instruction": "人工断开实验电路电源并确认。摄像头不能证明已经断电。", "gate": "off"},
+    {"id": "equipment", "title": "检查实验器材", "instruction": "准备传感器、万用表、面包板和连接线；尚未训练识别模型时使用人工核对。", "gate": "equipment"},
+    {"id": "connect", "title": "断电连接传感器", "instruction": "按已审核的传感器手册接线；不能假定任何模块引脚顺序通用。", "gate": "connected"},
+    {"id": "wiring", "title": "人工复核接线", "instruction": "复核供电极性、引脚、量程和万用表直流电压档。视觉识别不等于电气验证。", "gate": "wiring"},
+    {"id": "power_on", "title": "人工接通低压电源", "instruction": "只有前述检查通过后才人工上电；软件不直接驱动电源或继电器。", "gate": "on"},
+    {"id": "measure", "title": "读取传感器输出", "instruction": "采集万用表读数；OCR 必须选显示屏 ROI，低置信度读数需人工重读确认。", "gate": "measurement"},
+    {"id": "save", "title": "保存本次测量", "instruction": "核对数值、单位和来源后保存；重测保留历史记录。", "gate": "saved"},
+    {"id": "report", "title": "生成实验报告", "instruction": "报告包含测量来源、操作日志及人工确认限制；回放数据永不标为真实测量。", "gate": "report"}
+  ]
+}
