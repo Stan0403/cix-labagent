@@ -4,7 +4,15 @@
 
 系统用规则与 SQLite 事务控制实验步骤，模型提出计划、识别建议和工具调用。当前默认电池实验为阅读、器材、仪表、连接并读表、保存、报告六步；负数/负零/零值不计为正向电池的正式样本。读表保留独立采集编号、至少 1 秒间隔、同量程及 0.02 V 稳定性检查。具体规则以源代码和测试为准。
 
-**GitHub 发布**：运行 [deploy/publish_github.ps1](deploy/publish_github.ps1) 后输出真实仓库 URL；本交付不预填不存在的链接。发布不需要 Codex 插件。仓库默认私有；需要公开时明确使用 `-Visibility public`。
+**GitHub 仓库**：[Stan0403/cix-labagent](https://github.com/Stan0403/cix-labagent)，私有仓库，通过 Git 与 GitHub CLI 发布，无需 Codex 插件。[发布附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)包含源码包、PDF 和 OCR 模型包。
+
+```bash
+gh repo clone Stan0403/cix-labagent
+cd cix-labagent
+python quickstart.py
+```
+
+私有仓库需要先通过 `gh auth login` 登录获授权的 GitHub 账号。后续发布工具见 [deploy/publish_github.ps1](deploy/publish_github.ps1)。
 
 ## 一键启动
 

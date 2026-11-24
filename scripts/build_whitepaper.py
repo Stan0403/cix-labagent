@@ -126,7 +126,7 @@ table(['交付内容', '本稿范围'], [
  ['关键限制', '当前桌面缺 YOLO 等部分板端工件；OCR 开发图参与训练；没有独立全场景准确率。'],
 ], [122, 368])
 add('证据截止：2026-11-24。硬件性能来自既有 O6 板端记录；本次另在电脑运行 344 项软件回归。未将历史性能重新描述为本次新测，也未在本次操作中改变正式板端服务。', 'small')
-add('参考平台：Radxa Orion O6 / CIX P1，32 GB，ARM64 Linux。源码入口：根目录 README 与 docs/CURRENT_STATE.md。GitHub 地址由发布脚本在创建成功后输出；本稿不编造未创建的仓库链接。', 'small')
+add('参考平台：Radxa Orion O6 / CIX P1，32 GB，ARM64 Linux。源码入口：根目录 README 与 docs/CURRENT_STATE.md。GitHub 私有仓库：https://github.com/Stan0403/cix-labagent 。通过 Git 与官方 CLI 发布，无需插件。', 'small')
 
 page(2, '系统设计与可信执行边界', '模型提供建议；程序保存可追溯的实验事实。')
 story.append(Architecture())

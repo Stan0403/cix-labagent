@@ -30,7 +30,7 @@ if (@(& git remote) -contains 'origin') {
 if ($LASTEXITCODE -ne 0) { throw 'git add failed' }
 & git diff --cached --quiet
 if ($LASTEXITCODE -eq 1) {
-    & git commit -m 'Deliver CIX LabAgent source, reproducible deployment and technical whitepaper'
+    & git commit --quiet -m 'Deliver CIX LabAgent source, reproducible deployment and technical whitepaper'
     if ($LASTEXITCODE -ne 0) { throw 'git commit failed' }
 }
 & gh repo create $Name "--$Visibility" --source . --remote origin --push
