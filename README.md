@@ -104,7 +104,7 @@ python -m compileall -q labagent deploy quickstart.py
 python scripts/summarize_evidence.py
 ```
 
-2026-11-24 当前本地源码已有 **344 项通过，0 失败、0 错误、0 跳过**；回执在 `evidence/delivery/`。不继承系统包的全新 Python 3.12.7 环境也完成344项回归，依赖检查和一键安装/启动均通过，网页及健康接口返回200。Linux/O6全新安装、Docker构建和整机重启尚未实测。测试包含 HTTP/模型 fixture；硬件性能来自另附板端记录。GitHub Actions 只运行软件回归，不提供 O6 硬件保证。
+2026-11-24 当前本地源码已有 **344 项通过，0 失败、0 错误、0 跳过**；回执在 `evidence/delivery/`。不继承系统包的全新 Python 3.12.7 环境也完成344项回归，依赖检查和一键安装/启动均通过，网页及健康接口返回200。[GitHub Ubuntu / Python 3.11 回归](https://github.com/Stan0403/cix-labagent/actions/runs/45421123635)也已通过。O6硬件全新安装、Docker构建和整机重启尚未实测。测试包含 HTTP/模型 fixture；硬件性能来自另附板端记录。GitHub Actions 运行软件回归，不提供 O6 硬件保证。
 
 ## 目录
 

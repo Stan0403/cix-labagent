@@ -30,7 +30,7 @@
       "path": "README.md",
       "sha256": "6a0c39faf757fdd78239872667163a2ba0d0b049d228ae7bb38a68036c8b4124",
       "bytes": 6988,
-      "delivered_git_sha256": "cca78663c7c662256412d2a46726d7d1de797670461e835ec1ebf95ef452133b"
+      "delivered_git_sha256": "ae1f13e5bc5e47098aa64a4a916c25192b39d5bb4f4ed2b56f5dd456a034b9c8"
     },
     {
       "source": "LabAgent-demo/pyproject.toml",

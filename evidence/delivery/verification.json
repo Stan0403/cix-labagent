@@ -52,5 +52,12 @@
   ],
   "github_repository": "https://github.com/Stan0403/cix-labagent",
   "github_visibility": "private",
-  "github_ci": "pending"
+  "github_ci": {
+    "status": "completed",
+    "conclusion": "success",
+    "platform": "Ubuntu, Python 3.11",
+    "run_url": "https://github.com/Stan0403/cix-labagent/actions/runs/45421123635",
+    "tested_commit": "a419401e5da7281d3bde93b3578df36638129dd4",
+    "note": "Subsequent changes are documentation, publication links and evidence metadata only."
+  }
 }
