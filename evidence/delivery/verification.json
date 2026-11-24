@@ -32,7 +32,7 @@
   "pdf_pages": 11,
   "o6_hardware_deploy": "not run",
   "docker_build": "not run",
-  "github_published": false,
+  "github_published": true,
   "secret_scan": {
     "known_token_private_key_patterns": 0
   },
@@ -49,5 +49,8 @@
     "README.md",
     ".env.example",
     ".gitignore"
-  ]
+  ],
+  "github_repository": "https://github.com/Stan0403/cix-labagent",
+  "github_visibility": "private",
+  "github_ci": "pending"
 }
