@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-25",
+  "read_only_board_export": true,
+  "board_files": 10,
+  "board_file_bytes": 119466957,
+  "pre_post_board_and_local_sha256_match": true,
+  "actual_packaged_files_installed_and_verified": 9,
+  "fetch_safety_tests": {
+    "passed": 4
+  },
+  "ocr_existing_asset_byte_identical_to_board": true,
+  "production_services_or_experiment_records_modified": false
+}

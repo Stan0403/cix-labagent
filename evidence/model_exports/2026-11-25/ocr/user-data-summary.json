@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-22",
+  "run": "lcd-v3-user81",
+  "new_camera_images": 81,
+  "new_camera_batches": 1,
+  "new_camera_distinct_strings": 51,
+  "new_camera_negative_images": 34,
+  "camera_training_total": 129,
+  "synthetic_train": 4000,
+  "synthetic_validation_count": 400,
+  "warm_start": "lcd-v2/best.pt, selected step 2800",
+  "training_steps": 1200,
+  "selected_step": 1200,
+  "training_seconds": 325.5093082999956,
+  "new_camera_training_fit": {
+    "baseline": {
+      "correct": 66,
+      "count": 81,
+      "usage": "training fit only; not independent accuracy"
+    },
+    "trained": {
+      "correct": 81,
+      "count": 81,
+      "usage": "training fit only; not independent accuracy"
+    }
+  },
+  "synthetic_validation": {
+    "before": 0.83,
+    "after": 0.8525
+  },
+  "legacy_camera_numeric_diagnostic": {
+    "before": 2,
+    "after": 3,
+    "count": 4,
+    "records": [
+      {
+        "path": "real/candidate-002.png",
+        "truth": "1.34",
+        "prediction": "1.34",
+        "correct": true
+      },
+      {
+        "path": "real/candidate-005.png",
+        "truth": "1.353",
+        "prediction": "1.353",
+        "correct": true
+      },
+      {
+        "path": "real/candidate-006.png",
+        "truth": ".419",
+        "prediction": "41.9",
+        "correct": false
+      },
+      {
+        "path": "real/candidate-010.png",
+        "truth": "-0.00",
+        "prediction": "-0.00",
+        "correct": true
+      }
+    ]
+  },
+  "legacy_blank_diagnostic": {
+    "correct": 4,
+    "count": 4
+  },
+  "export_parity": {
+    "passed": true,
+    "checks": [
+      {
+        "path": "real/candidate-002.png",
+        "max_abs_error": 7.748603820800781e-07,
+        "prediction": "1.34"
+      },
+      {
+        "path": "real/candidate-005.png",
+        "max_abs_error": 8.344650268554688e-07,
+        "prediction": "1.353"
+      },
+      {
+        "path": "real/candidate-006.png",
+        "max_abs_error": 5.841255187988281e-06,
+        "prediction": "41.9"
+      },
+      {
+        "path": "real/candidate-010.png",
+        "max_abs_error": 2.682209014892578e-06,
+        "prediction": "-0.00"
+      }
+    ],
+    "sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35"
+  },
+  "npu_compiled": false,
+  "production_route_changed": true,
+  "calibration_images": 193,
+  "raw_captures_changed": false,
+  "limits": [
+    "All 81 new images entered training; none is an independent test image",
+    "New batch uses one fixed camera pose and two decimal places",
+    "Legacy four-digit diagnostics were inspected during development, not an untouched test set",
+    "Previous LCD locator failed on 81 dim images; manual offline crops were used for annotation; deployed adaptive locator verified on all 81",
+    ".419 is still decoded as 41.9 by raw OCR; production pixel checks reject direct acceptance and use VLM fallback; raw recognizer is not sufficient alone"
+  ],
+  "annotation_correction": {
+    "crop": "data/real/candidate-006.png",
+    "old_label": "4.19",
+    "corrected_label": ".419",
+    "basis": "magnified source pixels show a decimal before the first digit 4, not after 4",
+    "used_for_training": false,
+    "training_weights_affected": false,
+    "diagnostic_counts_changed": false,
+    "historical_reports": "preserved; corrected diagnostic reports are saved alongside each run"
+  },
+  "production_deployment": {
+    "date": "2026-11-22",
+    "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+    "NPU_used": false,
+    "fallback": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+    "checks": {
+      "local_regression_passed": 89,
+      "formal_adapter_checks_passed": 14,
+      "isolated_web_workflow_checks_passed": 3
+    },
+    "evidence": "../../production-reader/",
+    "guard": "pixel punctuation check; reject OCR/VLM digit disagreements; existing range/freshness/stability checks retained"
+  }
+}

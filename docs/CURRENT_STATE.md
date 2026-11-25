@@ -1,5 +1,9 @@
 # 当前交付状态 - 2026-11-24
 
+## 2026-11-25 模型补充
+
+已从 O6 只读导出并双向核验当前 YOLO NPU `.cix`、编译中间产物、验证记录、OCR `.onnx` 和字典。YOLO 与 OCR 现通过同仓库 Release 分发，入口为 `python deploy/fetch_models.py`；完整说明见 [MODEL_ARTIFACTS.md](MODEL_ARTIFACTS.md)。OCR 与先前已上传的附件一致，复用原附件并记录本次板端核验。完整 VLM/LLM/ASR 和厂商运行时仍单独准备。以下内容保留为 11 月 24 日历史交付说明。
+
 当前源码以本地 `LabAgent-demo` 为准，未用历史板端清单覆盖后来修改。`SOURCE_SNAPSHOT.json` 记录每个原始文件摘要及 6 个后续差异。当前仪表交互以单帧快照采用逻辑为准；某些旧项目上下文仍描述早前持续检查方案，应以代码和 `LIVE_METER.md` 为准。
 
 正式 LLM 在 CPU；器材 YOLO 和 ASR 网络在 NPU；仪表 VLM 是 NPU 视觉编码/CPU文本；OCR v3 在 CPU，复杂场景走 CPU VLM。GPU 路线经过实测但未采用。BGE 语义检索和完整 Qwen3 NPU 生成未完成。

@@ -1,0 +1,72 @@
+{
+  "correction": {
+    "crop": "data/real/candidate-006.png",
+    "old_label": "4.19",
+    "corrected_label": ".419",
+    "basis": "magnified source pixels show a decimal before the first digit 4, not after 4",
+    "used_for_training": false,
+    "training_weights_affected": false,
+    "diagnostic_counts_changed": false,
+    "historical_reports": "preserved; corrected diagnostic reports are saved alongside each run"
+  },
+  "baseline": {
+    "count": 4,
+    "exact_correct": 2,
+    "records": [
+      {
+        "path": "real/candidate-002.png",
+        "truth": "1.34",
+        "prediction": "1.34",
+        "correct": true
+      },
+      {
+        "path": "real/candidate-005.png",
+        "truth": "1.353",
+        "prediction": "1.3.53",
+        "correct": false
+      },
+      {
+        "path": "real/candidate-006.png",
+        "truth": ".419",
+        "prediction": "41.9",
+        "correct": false
+      },
+      {
+        "path": "real/candidate-010.png",
+        "truth": "-0.00",
+        "prediction": "-0.00",
+        "correct": true
+      }
+    ]
+  },
+  "trained": {
+    "count": 4,
+    "exact_correct": 3,
+    "records": [
+      {
+        "path": "real/candidate-002.png",
+        "truth": "1.34",
+        "prediction": "1.34",
+        "correct": true
+      },
+      {
+        "path": "real/candidate-005.png",
+        "truth": "1.353",
+        "prediction": "1.353",
+        "correct": true
+      },
+      {
+        "path": "real/candidate-006.png",
+        "truth": ".419",
+        "prediction": "41.9",
+        "correct": false
+      },
+      {
+        "path": "real/candidate-010.png",
+        "truth": "-0.00",
+        "prediction": "-0.00",
+        "correct": true
+      }
+    ]
+  }
+}

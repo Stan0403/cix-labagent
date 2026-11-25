@@ -1,0 +1,78 @@
+{
+  "repository": "Stan0403/cix-labagent",
+  "release_tag": "v0.1.0-delivery",
+  "board_verified_date": "2026-11-25",
+  "evidence": "evidence/model_exports/2026-11-25/board-model-manifest.json",
+  "read_only_board_export": true,
+  "assets": [
+    {
+      "model": "yolo",
+      "name": "yolo26n-o6-npu.zip",
+      "bytes": 4620927,
+      "sha256": "cc8fda82f7a9386c71224f295862308cec55c15cd19c2d8cd67fabe85e5484e2",
+      "files": [
+        {
+          "path": "models/equipment-yolo26-v1/README.md",
+          "bytes": 3634,
+          "sha256": "5dbd52448939d9e3dacb446af1c9d8e2754ea4a330bbf22ff27f146192282920"
+        },
+        {
+          "path": "models/equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32.aipu.bin",
+          "bytes": 3909196,
+          "sha256": "40e470555d58d6602bd4b668c86f06585f57da1a5435208497b46b20659b8016"
+        },
+        {
+          "path": "models/equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32_packed.cix",
+          "bytes": 3909392,
+          "sha256": "a4dd692a0eb944d2379ca98f3539f3a8a770560ddf91940b570c22cb0a01760d"
+        },
+        {
+          "path": "models/equipment-yolo26-v1/http-smoke.json",
+          "bytes": 5059,
+          "sha256": "0fdf45636b0d7189aa9cb68fe322142cac57c2565e2d961ad48511afa7a9a46f"
+        },
+        {
+          "path": "models/equipment-yolo26-v1/npu-validation.json",
+          "bytes": 34022,
+          "sha256": "ea1ce94885453dc984e10eea9ee5df21849dbe00003c7e46d9e0d271641f478e"
+        },
+        {
+          "path": "models/equipment-yolo26-v1/classes.json",
+          "bytes": 70,
+          "sha256": "73d9b3f902a947d0e3d8ac70497b5cf5ed1352a2302dc04f3b36fd3d770cbd1f",
+          "derived_from": "The current board YOLO /health classes array, preserving exact class order"
+        }
+      ],
+      "source": "Fresh read-only export of the current O6 NPU detector and its available metadata"
+    },
+    {
+      "model": "ocr",
+      "name": "lcd-reader-v3.zip",
+      "bytes": 99313004,
+      "sha256": "5ff0e9c5c59725b7576b21c61c8dedf919c70db80e81b026152d139c964b13dd",
+      "files": [
+        {
+          "path": "models/lcd-v3/rec-lcd.onnx",
+          "bytes": 111573230,
+          "sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35"
+        },
+        {
+          "path": "models/lcd-v3/ppocr_keys_v1.txt",
+          "bytes": 26249,
+          "sha256": "28b2362ad4ab2dc38769aa72feb535e3a9ddb3fd2a7585a05920e6393b1dc7f7"
+        },
+        {
+          "path": "models/lcd-v3/MODEL-LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ],
+      "source": "Current O6 weight and dictionary freshly exported and confirmed identical to the existing Release attachment"
+    }
+  ],
+  "limits": [
+    "YOLO package includes the deployed CIX NPU graph and compiler intermediate; original FP32 ONNX/PT is not present in that model directory.",
+    "No training photographs, experiment database, password, runtime credential, or driver is included.",
+    "This covers YOLO and LCD OCR only; VLM/LLM/ASR artifacts and vendor runtime remain separate."
+  ]
+}

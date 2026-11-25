@@ -1,5 +1,7 @@
 # 复现环境与 O6 部署
 
+2026-11-25 补充：当前 YOLO 与 OCR 模型已从源板导出并上传同仓库 Release。先运行 `python deploy/fetch_models.py` 下载、安装及校验，详见 [MODEL_ARTIFACTS.md](MODEL_ARTIFACTS.md)。下文“当前桌面缺 YOLO”的描述属于原交付时点；完整模型包仍需另外准备 LLM/VLM/ASR。
+
 ## 普通电脑
 
 Python 3.11/3.12 + Git。运行 `python quickstart.py`，访问 `http://127.0.0.1:8001`。基础包精确版本见根目录锁文件。默认规则/人工流程，不需要模型。`quickstart.py` 不复制虚拟环境、不改全局 Python、不覆盖已有 `.env`。

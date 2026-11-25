@@ -1,5 +1,5 @@
 {
-  "revision_date": "2026-11-24",
+  "revision_date": "2026-11-25",
   "models": [
     {
       "path": "qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
@@ -31,24 +31,24 @@
     },
     {
       "path": "equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32_packed.cix",
-      "sha256": null,
-      "source": "Existing board artifact; not present in this desktop snapshot",
+      "sha256": "a4dd692a0eb944d2379ca98f3539f3a8a770560ddf91940b570c22cb0a01760d",
+      "source": "https://github.com/Stan0403/cix-labagent/releases/download/v0.1.0-delivery/yolo26n-o6-npu.zip",
       "role": "NPU equipment detector",
-      "distribution": "self-trained artifact required"
+      "distribution": "GitHub Release asset; verified against current source-board files on 2026-11-25"
     },
     {
       "path": "lcd-v3/rec-lcd.onnx",
       "sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
-      "source": "Separate lcd-reader-v3.zip deliverable",
+      "source": "https://github.com/Stan0403/cix-labagent/releases/download/v0.1.0-delivery/lcd-reader-v3.zip",
       "role": "CPU LCD OCR",
-      "distribution": "self-trained release asset"
+      "distribution": "GitHub Release asset; verified against current source-board files on 2026-11-25"
     },
     {
       "path": "lcd-v3/ppocr_keys_v1.txt",
-      "sha256": null,
-      "source": "research/ocr_training/assets/ppocr_keys_v1.txt",
+      "sha256": "28b2362ad4ab2dc38769aa72feb535e3a9ddb3fd2a7585a05920e6393b1dc7f7",
+      "source": "https://github.com/Stan0403/cix-labagent/releases/download/v0.1.0-delivery/lcd-reader-v3.zip",
       "role": "OCR dictionary",
-      "distribution": "included text artifact"
+      "distribution": "GitHub Release asset; verified against current source-board files on 2026-11-25"
     },
     {
       "path": "sensevoice-cix/sense_voice_mask256.cix",

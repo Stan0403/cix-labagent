@@ -14,6 +14,8 @@ python quickstart.py
 
 私有仓库需要先通过 `gh auth login` 登录获授权的 GitHub 账号。后续发布工具见 [deploy/publish_github.ps1](deploy/publish_github.ps1)。
 
+**2026-11-25 模型补齐**：已从 O6 导出并核验正式 YOLO NPU `.cix` 和 OCR `.onnx`。详见 [模型工件与下载](docs/MODEL_ARTIFACTS.md)。在当前仓库运行 `python deploy/fetch_models.py` 可从同仓库 Release 下载两种模型并逐文件校验。
+
 ## 一键启动
 
 环境：Windows/Linux/macOS、Python 3.11 或 3.12、可访问 Python 包源；浏览器支持相机 API。首次安装后续启动复用隔离环境。
@@ -78,8 +80,8 @@ docker compose up -d --build
 - [requirements.lock.txt](requirements.lock.txt)：便携 Web 的精确包版本；Python、操作系统及轮子架构仍需匹配。锁文件不等于逐字节容器镜像锁。
 - [requirements-dev.lock.txt](requirements-dev.lock.txt)：本次回归环境的测试/CPU视觉版本。现有代码在 NumPy 1.26.4 上实测；不要同时安装声明为 NumPy 2 的旧 `.[vision]` extra。
 - [deploy/model_manifest.json](deploy/model_manifest.json)：模型角色、来源和已核验 SHA-256。没有证据的摘要标为 null，完整 O6 部署必须再提供 `ARTIFACT_LOCK.json`。
-- 微调 OCR v3 权重提供为单独的 `lcd-reader-v3.zip`，解压至仓库根目录即可得到 `models/lcd-v3/`；权重超过 GitHub 普通 Git 文件大小范围，作为 Release 附件分发。
-- **当前电脑缺少自训练 YOLO `.cix`、完整 VLM/GGUF 和 ASR 工件**。从现有 O6 导出才能完整复现；不能用通用 COCO 模型代替实验四类模型。导出命令和路径调整见部署文档。
+- YOLO NPU 权重和微调 OCR v3 已作为本仓库 Release 附件分发。`python deploy/fetch_models.py` 自动下载并验证；单独核验用 `--verify-only`。来源与包摘要见 [deploy/board_model_artifacts.json](deploy/board_model_artifacts.json)。
+- **完整 VLM/GGUF 和 ASR 工件仍需另行准备**。不能用通用 COCO 模型代替实验四类 YOLO；本次未在板端该模型目录找到原始 FP32 ONNX/训练 PT。完整部署所需工件和路径调整见部署文档。
 - CIX 厂商 wheel、驱动及大权重不提交 Git。训练脚本、C++ 视觉桥、构建脚本与第三方声明已收录；真实训练照片不随源码分发，第三轮相同数据重训需原采集批次。
 
 ## 真实性能记录
@@ -90,7 +92,7 @@ docker compose up -d --build
 | Vulkan 同三类请求 | 12.156 / 104.681 / 49.023 秒 | 实际卸载，较慢，未进入正式路径 |
 | OCR 定位+识别 | 中位 0.294 秒，P90 0.520 秒 | 81 张参与过训练的照片；78 快读、3 回退；库调用，不含网页/HTTP，非独立准确率 |
 | 仪表 NPU 视觉+CPU文本 | 3.657 / 3.610 秒 | 两张留存照片的全链路；非现场准确率或逐帧速率 |
-| YOLO | 25.85 ms 纯 NPU，69.37 ms 含前后处理 | 25 张验证图片的历史部署文档记录；原始逐图文件不在当前桌面快照，证据级别见白皮书 |
+| YOLO | 25.85 ms 纯 NPU，69.37 ms 含前后处理 | 25 张同场景验证图；11月25日已补入板端原始 [npu-validation.json](evidence/model_exports/2026-11-25/yolo/npu-validation.json)，不代表独立泛化性能 |
 
 原始 JSON 位于 [evidence](evidence/)，汇总可用 `python scripts/summarize_evidence.py` 重算。完整数据条件、失败路线和优化经验见 [PDF 技术白皮书](docs/CIX-LabAgent-Technical-Whitepaper.pdf)。不以训练拟合、回放 fixture、服务健康或单算子提速声称独立准确率或整模型加速。
 
