@@ -4,15 +4,15 @@
 
 系统用规则与 SQLite 事务控制实验步骤，模型提出计划、识别建议和工具调用。当前默认电池实验为阅读、器材、仪表、连接并读表、保存、报告六步；负数/负零/零值不计为正向电池的正式样本。读表保留独立采集编号、至少 1 秒间隔、同量程及 0.02 V 稳定性检查。具体规则以源代码和测试为准。
 
-**GitHub 仓库**：[Stan0403/cix-labagent](https://github.com/Stan0403/cix-labagent)，私有仓库，通过 Git 与 GitHub CLI 发布，无需 Codex 插件。[发布附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)包含源码包、PDF 和 OCR 模型包。
+**GitHub 仓库**：[Stan0403/cix-labagent](https://github.com/Stan0403/cix-labagent)，已由所有者于 2026-11-25 公开，通过 Git 与 GitHub CLI 发布，无需 Codex 插件。[发布附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)包含源码包、PDF、YOLO 和 OCR 模型包。
 
 ```bash
-gh repo clone Stan0403/cix-labagent
+git clone https://github.com/Stan0403/cix-labagent.git
 cd cix-labagent
 python quickstart.py
 ```
 
-私有仓库需要先通过 `gh auth login` 登录获授权的 GitHub 账号。后续发布工具见 [deploy/publish_github.ps1](deploy/publish_github.ps1)。
+浏览、克隆源码及通过浏览器下载 Release 附件均无需 GitHub 登录。模型自动下载脚本使用 GitHub CLI；如不使用 CLI，可直接下载两个 ZIP 后按 [离线安装说明](docs/MODEL_ARTIFACTS.md) 校验安装。后续发布工具见 [deploy/publish_github.ps1](deploy/publish_github.ps1)。
 
 **2026-11-25 模型补齐**：已从 O6 导出并核验正式 YOLO NPU `.cix` 和 OCR `.onnx`。详见 [模型工件与下载](docs/MODEL_ARTIFACTS.md)。在当前仓库运行 `python deploy/fetch_models.py` 可从同仓库 Release 下载两种模型并逐文件校验。
 

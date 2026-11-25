@@ -1,5 +1,7 @@
 # 无插件发布 GitHub
 
+当前 `Stan0403/cix-labagent` 已由所有者于 2026-11-25 改为公开。浏览、克隆和直接下载 Release 附件无需登录。以下 CLI 登录和默认私有参数用于有写入权限的发布者创建或推送仓库，不是访问当前公开仓库的前提。
+
 GitHub CLI 官方文档：https://cli.github.com/manual/gh_repo_create 。本流程不使用 Codex 插件，也不要求把个人令牌贴进聊天。
 
 先安装 Git 和 GitHub CLI，运行 `gh auth login --hostname github.com --web`，在 GitHub 官方网页完成登录授权。检查 `gh auth status`。

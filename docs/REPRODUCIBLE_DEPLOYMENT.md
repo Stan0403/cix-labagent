@@ -36,7 +36,7 @@ python3 deploy/export_models.py --models /path/to/prepared/models --output cix-l
 python3 deploy/verify_models.py
 ```
 
-当前桌面未保存 YOLO 和完整 ASR/VLM 工件，因此本交付不能凭空生成其下载地址或摘要。随附 `lcd-reader-v3.zip` 含可用 OCR 权重；完整模型包需在源板导出。模型包应作为有权限的 Release/私有存储附件，遵循原模型许可。
+YOLO 和 OCR 已补齐并通过本仓库公开 Release 分发，入口见 MODEL_ARTIFACTS.md。完整 ASR/VLM 等其余工件仍需准备或从源板导出；各模型遵循原模型许可。
 
 ## 2. 创建独立 Python 环境
 

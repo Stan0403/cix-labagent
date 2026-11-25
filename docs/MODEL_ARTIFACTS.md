@@ -2,7 +2,7 @@
 
 2026-11-25 已从正在运行的 O6 只读导出 YOLO 和液晶 OCR。10 个源文件合计 119,466,957 字节，下载前后板端摘要与本地逐文件 SHA-256 全部相同。未重启服务、替换权重或写入实验记录。
 
-同一私有仓库的 [Release 模型附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)：
+同一公开仓库的 [Release 模型附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)，可直接通过浏览器下载，无需 GitHub 登录：
 
 | 模型包 | 内容 | 当前执行位置 |
 | --- | --- | --- |
@@ -13,7 +13,7 @@
 
 ## 一键下载并校验
 
-仓库为私有，需要 GitHub CLI 登录有权限的账号。克隆当前 `main` 分支后，在仓库根目录运行：
+使用 GitHub CLI 自动下载：先按 CLI 提示完成登录，再在当前 `main` 分支的仓库根目录运行。此登录属于 CLI 下载方式，公开附件也可直接在上表下载。
 
 ```bash
 gh auth login
@@ -29,6 +29,15 @@ python deploy/fetch_models.py --models ocr
 ```
 
 使用非默认 gh 路径可传 `--gh /path/to/gh`。下载 ZIP 的 SHA-256 和安装后的每个文件均按 [工件目录](../deploy/board_model_artifacts.json) 校验；不同摘要的已有权重会阻止覆盖，需先自行备份或使用新的 `--destination` 目录。已经手动下载两个 ZIP 时，可用 `--archive-dir /path/to/zip-directory` 离线安装。
+
+无需 GitHub CLI 或账号的方式：在上表下载两个 ZIP，放到同一目录，然后运行：
+
+```bash
+python deploy/fetch_models.py --archive-dir /path/to/zip-directory
+python deploy/fetch_models.py --verify-only
+```
+
+以上离线安装和校验只需 Python 3.11+，不会调用 GitHub CLI。
 
 安装后：
 
