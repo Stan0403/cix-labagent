@@ -65,7 +65,8 @@ def aggregate(rows):
 
 
 def benchmark(root, scene=None, repeats=2):
-    result = {'date': '2026-11-27', 'serial_client': True, 'model_services_already_loaded': True,
+    result = {'date': time.strftime('%Y-%m-%d'), 'sampled_at': time.strftime('%Y-%m-%dT%H:%M:%S%z'),
+              'serial_client': True, 'model_services_already_loaded': True,
               'experiment_session_api_called': False, 'accuracy_benchmark': False,
               'llm': {}, 'ocr_fast_only': {}, 'limits': [
                   'Small latency samples, not an independent accuracy or P95 study.',
