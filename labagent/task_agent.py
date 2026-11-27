@@ -9,6 +9,7 @@ from uuid import uuid4
 
 from .battery_polarity import latest_issue
 from .completion_notice import notice_for
+from .equipment_checks import missing_in_equipment_observation
 from .models import Action, DomainError, now
 from .providers import ProviderError, json_content
 from .step_checks import rule_for
@@ -74,7 +75,7 @@ class TaskAgent:
                 model_used INTEGER NOT NULL, result TEXT NOT NULL DEFAULT '{}',
                 UNIQUE(session_id,request_id));""")
 
-    def record_preview(self, session_id, result):
+    def record_preview(self, session_id, result, revision=None):
         # Latest observations live in bounded memory, not one DB write per video frame.
         present = result.get("present", {})
         signature = json.dumps(present, sort_keys=True, ensure_ascii=False)
@@ -83,21 +84,25 @@ class TaskAgent:
             old = self._preview.get(session_id, {})
             if len(self._preview) >= 100 and session_id not in self._preview:
                 self._preview.pop(next(iter(self._preview)))
+            continuous = (old.get("signature") == signature and old.get("revision") == revision
+                          and instant - old.get("last", 0) <= 5)
+            since = old["since"] if continuous else instant
             self._preview[session_id] = {
                 "present": present,
                 "at": now(),
                 "backend": result.get("backend", ""),
                 "signature": signature,
-                "since": old.get("since", instant) if old.get("signature") == signature else instant,
+                "since": since, "last": instant, "revision": revision,
+                "stable": continuous and instant - since >= 0.7,
             }
+            return self._preview[session_id]["stable"]
 
     def preview(self, session_id):
         with self._guard:
             value = dict(self._preview.get(session_id, {}))
         if not value or timestamp_age(value["at"]) > 5:
             return None
-        return {k: v for k, v in value.items() if k not in {"signature", "since"}} | {
-            "stable": time.monotonic() - value["since"] >= 0.7,
+        return {k: v for k, v in value.items() if k not in {"signature", "since", "last"}} | {
             "confirmed": False,
         }
 
@@ -148,6 +153,7 @@ class TaskAgent:
             "model_used": bool(valid and row["model_used"]),
             "status": row["status"] if valid else "ready",
             "decision_id": row["id"] if valid else None,
+            "ticket_valid": bool(valid and 0 <= timestamp_age(row.get("created_at")) < self.settings.agent_ticket_seconds),
         }
 
     def available(self, state):
@@ -172,7 +178,7 @@ class TaskAgent:
             and not prior_blockers(self.engine, state)
         ):
             allowed["read_display"] = {}
-            if latest_issue(state):
+            if latest_issue(state) or state.mode == "live":
                 return {"read_display": {}}
         if gate == "save":
             allowed["save_measurement"] = {}
@@ -198,6 +204,27 @@ class TaskAgent:
             return False
         latest = self.preview(state.id)
         return not latest or all(latest["present"].get(key) is True for key in required)
+
+    def _equipment_continuation(self, state, latest):
+        """Finish the second frame of a model-authorized equipment inspection."""
+        proof = state.facts.get("equipment_stability")
+        if (
+            step(state)["gate"] != "equipment"
+            or not latest
+            or latest["tool"] != "inspect_equipment"
+            or latest["status"] != "completed"
+            or latest["step_id"] != step(state)["id"]
+            or latest["revision"] + 1 != state.revision
+            or not proof
+            or not isinstance(proof.value, dict)
+            or proof.value.get("step_id") != step(state)["id"]
+            or proof.value.get("count") != 1
+            or proof.value.get("automatic") is not True
+            or not 0 <= timestamp_age(proof.at) <= min(self.settings.evidence_ttl_seconds, 90)
+            or not self._equipment_seen(state)
+        ):
+            return None
+        return json.loads(latest["arguments"])
 
     def _context(self, state, available):
         current = step(state)
@@ -394,6 +421,13 @@ class TaskAgent:
             raise DomainError("实验状态已变化，请刷新后重新决策", 409)
         if notice_for(state):
             raise DomainError("正在展示收尾提示，稍后自动继续；无需模型检查或人工确认", 409)
+        returned = False
+        if missing_in_equipment_observation(state):
+            preview = self.preview(session_id)
+            returned = bool(preview and preview["revision"] == revision and preview["stable"]
+                            and all(preview["present"].get(k) is True for k in state.plan["required_objects"]))
+            if not returned:
+                raise DomainError("正在等待缺少的器材入镜，尚未发起决策。", 409)
         with self.store.connect() as db:
             cached = db.execute(
                 "SELECT * FROM agent_runs WHERE session_id=? AND request_id=?", (session_id, request_id)
@@ -415,6 +449,7 @@ class TaskAgent:
         try:
             performance = None
             available = self.available(state)
+            click_reading = state.mode == "live" and "read_display" in available
             context = self._context(state, available)
             stable = context["latest_preview"]
             fingerprint = hashlib.sha256(
@@ -431,12 +466,13 @@ class TaskAgent:
                 latest
                 and latest["tool"] == "ask_user"
                 and latest["status"] == "completed"
-                and latest["fingerprint"] == fingerprint
+                and latest["fingerprint"] == fingerprint and not returned and not click_reading
             ):
                 return self.public(latest)
             if (
                 latest
                 and latest["status"] == "proposed"
+                and latest["tool"] in available
                 and latest["revision"] == revision
                 and timestamp_age(latest["created_at"]) < self.settings.agent_ticket_seconds
             ):
@@ -453,8 +489,20 @@ class TaskAgent:
                 attempts += 1
             model_used = (
                 attempts < self.settings.agent_max_actions or "advance" in available or "report" in available
+                or click_reading
             )
-            if model_used:
+            continuation = self._equipment_continuation(state, latest)
+            if returned and "inspect_equipment" in available:
+                name, args, reason = "inspect_equipment", {"mode": "fast"}, "预览中器材已齐，开始两帧正式核验。"
+                model_used = False
+            elif continuation and "inspect_equipment" in available:
+                name, args, reason = (
+                    "inspect_equipment",
+                    continuation,
+                    "首帧器材齐全，继续本次检查的第二帧核验。",
+                )
+                model_used = False
+            elif model_used:
                 messages, options = self._decision_request(state, available, context)
                 message = self.gateway.chat(messages, **options)
                 name, args, reason = self._choice(message, available)
@@ -554,6 +602,30 @@ class TaskAgent:
                     equipment_mode=args.get("mode", "fast"),
                     **({"capture_id":capture_id} if capture_id else {}),
                 )
+                if name == "inspect_equipment" and result.get("equipment_verified") is True:
+                    # The engine checks the real evidence before continuing.
+                    expected = result.get("session", {}).get("revision")
+                    if expected == row["revision"] + 1:
+                        try:
+                            _, advanced = self.store.mutate(
+                                session_id,
+                                "agent.equipment_verified",
+                                {"decision_id": decision_id},
+                                lambda current: self.engine.apply(
+                                    current, Action(kind="advance", automatic=True)
+                                ),
+                                expected,
+                            )
+                            result = {
+                                **result,
+                                "advanced": advanced.get("accepted", False),
+                                "message": result["message"] + advanced.get("message", ""),
+                            }
+                        except DomainError as exc:
+                            if exc.status != 409:
+                                raise
+                            result = {**result, "advanced": False,
+                                      "message": "器材核对通过，实验状态已变化，请按当前步骤继续。"}
                 result = {k: v for k, v in result.items() if k != "session"}
             elif name == "search_manual":
                 sources = [state.plan["source_name"]] if state.plan.get("source_name") else None

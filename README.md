@@ -1,10 +1,12 @@
-# CIX LabAgent - 本地多模态实验助手
+# LabAgent：O6 本地实验助手
 
-代码快照：2026-11-24。正式应用源自 `LabAgent-demo`，包含当前本地改动；逐文件来源见 [SOURCE_SNAPSHOT.json](SOURCE_SNAPSHOT.json)。旧版保留在 `legacy/LabAgent/`。本包不包含正式实验数据库、原始拍摄批次、密钥或虚拟环境；保留3张必要的LCD诊断裁剪测试图。
+当前应用代码取自 **2026-11-27 的 O6 板端运行目录**，已同步队友对器材检查、仪表检查、按键读数和 Agent 调度的更新。应用实现保持板端原样；发布时仅修正了一个未随30秒推理超时更新的测试断言。源码清单与差异见 [SOURCE_SNAPSHOT.json](SOURCE_SNAPSHOT.json) 和 [同步记录](evidence/board_refresh/2026-11-27/sync-summary.json)。
 
-系统用规则与 SQLite 事务控制实验步骤，模型提出计划、识别建议和工具调用。当前默认电池实验为阅读、器材、仪表、连接并读表、保存、报告六步；负数/负零/零值不计为正向电池的正式样本。读表保留独立采集编号、至少 1 秒间隔、同量程及 0.02 V 稳定性检查。具体规则以源代码和测试为准。
+[公开仓库](https://github.com/Stan0403/cix-labagent) · [新版技术白皮书](docs/CIX-LabAgent-Technical-Whitepaper.pdf) · [本次源码和白皮书发布包](https://github.com/Stan0403/cix-labagent/releases/tag/board-2026-11-27) · [YOLO / OCR 模型下载](docs/MODEL_ARTIFACTS.md)
 
-**GitHub 仓库**：[Stan0403/cix-labagent](https://github.com/Stan0403/cix-labagent)，已由所有者于 2026-11-25 公开，通过 Git 与 GitHub CLI 发布，无需 Codex 插件。[发布附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)包含源码包、PDF、YOLO 和 OCR 模型包。
+## 一键运行
+
+普通电脑需要 Python 3.11/3.12、Git 和可用的 Python 包源。首次运行会创建独立 `.venv` 并安装锁定依赖。
 
 ```bash
 git clone https://github.com/Stan0403/cix-labagent.git
@@ -12,132 +14,90 @@ cd cix-labagent
 python quickstart.py
 ```
 
-浏览、克隆源码及通过浏览器下载 Release 附件均无需 GitHub 登录。模型自动下载脚本使用 GitHub CLI；如不使用 CLI，可直接下载两个 ZIP 后按 [离线安装说明](docs/MODEL_ARTIFACTS.md) 校验安装。后续发布工具见 [deploy/publish_github.ps1](deploy/publish_github.ps1)。
+Linux/macOS 使用 `python3 quickstart.py`。打开 **http://127.0.0.1:8001**，Ctrl+C 停止；端口冲突可加 `--port 18001`。已有 `.env` 不会被覆盖。
 
-**2026-11-25 模型补齐**：已从 O6 导出并核验正式 YOLO NPU `.cix` 和 OCR `.onnx`。详见 [模型工件与下载](docs/MODEL_ARTIFACTS.md)。在当前仓库运行 `python deploy/fetch_models.py` 可从同仓库 Release 下载两种模型并逐文件校验。
+新电脑默认使用规则和人工输入，可以创建实验、记录读数和导出报告。自动识别、语言规划及语音需要接入真实模型服务，未配置时不生成模拟结果。模型不随普通 Git 提交分发。
 
-## 一键启动
+## 当前交互
 
-环境：Windows/Linux/macOS、Python 3.11 或 3.12、可访问 Python 包源；浏览器支持相机 API。首次安装后续启动复用隔离环境。
+1. 导入要求或实验手册，核对计划后开始实验。
+2. 器材预览使用 YOLO。缺少器材时等待画面变化；齐全后进行两次正式独立观察，第二帧和通过后的推进由规则完成。
+3. 仪表设置从同一张照片分别放大旋钮和插孔，使用 NPU 视觉编码和 CPU 短文本判断。首次自动检查，未通过后按页面提示重试。
+4. 测量阶段点击“已接好，开始读数”，经过5秒准备倒计时后定位 LCD 并识别单帧。快速采集不调用慢 VLM 回退；数值按计划范围、量程和时效条件记录，保留实际正负号。零值、负值可记录并提示核对。
+5. 报告将该入口的数据标为“单帧显示屏识别”。旧双帧接口仍保留稳定性核验；单帧记录不等于双帧稳定性证明。
 
-```powershell
-python quickstart.py
-```
+SQLite 保存记录和审计。暂停、切换、刷新或删除后，旧会话版本的结果不能继续提交；删除需要明确确认。取景相机属于打开浏览器的设备，模型在 O6 上运行。
 
-Linux/macOS：
+## O6 部署与模型分工
 
-```bash
-python3 quickstart.py
-```
+参考板为 Radxa Orion O6 / CIX P1，32 GB，ARM64 Linux，内核6.6.89-3-sky1。当前进程、配置、模型摘要和依赖版本已保存在 [runtime.json](evidence/board_refresh/2026-11-27/runtime.json)。
 
-打开 **http://127.0.0.1:8001**，按 Ctrl+C 停止。脚本创建 `.venv`，安装锁定版本，不改写已有 `.env`。端口冲突可用 `python quickstart.py --port 18001`。只安装用 `--install-only`。
+| 模块 | 当前执行位置 | 接口 |
+| --- | --- | --- |
+| Web、流程、TF-IDF、SQLite与报告 | CPU | 8001 |
+| Qwen3-4B Q4_K_M 规划/对话/工具 | CPU，8个大核线程、KleidiAI | 8081 |
+| YOLO26n INT8 四类器材 | CIX NPU，CPU前后处理 | 8035 |
+| 微调PP-OCR液晶识别器 v3 | CPU ONNX Runtime，4线程 | 经8031 |
+| Qwen3-VL通用视觉 | CPU | 8032 |
+| 仪表旋钮与插孔核验 | NPU视觉编码 + CPU文本 | 8034 + Unix socket |
+| SenseVoiceSmall | NPU网络 + CPU音频前后处理 | 8011 |
 
-新机器默认使用规则与人工核验，可创建实验、人工录入真实读数、保存、恢复/删除会话和导出图文报告。它不会假装已加载大模型或 NPU；无人值守的自动 Agent 需要下面的模型服务。回放仅为软件演练，不能当作真实测量。
+应用环境为 Python3.11.2、NumPy2.4.6、ONNX Runtime1.31.1；ASR/NPU独立环境使用 NumPy1.26.4。便携电脑依赖锁见 `requirements.lock.txt`，测试环境见 `requirements-dev.lock.txt`。不能将 Windows 虚拟环境复制到 ARM Linux。
 
-## Docker 一键部署
-
-需 Docker Engine/Desktop 与 Compose。设置访问令牌后执行；容器仅映射本机端口，数据使用命名卷。
-
-```powershell
-$env:LABAGENT_ACCESS_TOKEN = [guid]::NewGuid().ToString('N')
-Write-Output $env:LABAGENT_ACCESS_TOKEN
-docker compose up -d --build
-```
-
-```bash
-export LABAGENT_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')"
-printf '%s\n' "$LABAGENT_ACCESS_TOKEN"
-docker compose up -d --build
-```
-
-打开同一地址并按页面提示输入令牌。查看日志用 `docker compose logs -f web`；停止用 `docker compose down`，不删除数据卷。该容器是 CPU Web/规则版，未封装厂商 NPU 驱动。本次交付尚未实测容器构建。
-
-## O6 完整异构部署
-
-实际参考硬件为 **Radxa Orion O6 / CIX P1，32 GB，ARM64 Linux，内核 6.6.89-3-sky1**。NPU 需要与板卡镜像匹配的 `/dev/aipu`、libnoe/NOE_Engine；不能从普通 PyPI 环境推导其可用性。完整步骤见 [O6 部署与模型工件](docs/REPRODUCIBLE_DEPLOYMENT.md)。准备好权重、锁定工件和独立运行时后，一条命令安装并启动用户服务栈：
+YOLO 和 OCR 与既有发布权重的摘要一致。使用 GitHub CLI 下载并校验：
 
 ```bash
+python deploy/fetch_models.py
+python deploy/fetch_models.py --verify-only
+```
+
+公开附件可在浏览器直接下载；无 CLI 的离线安装方式见 [模型说明](docs/MODEL_ARTIFACTS.md)。完整异构服务还需准备 LLM/VLM/ASR 工件、配套厂商 wheel 和 `/dev/aipu`，详见 [部署文档](docs/REPRODUCIBLE_DEPLOYMENT.md)。准备完成后：
+
+```bash
+python deploy/build_runtime.py --kind both
 .venv/bin/python deploy/o6_stack.py --apply
 .venv/bin/python deploy/check_stack.py --wait 180
 ```
 
-安装器先检查所有工件摘要、运行时及端口，再生成 `cix-labagent-*` 服务。已有服务占用端口时直接报错；不会接管正在运行的原项目。`--render-only` 仅生成供审阅的配置，不代表硬件部署通过。
+安装器先检查工件和端口；新服务使用 `cix-labagent-*` 名称，已有服务占用端口时停止。本文不代表已在另一块全新 O6 上完成安装或重启验收。
 
-| 能力 | 当前实际执行位置 | 端口 |
-| --- | --- | --- |
-| Web、流程、TF-IDF 检索、SQLite、报告 | CPU | 8001 |
-| Qwen3-4B Q4_K_M 规划/对话/决策 | CPU，大核 + KleidiAI | 8081 |
-| YOLO26n INT8 四类器材 | CIX NPU，CPU 前后处理 | 8035 |
-| PP-OCR 液晶 v3 | **CPU ONNX Runtime**，不确定时回退 VLM | 经 8031 |
-| Qwen3-VL 通用视觉 | CPU | 8032 |
-| 仪表设置短回复 | NPU 视觉编码 + CPU 文本 | 8034 + Unix socket |
-| SenseVoiceSmall | NPU 网络 + CPU 音频前后处理 | 8011 |
+## 实测与验证
 
-8031 适配器按任务静态路由，返回真实 `backend`；`ocr_provider=mnn` 是历史协议名，不能用于判断硬件。当前仪表页以 `docs/LIVE_METER.md` 的**单帧拍照核验**实现为准，不能按早期持续检查文档描述为逐帧推理。完整 Qwen3 的 NPU 首层实验留在 `research/npu_llm/`，尚未接管正式语言生成。
+11月27日对常驻模型服务进行串行 HTTP 采样：
 
-## 模型工件与依赖
+| 请求 | 次数 | HTTP平均耗时 |
+| --- | ---: | ---: |
+| LLM简短中文 / 带说明问答 / 工具调用 | 各2次 | 1.694 / 3.919 / 4.337秒 |
+| YOLO完整场景图 | 预热1次、计时5次 | 0.089秒 |
+| OCR `.419` / `-0.00` / `1.353` 裁剪图 | 各3次 | 0.283 / 0.234 / 0.233秒 |
+| 旋钮与插孔完整核验 | 2次 | 11.003秒 |
 
-- [requirements.lock.txt](requirements.lock.txt)：便携 Web 的精确包版本；Python、操作系统及轮子架构仍需匹配。锁文件不等于逐字节容器镜像锁。
-- [requirements-dev.lock.txt](requirements-dev.lock.txt)：本次回归环境的测试/CPU视觉版本。现有代码在 NumPy 1.26.4 上实测；不要同时安装声明为 NumPy 2 的旧 `.[vision]` extra。
-- [deploy/model_manifest.json](deploy/model_manifest.json)：模型角色、来源和已核验 SHA-256。没有证据的摘要标为 null，完整 O6 部署必须再提供 `ARTIFACT_LOCK.json`。
-- YOLO NPU 权重和微调 OCR v3 已作为本仓库 Release 附件分发。`python deploy/fetch_models.py` 自动下载并验证；单独核验用 `--verify-only`。来源与包摘要见 [deploy/board_model_artifacts.json](deploy/board_model_artifacts.json)。
-- **完整 VLM/GGUF 和 ASR 工件仍需另行准备**。不能用通用 COCO 模型代替实验四类 YOLO；本次未在板端该模型目录找到原始 FP32 ONNX/训练 PT。完整部署所需工件和路径调整见部署文档。
-- CIX 厂商 wheel、驱动及大权重不提交 Git。训练脚本、C++ 视觉桥、构建脚本与第三方声明已收录；真实训练照片不随源码分发，第三轮相同数据重训需原采集批次。
+OCR `.419` 样例因小数点位置冲突被拒收。数据不包含取景、倒计时或数据库写入；同图重复和开发诊断图不是独立准确率评测。原始逐次响应、输入摘要及完整条件见 [model-benchmark.json](evidence/board_refresh/2026-11-27/model-benchmark.json)。
 
-## 真实性能记录
+在已有 O6 模型服务上复现采样：
 
-| 项目 | 实测结果 | 条件和解释 |
-| --- | --- | --- |
-| CPU LLM：短请求 / 带资料 / 工具 | 4.576→2.705 / 23.187→14.654 / 7.660→4.398 秒 | 2026-11-17，每类每配置 2 轮，HTTP 完整响应；固定提示、最大 96 token，非整套实验速度 |
-| Vulkan 同三类请求 | 12.156 / 104.681 / 49.023 秒 | 实际卸载，较慢，未进入正式路径 |
-| OCR 定位+识别 | 中位 0.294 秒，P90 0.520 秒 | 81 张参与过训练的照片；78 快读、3 回退；库调用，不含网页/HTTP，非独立准确率 |
-| 仪表 NPU 视觉+CPU文本 | 3.657 / 3.610 秒 | 两张留存照片的全链路；非现场准确率或逐帧速率 |
-| YOLO | 25.85 ms 纯 NPU，69.37 ms 含前后处理 | 25 张同场景验证图；11月25日已补入板端原始 [npu-validation.json](evidence/model_exports/2026-11-25/yolo/npu-validation.json)，不代表独立泛化性能 |
+```bash
+python scripts/benchmark_deployed_models.py --scene /path/to/equipment-photo.jpg --output data/benchmarks/o6.json
+```
 
-原始 JSON 位于 [evidence](evidence/)，汇总可用 `python scripts/summarize_evidence.py` 重算。完整数据条件、失败路线和优化经验见 [PDF 技术白皮书](docs/CIX-LabAgent-Technical-Whitepaper.pdf)。不以训练拟合、回放 fixture、服务健康或单算子提速声称独立准确率或整模型加速。
+该脚本只请求模型接口，不调用实验会话 API；原始照片不嵌入输出。不同照片、输出长度、缓存及并发条件会改变结果。
 
-## 测试与复现
+软件验证：本地350项通过；O6临时源码副本346项通过。原始板端7个失败来自旧的12秒超时测试断言，发布仓库按现行30秒实现修正后通过，原报告仍保留。模型 fixture 的通过数不表示模型准确率。运行测试：
 
 ```bash
 python -m pip install -r requirements-dev.lock.txt
 python -m pip install --no-deps --no-build-isolation -e .
 python -m pytest --junitxml=test-results.xml
-python -m compileall -q labagent deploy quickstart.py
-python scripts/summarize_evidence.py
 ```
 
-2026-11-24 当前本地源码已有 **344 项通过，0 失败、0 错误、0 跳过**；回执在 `evidence/delivery/`。不继承系统包的全新 Python 3.12.7 环境也完成344项回归，依赖检查和一键安装/启动均通过，网页及健康接口返回200。[GitHub Ubuntu / Python 3.11 回归](https://github.com/Stan0403/cix-labagent/actions/runs/45421123635)也已通过。O6硬件全新安装、Docker构建和整机重启尚未实测。测试包含 HTTP/模型 fixture；硬件性能来自另附板端记录。GitHub Actions 运行软件回归，不提供 O6 硬件保证。
+GitHub CI 入口：[软件回归](https://github.com/Stan0403/cix-labagent/actions/workflows/ci.yml)。
 
-## 目录
+## 仓库内容
 
-```text
-labagent/          当前正式应用、视觉/ASR适配、状态机和网页
-configs/           实验定义与默认电池计划
-knowledge/         示例实验手册
-fixtures/, tests/  软件演练与自动化回归
-scripts/           模型服务、采集、验证和工具
-deploy/            模型清单、校验/导出、可迁移服务与GitHub发布
-docs/              当前部署说明、技术白皮书、历史专项文档
-evidence/          真机性能原始JSON和本次交付回执
-research/          OCR训练、NPU首层实验、早期器材训练准备
-maintenance/       原板端维护/测速源代码（包含旧路径，使用前审阅）
-legacy/LabAgent/   原始版本，便于追溯，不是默认运行入口
-```
+`labagent/` 为当前应用；`configs/`、`knowledge/`、`fixtures/` 和 `tests/` 为计划、手册及验证材料；`scripts/` 提供模型服务和采样工具；`deploy/` 提供下载、校验及部署入口；`evidence/` 保留原始测量与回执。
 
-`docs/CURRENT_STATE.md` 和本 README 是当前状态入口；早期专项说明保留日期，其中的“当前”只指当时。维护脚本与 `scripts/board_runtime.py` 是历史部署工具，新的复现使用 `deploy/`。
+`legacy/`、`research/`、`maintenance/` 和较早专项文档保留历史版本。当前行为以代码、本文及 [CURRENT_STATE.md](docs/CURRENT_STATE.md) 为准；板端原README另存为 [BOARD_README.md](docs/BOARD_README.md)。
 
-## 发布到 GitHub（无需插件）
+默认仅本机访问。远程电脑可用 `ssh -N -L 18001:127.0.0.1:8001 user@board` 建立隧道，再访问 `http://127.0.0.1:18001`。相机图像不能证明断电、表笔电气接触或无短接。
 
-安装 [GitHub CLI](https://cli.github.com/)，执行 `gh auth login --hostname github.com --web` 完成官方浏览器授权。随后在本目录运行：
-
-```powershell
-.\deploy\publish_github.ps1 -Name cix-labagent
-```
-
-脚本初始化本目录 Git、创建一次提交、创建私有仓库并推送，成功后打印真实链接。等价命令和 Release 上传方式见 [发布说明](docs/GITHUB_PUBLISH.md)。不要把模型权重、数据库和 `.env` 加进普通 Git 提交。
-
-## 数据、许可与边界
-
-页面相机/麦克风取自打开浏览器的设备。真实记录在 `data/`，删除会话需要明确确认；共享图片不随会话批量清理。图像不能证明断电、表笔电气接触或无短接。默认仅本机访问，远程建议 SSH 转发；这不是多租户公网服务。
-
-原始项目未附统一开源许可证，本交付不替权利人授予新许可证。公开分发前确定自有代码授权；第三方与模型许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+原项目未提供统一开源许可证；第三方与模型许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。正式数据库、原始拍摄批次、密钥和虚拟环境不提交 Git。

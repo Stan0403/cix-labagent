@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-27",
+  "entrypoint": "python quickstart.py --port 18081",
+  "isolated_data": true,
+  "health_status": 200,
+  "page_status": 200,
+  "health": {
+    "status": "ok",
+    "version": "0.1.0",
+    "providers": {
+      "chat_provider": "rules",
+      "local_only": true,
+      "llm_configured": false,
+      "vision_provider": "disabled",
+      "ocr_provider": "disabled",
+      "vlm_configured": false,
+      "asr_configured": false,
+      "access_token_required": false,
+      "evidence_ttl_seconds": 300,
+      "meter_live_enabled": false,
+      "npu_status": "OCR 和语音服务运行状态请分别检查其 /health"
+    },
+    "knowledge_chunks": 5,
+    "capabilities": {
+      "agent_controller": "llm",
+      "goal_planning": true,
+      "document_planning": true,
+      "task_ui": "single-action-v2",
+      "equipment_verification": "independent-frames",
+      "experiment_report": "readable-eight-sections-v1",
+      "session_lifecycle": "exclusive-review-delete-v1",
+      "meter_live": "latest-frame-preview-commit-v1"
+    }
+  },
+  "passed": true
+}

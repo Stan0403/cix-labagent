@@ -1,0 +1,48 @@
+{
+  "new": [
+    "scripts/live_equipment_ui.patch",
+    "tests/test_reading_burst.py",
+    "tests/test_single_reading.py"
+  ],
+  "changed": [
+    "docs/LOCAL_OCR.md",
+    "labagent/agent.py",
+    "labagent/agent_api.py",
+    "labagent/battery_polarity.py",
+    "labagent/chat_context.py",
+    "labagent/demo_api.py",
+    "labagent/equipment_checks.py",
+    "labagent/interaction.py",
+    "labagent/lcd_reader.py",
+    "labagent/meter_live.py",
+    "labagent/meter_live_model.py",
+    "labagent/models.py",
+    "labagent/planning.py",
+    "labagent/plans.py",
+    "labagent/report_data.py",
+    "labagent/step_checks.py",
+    "labagent/task_agent.py",
+    "labagent/workflow.py",
+    "labagent/web/agent-runner.js",
+    "labagent/web/demo.js",
+    "labagent/web/equipment-live.js",
+    "labagent/web/meter-live.js",
+    "scripts/qwen3vl_gguf_service.py",
+    "tests/test_chat_input.py",
+    "tests/test_lcd_reader.py",
+    "tests/test_simplified_workflow.py"
+  ],
+  "removed": [
+    "tests/test_lcd_capture.py"
+  ],
+  "retained_repository_scaffolding": [
+    ".env.example",
+    ".gitattributes",
+    ".gitignore",
+    "README.md",
+    "environment-core-status.json"
+  ],
+  "source_snapshot_date": "2026-11-27",
+  "active_source_root": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+  "original_application_files_copied_without_behavior_edits": true
+}

@@ -68,17 +68,25 @@ async function runMeterLive(){
  S.meterBusy=true;S.meterController=control;S.meterStartedAt=Date.now();
  S.meterResult=null;clearMeterDetails();clearMeterSnapshot();
  S.meterMessage='正在拍摄本次照片';renderMeterLive();renderTaskStatus();
- const timeout=setTimeout(()=>control.abort(),30000);
+ const timeout=setTimeout(()=>control.abort(),45000);
  const current=()=>!control.signal.aborted&&epoch===(S.meterEpoch||0)&&meterLiveReady()&&S.session?.id===id;
  try{
   if(!S.media)await startCamera(true);
   if(!current())return;
-  const snapshot=await capture(),form=new FormData();
-  if(!current())return;
-  showMeterSnapshot(snapshot);form.append('file',snapshot,'meter-snapshot.jpg');
-  if(!current())return;
-  S.meterMessage='正在识别本次拍摄的照片；视频后续变化不影响这张照片';renderTaskStatus();
-  const result=await api(`/sessions/${id}/meter-live/preview`,{method:'POST',body:form,signal:control.signal});
+  const locateUntil=Date.now()+10000;
+  let result;
+  while(current()){
+   const snapshot=await capture(),form=new FormData();
+   if(!current())return;
+   showMeterSnapshot(snapshot);form.append('file',snapshot,'meter-snapshot.jpg');
+   S.meterMessage='正在定位万用表并检查本次照片，请保持整台仪表入镜…';renderTaskStatus();
+   result=await api(`/sessions/${id}/meter-live/preview`,{method:'POST',body:form,signal:control.signal});
+   const locating=result.model_used===false&&['meter_not_localized','meter_detail_too_small'].includes(result.diagnostic?.reason);
+   if(!current()||!locating||Date.now()>=locateUntil)break;
+   S.meterMessage='继续定位中，请保持万用表完整入镜，稍候…';renderTaskStatus();
+   await waitForReading(800,control.signal);
+  }
+  if(!result)return;
   if(!current()){discardMeterProof(result.preview_id,id);return;}
   S.meterResult=result.check;S.meterResultAt=result.captured_at;S.meterDetailViews=result.detail_views;renderMeterDetails();
   const at=new Date(result.captured_at).toLocaleTimeString();

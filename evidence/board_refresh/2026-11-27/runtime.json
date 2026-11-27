@@ -1,0 +1,546 @@
+{
+  "date": "2026-11-27",
+  "read_only_capture": true,
+  "active_source_root": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+  "roots": {
+    "active": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+    "legacy": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent"
+  },
+  "kernel": "6.6.89-3-sky1",
+  "architecture": "aarch64",
+  "mem_total": "MemTotal:       32435004 kB",
+  "services": {
+    "labagent-demo-asr.service": {
+      "MainPID": "1741",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-asr.service",
+      "DropInPaths": "",
+      "argv": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-asr/bin/python",
+        "-m",
+        "labagent.speech_service"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_LOCAL_ASR_PORT": "8011"
+      }
+    },
+    "labagent-demo-equipment-vlm.service": {
+      "MainPID": "6729",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-equipment-vlm.service",
+      "DropInPaths": "",
+      "argv": [
+        "/home/radxa/llama.cpp-codex-npu/build/bin/llama-server",
+        "--model",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+        "--mmproj",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+        "--alias",
+        "qwen3-vl-4b-local",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8034",
+        "--ctx-size",
+        "4096",
+        "--threads",
+        "8",
+        "--threads-batch",
+        "8",
+        "--parallel",
+        "1",
+        "--jinja",
+        "--temp",
+        "0",
+        "--n-predict",
+        "512",
+        "--device",
+        "none",
+        "--n-gpu-layers",
+        "0",
+        "--no-kv-offload",
+        "--no-op-offload",
+        "--no-mmproj-offload",
+        "--image-min-tokens",
+        "100",
+        "--image-max-tokens",
+        "100"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_NPU_VISION_SOCKET": "/run/user/1000/labagent-npu-vision.sock"
+      }
+    },
+    "labagent-demo-llm.service": {
+      "MainPID": "1742",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-llm.service",
+      "DropInPaths": "/home/radxa/.config/systemd/user/labagent-demo-llm.service.d/model-acceleration.conf",
+      "argv": [
+        "/home/radxa/llama.cpp/build-codex-vulkan/bin/llama-server",
+        "--model",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+        "--alias",
+        "qwen3-4b-local",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8081",
+        "--ctx-size",
+        "8192",
+        "--threads",
+        "8",
+        "--threads-batch",
+        "8",
+        "--parallel",
+        "1",
+        "--n-predict",
+        "1536",
+        "--threads-http",
+        "2",
+        "--metrics",
+        "--jinja",
+        "--chat-template-kwargs",
+        "{\"enable_thinking\":false}",
+        "--temp",
+        "0.7",
+        "--top-p",
+        "0.8",
+        "--top-k",
+        "20",
+        "--min-p",
+        "0",
+        "--device",
+        "none",
+        "--n-gpu-layers",
+        "0",
+        "--no-kv-offload",
+        "--no-op-offload"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_LLM_PORT": "8081",
+        "LABAGENT_ACCEL_BACKEND": "cpu"
+      }
+    },
+    "labagent-demo-npu-vision.service": {
+      "MainPID": "6717",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-npu-vision.service",
+      "DropInPaths": "",
+      "argv": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-ocr/bin/python",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/cix_npu_vision_worker.py"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {}
+    },
+    "labagent-demo-vlm.service": {
+      "MainPID": "34797",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-vlm.service",
+      "DropInPaths": "/home/radxa/.config/systemd/user/labagent-demo-vlm.service.d/30-lcd-reader.conf /home/radxa/.config/systemd/user/labagent-demo-vlm.service.d/40-live-meter.conf /home/radxa/.config/systemd/user/labagent-demo-vlm.service.d/qwen3vl4b.conf /home/radxa/.config/systemd/user/labagent-demo-vlm.service.d/yolo-equipment.conf",
+      "argv": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.venv-app/bin/python",
+        "-m",
+        "uvicorn",
+        "scripts.qwen3vl_gguf_service:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8031"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_LCD_OCR_MODEL": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/data/ocr-training/20261122-user81/rec-lcd.onnx",
+        "LABAGENT_LCD_OCR_DICT": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/data/ocr-training/20261122-user81/ppocr_keys_v1.txt",
+        "LABAGENT_LCD_OCR_SHA256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
+        "LABAGENT_LCD_OCR_THREADS": "4",
+        "LABAGENT_METER_VLM_SERVER": "http://127.0.0.1:8034",
+        "LABAGENT_EQUIPMENT_YOLO_SERVER": "http://127.0.0.1:8035",
+        "LABAGENT_EQUIPMENT_VLM_SERVER": ""
+      }
+    },
+    "labagent-demo-web.service": {
+      "MainPID": "34799",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-web.service",
+      "DropInPaths": "/home/radxa/.config/systemd/user/labagent-demo-web.service.d/40-live-meter.conf",
+      "argv": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.venv-app/bin/python",
+        "-m",
+        "labagent"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_METER_LIVE_ENABLED": "true"
+      }
+    },
+    "labagent-demo-yolo.service": {
+      "MainPID": "1744",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-demo-yolo.service",
+      "DropInPaths": "",
+      "argv": [
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-ocr/bin/python",
+        "-m",
+        "uvicorn",
+        "scripts.yolo_equipment_service:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8035",
+        "--workers",
+        "1"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo",
+      "environment": {
+        "LABAGENT_YOLO_BACKEND": "cix",
+        "LABAGENT_YOLO_SIZE": "960",
+        "LABAGENT_YOLO_CONFIDENCE": "0.35",
+        "LABAGENT_YOLO_MODEL": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32_packed.cix"
+      }
+    },
+    "labagent-qwen3vl4b.service": {
+      "MainPID": "1745",
+      "WorkingDirectory": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent",
+      "ActiveState": "active",
+      "FragmentPath": "/home/radxa/.config/systemd/user/labagent-qwen3vl4b.service",
+      "DropInPaths": "",
+      "argv": [
+        "/home/radxa/llama.cpp/build/bin/llama-server",
+        "--model",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+        "--mmproj",
+        "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+        "--alias",
+        "qwen3-vl-4b-local",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8032",
+        "--ctx-size",
+        "4096",
+        "--threads",
+        "8",
+        "--threads-batch",
+        "8",
+        "--parallel",
+        "1",
+        "--n-gpu-layers",
+        "0",
+        "--no-mmproj-offload",
+        "--jinja",
+        "--temp",
+        "0",
+        "--n-predict",
+        "512"
+      ],
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "cwd": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent",
+      "environment": {}
+    }
+  },
+  "project_environment": {
+    "LABAGENT_HOST": "127.0.0.1",
+    "LABAGENT_PORT": "8001",
+    "LABAGENT_LOCAL_ONLY": "true",
+    "LABAGENT_EVIDENCE_TTL_SECONDS": "900",
+    "LABAGENT_HTTP_TIMEOUT": "240",
+    "LABAGENT_CHAT_PROVIDER": "api",
+    "LABAGENT_LLM_BASE_URL": "http://127.0.0.1:8081/v1",
+    "LABAGENT_LLM_MODEL": "qwen3-4b-local",
+    "LABAGENT_ASR_BASE_URL": "http://127.0.0.1:8011/v1",
+    "LABAGENT_ASR_MODEL": "sensevoice-small-cix",
+    "LABAGENT_OCR_PROVIDER": "mnn",
+    "LABAGENT_OCR_BASE_URL": "http://127.0.0.1:8031",
+    "LABAGENT_VISION_PROVIDER": "disabled"
+  },
+  "health": {
+    "8001": {
+      "http_status": 200,
+      "body": {
+        "status": "ok",
+        "version": "0.1.0",
+        "providers": {
+          "chat_provider": "api",
+          "local_only": true,
+          "llm_configured": true,
+          "vision_provider": "disabled",
+          "ocr_provider": "mnn",
+          "vlm_configured": false,
+          "asr_configured": true,
+          "evidence_ttl_seconds": 900,
+          "meter_live_enabled": true,
+          "npu_status": "OCR 和语音服务运行状态请分别检查其 /health"
+        },
+        "knowledge_chunks": 23,
+        "capabilities": {
+          "agent_controller": "llm",
+          "goal_planning": true,
+          "document_planning": true,
+          "task_ui": "single-action-v2",
+          "equipment_verification": "independent-frames",
+          "experiment_report": "readable-eight-sections-v1",
+          "session_lifecycle": "exclusive-review-delete-v1",
+          "meter_live": "latest-frame-preview-commit-v1"
+        }
+      }
+    },
+    "8081": {
+      "http_status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "8011": {
+      "http_status": 200,
+      "body": {
+        "status": "ok",
+        "model": "sensevoice-small-cix",
+        "backend": "CIX NPU / libnoe",
+        "error": ""
+      }
+    },
+    "8031": {
+      "http_status": 200,
+      "body": {
+        "ready": true,
+        "busy": false,
+        "backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu; equipment=yolo26n-cix-npu",
+        "default_backend": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "equipment_backend": "yolo26n-cix-npu",
+        "equipment_ready": true,
+        "reading_backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+        "reading_ready": true,
+        "reading_model_sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35",
+        "reading_error": "",
+        "reading_fallback": "qwen3-vl-4b-q4_k_m-llamacpp-cpu",
+        "meter_live_configured": true,
+        "meter_live_backend": "qwen3-vl-cix-npu-vision-cpu-text-320-closeup-v1",
+        "meter_live_detail_mode": "separate-dial-terminals-v1"
+      }
+    },
+    "8032": {
+      "http_status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "8034": {
+      "http_status": 200,
+      "body": {
+        "status": "ok"
+      }
+    },
+    "8035": {
+      "http_status": 200,
+      "body": {
+        "ready": true,
+        "backend": "yolo26n-cix-npu",
+        "input_size": 960,
+        "classes": [
+          "multimeter",
+          "battery",
+          "red_probe",
+          "black_probe"
+        ],
+        "requests": 9588
+      }
+    }
+  },
+  "python_environments": {
+    "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.venv-app/bin/python": {
+      "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+      "executable": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.venv-app/bin/python",
+      "packages": {
+        "fastapi": "0.162.0",
+        "uvicorn": "0.54.0",
+        "httpx": "0.28.1",
+        "pydantic": "2.14.1",
+        "python-dotenv": "1.2.4",
+        "python-multipart": "0.0.32",
+        "pillow": "12.3.0",
+        "pypdf": "6.21.4",
+        "numpy": "2.4.6",
+        "onnxruntime": "1.31.1",
+        "opencv-python-headless": "4.11.0.86",
+        "pytest": "9.2.0"
+      }
+    },
+    "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-asr/bin/python": {
+      "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+      "executable": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-asr/bin/python",
+      "packages": {
+        "fastapi": "0.162.0",
+        "uvicorn": "0.54.0",
+        "httpx": "0.28.1",
+        "pydantic": "2.14.1",
+        "python-dotenv": "1.2.4",
+        "python-multipart": "0.0.32",
+        "pillow": "12.3.0",
+        "numpy": "1.26.4",
+        "NOE_Engine": "2.0.0",
+        "libnoe": "2.0.0"
+      }
+    },
+    "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-ocr/bin/python": {
+      "python": "3.11.2 (main, Oct  7 2026, 12:35:07) [GCC 12.2.0]",
+      "executable": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.venv-ocr/bin/python",
+      "packages": {
+        "fastapi": "0.162.0",
+        "uvicorn": "0.54.0",
+        "pydantic": "2.14.2",
+        "python-multipart": "0.0.32",
+        "pillow": "13.0.0",
+        "numpy": "1.26.4",
+        "opencv-python-headless": "4.11.0.86",
+        "NOE_Engine": "2.0.0",
+        "libnoe": "2.0.0"
+      }
+    }
+  },
+  "model_artifacts": [
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/data/ocr-training/20261122-user81/ppocr_keys_v1.txt",
+      "bytes": 26249,
+      "sha256": "28b2362ad4ab2dc38769aa72feb535e3a9ddb3fd2a7585a05920e6393b1dc7f7"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/data/ocr-training/20261122-user81/rec-lcd.onnx",
+      "bytes": 111573230,
+      "sha256": "ec0b3f0b6090c41720d1bcccc940103fffce74b6db5d1aa044229d40e8655d35"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/equipment-yolo26-v1/equipment_yolo26n_960_heads_int8_bias32_packed.cix",
+      "bytes": 3909392,
+      "sha256": "a4dd692a0eb944d2379ca98f3539f3a8a770560ddf91940b570c22cb0a01760d"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
+      "bytes": 2497280256,
+      "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/Qwen3VL-4B-Instruct-Q4_K_M.gguf",
+      "bytes": 2497281664,
+      "sha256": "66358cb18bb6b3b1b6675aa412c7a88ef01d228f481184d13668e5201c730a0a"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-gguf/mmproj-Qwen3VL-4B-Instruct-F16.gguf",
+      "bytes": 836180256,
+      "sha256": "256f3a43bd4205ffef48d6b92715e1e70b5b0e9aef06522584967513a9985331"
+    }
+  ]
+}

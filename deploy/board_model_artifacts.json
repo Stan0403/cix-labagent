@@ -1,8 +1,8 @@
 {
   "repository": "Stan0403/cix-labagent",
   "release_tag": "v0.1.0-delivery",
-  "board_verified_date": "2026-11-25",
-  "evidence": "evidence/model_exports/2026-11-25/board-model-manifest.json",
+  "board_verified_date": "2026-11-27",
+  "evidence": "evidence/board_refresh/2026-11-27/runtime.json",
   "read_only_board_export": true,
   "assets": [
     {
@@ -74,5 +74,6 @@
     "YOLO package includes the deployed CIX NPU graph and compiler intermediate; original FP32 ONNX/PT is not present in that model directory.",
     "No training photographs, experiment database, password, runtime credential, or driver is included.",
     "This covers YOLO and LCD OCR only; VLM/LLM/ASR artifacts and vendor runtime remain separate."
-  ]
+  ],
+  "source_export_evidence": "evidence/model_exports/2026-11-25/board-model-manifest.json"
 }

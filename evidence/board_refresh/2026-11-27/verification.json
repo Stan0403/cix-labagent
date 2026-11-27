@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-27",
+  "source_capture_stable": true,
+  "application_source_differences": [],
+  "local_tests": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "350",
+      "time": "135.822",
+      "timestamp": "2026-11-27T19:03:33.107581+08:00"
+    }
+  ],
+  "board_isolated_tests": [
+    {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "346",
+      "time": "54.284",
+      "timestamp": "2026-11-27T19:05:47.712185+08:00"
+    }
+  ],
+  "original_board_test_failures": 7,
+  "test_adjustment": "Only stale timeout assertion <=12 changed to ==30 to match current board implementation",
+  "whitepaper_pages": 4,
+  "current_model_http_samples": {
+    "llm": 6,
+    "ocr": 9,
+    "yolo": 5,
+    "meter": 2
+  },
+  "production_services_restarted": false,
+  "experiment_session_api_called_by_benchmark": false,
+  "credentials_in_published_capture": false
+}

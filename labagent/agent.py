@@ -71,11 +71,12 @@ class Agent:
         if requested_action(text)=="pause" or (initial.plan and hazard):
             return self._chat(session_id,text)
         if initial.plan and not hazard and requested_action(text) is None:
-            answer=factual_answer(self.engine,initial,text)
+            preview = self.task_agent.preview(session_id) if hasattr(self, "task_agent") else None
+            answer=factual_answer(self.engine,initial,text,preview)
             if answer:
                 self.store.message(session_id,"user",text)
                 self.store.message(session_id,"assistant",answer)
-                return {"answer":answer,"engine":"workflow","traces":[{"tool":"get_status","result":status_summary(self.engine,initial)}],
+                return {"answer":answer,"engine":"workflow","traces":[{"tool":"get_status","result":status_summary(self.engine,initial,preview=preview)}],
                         "proposals":[],"citations":[],"session":self.engine.view(initial)}
         if not self.lock(session_id).acquire(blocking=False):
             raise DomainError("上一条对话仍在处理，请稍后重试", 409)
@@ -175,7 +176,8 @@ class Agent:
         state = self.store.get(session_id)
         kind = question_kind(text)
         focus = "measurement" if kind == "principle" and any(word in text for word in ("读数", "负数", "反接", "刚才", "小数点")) else kind
-        context = status_summary(self.engine,state,focus)
+        preview = self.task_agent.preview(session_id) if hasattr(self, "task_agent") else None
+        context = status_summary(self.engine,state,focus,preview)
         citations = compact_documents(self._search(state,text),text) if needs_manual(text) else []
         # The system instruction is immutable. Question-scoped records and retrieved
         # passages belong at the tail, so they do not invalidate the fixed prefix.
@@ -228,6 +230,8 @@ class Agent:
                         if item not in citations:
                             citations.append(item)
                 self.store.audit(session_id, "agent.tool_result", traces[-1])
+                if isinstance(result.get("proposal"),dict):
+                    return result["message"],traces,citations
                 messages.append({"role": "tool", "tool_call_id": call_id,
                                  "content": json.dumps(result, ensure_ascii=False,separators=(",",":"))})
         return "模型工具调用已达到上限；请检查状态面板，本轮未继续执行。", traces, citations
@@ -242,7 +246,8 @@ class Agent:
             return {"accepted":False,"message":"已提出采样计划调整，等待用户核对，尚未修改实验。",
                     "proposal":{"kind":"update_sampling","samples":samples,"reason":reason,"expected_revision":revision}}
         if name == "get_status" and not args:
-            return status_summary(self.engine,self.store.get(session_id))
+            preview = self.task_agent.preview(session_id) if hasattr(self, "task_agent") else None
+            return status_summary(self.engine,self.store.get(session_id),preview=preview)
         if name == "search_manual" and set(args) == {"query"} and isinstance(args["query"], str):
             query = args["query"][:4000]
             return {"documents": compact_documents(self._search(self.store.get(session_id),query),query)}

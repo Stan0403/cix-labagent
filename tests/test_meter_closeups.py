@@ -17,7 +17,7 @@ class ReplyOpener:
         self.payloads = []
 
     def open(self, request, timeout):
-        assert timeout <= 12
+        assert timeout == 30
         self.payloads.append(json.loads(request.data))
         return io.BytesIO(
             json.dumps(

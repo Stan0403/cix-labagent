@@ -11,6 +11,38 @@ from labagent.models import Evidence, Measurement, NewSession, ReadingCandidate
 from labagent.providers import Gateway
 
 
+@pytest.mark.parametrize("question", ["现在还缺什么", "缺什么？", "还缺哪些器材？", "器材齐了吗？"])
+def test_missing_inventory_question_reads_observations_not_blockers(client, monkeypatch, question):
+    plan = client.app.state.plans.get("battery-voltage-15v").model_dump()
+    store = client.app.state.store
+    state = store.create(NewSession(automation="agent"), plan)
+
+    def observed(s):
+        s.step = 1
+        s.facts["observed_objects"] = Evidence(
+            value={"battery": False, "multimeter": True, "probes": True}, source="vision", confidence=0)
+
+    state, _ = store.mutate(state.id, "test.inventory", {}, observed)
+    agent = client.app.state.agent
+    monkeypatch.setattr(agent.gateway, "chat", lambda *a, **kw: pytest.fail("No LLM for inventory facts"))
+    path = f"/api/sessions/{state.id}/chat"
+    first = client.post(path, json={"message": question}).json()
+    assert first["engine"] == "workflow"
+    assert ("未见" + plan["object_labels"]["battery"]) in first["answer"]
+    assert ("已看到" + plan["object_labels"]["multimeter"]) in first["answer"]
+    assert "表笔" in first["answer"]
+    controller = client.app.state.task_agent
+    controller.record_preview(state.id, {"present": {"battery": True, "multimeter": True, "probes": True}},
+                              revision=state.revision)
+    answer = client.post(path, json={"message": question}).json()["answer"]
+    assert "器材已齐" in answer and "两帧正式核验" in answer and "未见电池" not in answer
+    controller.forget(state.id)
+    store.mutate(state.id, "test.stale", {}, lambda s: setattr(s.facts["observed_objects"], "at",
+        (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()))
+    answer = client.post(path, json={"message": question}).json()["answer"]
+    assert "无法判断" in answer and "未见电池" not in answer
+
+
 def prepare(client, readings=(1.34,), automation="agent"):
     plan = client.app.state.plans.get("battery-voltage-15v").model_dump()
     store = client.app.state.store

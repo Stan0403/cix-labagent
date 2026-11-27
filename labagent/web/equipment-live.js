@@ -100,7 +100,12 @@ async function runEquipmentPreview(){
   const result=await api(`/sessions/${id}/equipment-preview`,{method:'POST',body:form,signal:controller.signal});
   if(controller.signal.aborted||!liveEquipmentReady()||S.session.id!==id||S.stream!==stream
      ||S.session.steps[S.session.step].id!==stepId||result.step_id!==stepId)return;
+  const wasReady=S.equipmentPreview?.inventory_ready;
   acceptEquipmentPreview(result);
+  if(!wasReady && result.inventory_ready && S.session.interaction?.waiting_for_equipment){
+   S.agentWaiting=null;
+   scheduleAuto();
+  }
   const ms=Math.round(performance.now()-start);
   $('live-equipment-status').textContent=`连续检测中 · 本次 ${ms} ms · 核对通过后自动继续`;
  }catch(error){

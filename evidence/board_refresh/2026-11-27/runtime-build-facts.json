@@ -1,0 +1,34 @@
+{
+  "cpu": {
+    "CMAKE_BUILD_TYPE:STRING": "Release",
+    "GGML_CPU_ARM_ARCH:STRING": "armv9-a+i8mm+dotprod+sve",
+    "GGML_CPU_KLEIDIAI:BOOL": "ON",
+    "GGML_NATIVE:BOOL": "OFF",
+    "GGML_VULKAN:BOOL": "ON",
+    "source_checkout_head": "57819b8d4b39d893408e51520dff3d47d1ebb757",
+    "binary_sha256": "724151db22015d1f47565ad87c859c1c98da0a4618ccbfb1475655ef0d9c43de"
+  },
+  "npu_vision_bridge": {
+    "CMAKE_BUILD_TYPE:STRING": "Release",
+    "GGML_CPU_ARM_ARCH:STRING": "armv9-a+i8mm+dotprod+sve",
+    "GGML_CPU_KLEIDIAI:BOOL": "ON",
+    "GGML_NATIVE:BOOL": "OFF",
+    "GGML_VULKAN:BOOL": "OFF",
+    "source_checkout_head": "57819b8d4b39d893408e51520dff3d47d1ebb757",
+    "binary_sha256": "21151e5d7435b5114b8652096028d333946d51d7d7d5cf73e434f844c5c54297"
+  },
+  "cpu_capacities": {
+    "0": "1024",
+    "1": "1024",
+    "2": "279",
+    "3": "279",
+    "4": "279",
+    "5": "279",
+    "6": "905",
+    "7": "905",
+    "8": "866",
+    "9": "866",
+    "10": "984",
+    "11": "984"
+  }
+}

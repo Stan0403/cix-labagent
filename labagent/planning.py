@@ -69,7 +69,7 @@ measurement格式：{"quantity":"电池端电压","unit":"V","adapter":"voltage"
 samples必须保留用户/文档要求的次数（1到10）；只设一个measurement操作，多次采样在该操作内完成。
 只要measurement不为null，就必须有一个kind=measurement的操作。equipment为必填，不要遗漏。
 电压测量必须先meter_setup检查COM、V/Ω与直流档；电池接触可用battery_contact，收尾可用battery_cleanup。
-电池正向电压实验的接触操作由平台合并到measurement；负数提示调整表笔，正数须通过两帧稳定性核验才记录。不要另设必须视觉识别正负极才能继续的关卡。若实验明确要求记录反向电压，measurement.polarity_check设为signed。
+电池电压实验的接触操作由平台合并到measurement；实时Agent按键采集采用单帧读数，保留实际符号；零值、负值提示核对接触和极性。不要另设必须视觉识别正负极才能继续的关卡。若实验明确要求记录反向电压，measurement.polarity_check设为signed。
 电池实验收尾仅在保存后提示移开表笔、关闭万用表，不单独安排视觉检查或人工确认关卡。
 未知标称值、量程、单位、需要额外硬件或不支持的样本分组时放进questions，不能编造；questions未解决不可启动。
 标称1.5V单节干电池可使用±2V接收范围和直流2V或20V档。操作与数值均为计划，禁止输出实际测量结果。

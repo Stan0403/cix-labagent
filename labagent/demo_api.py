@@ -262,9 +262,12 @@ def mount_demo_api(app, settings, store, engine, knowledge, gateway):
         if (after.status != "running" or after.step != before.step or not after.plan
                 or after.plan["object_labels"] != labels):
             raise DomainError("步骤已变化，请更新画面", 409)
-        if hasattr(app.state,"task_agent"):
-            app.state.task_agent.record_preview(session_id,result)
+        if after.revision != before.revision:
+            raise DomainError("器材状态已更新，请重新预览", 409)
+        stable = app.state.task_agent.record_preview(session_id, result, after.revision)
         return {"present": present, "boxes": valid_boxes(result.get("boxes", []), labels),
+                "session_id": session_id, "revision": after.revision,
+                "inventory_ready": stable and all(present.get(k) is True for k in after.plan["required_objects"]),
                 "backend": result.get("backend", "local-vision"), "preview": True,
                 "requires_confirmation": True, "step_id": step(before)["id"],
                 "inference_ms": result.get("inference_ms"), "total_ms": result.get("total_ms")}
@@ -274,7 +277,8 @@ def mount_demo_api(app, settings, store, engine, knowledge, gateway):
         return perform_observation(session_id,file,task,roi,automatic,capture_id=capture_id)
 
     def perform_observation(session_id, file, task="reading", roi="", automatic=False,
-                            *,agent_authorized=False,expected_revision=None,equipment_mode="fast",capture_id=""):
+                            *,agent_authorized=False,expected_revision=None,equipment_mode="fast",capture_id="",
+                            burst_start=False, reading_timeout=None, single_reading=False):
         before = store.get(session_id)
         if expected_revision is not None and before.revision != expected_revision:
             raise DomainError("观察决定对应的实验状态已变化",409)
@@ -355,8 +359,11 @@ def mount_demo_api(app, settings, store, engine, knowledge, gateway):
         if auto_roi:
             buffer = io.BytesIO()
             image.save(buffer, format="JPEG", quality=85)
-            located = gateway.request(settings.ocr_base_url, "", "locate_display", files={"file": ("scene.jpg", buffer.getvalue(), "image/jpeg")})
+            located = gateway.request(settings.ocr_base_url, "", "locate_display", files={"file": ("scene.jpg", buffer.getvalue(), "image/jpeg")},
+                                      **({"timeout": reading_timeout, "data": {"fast_only": "true"}} if reading_timeout else {}))
             selected_roi = located.get("roi")
+            if reading_timeout and not selected_roi:
+                raise DomainError("本轮未能快速定位显示屏，可以移开表笔。请让显示屏清晰完整入镜后再开始。", 422)
         else:
             try:
                 selected_roi = [float(x) for x in roi.split(",")]
@@ -368,7 +375,8 @@ def mount_demo_api(app, settings, store, engine, knowledge, gateway):
             raise DomainError("量程核对已过期，请重新检查档位和插孔", 409)
         buffer = io.BytesIO()
         cropped.save(buffer, format="PNG")
-        data = gateway.request(settings.ocr_base_url, "", "recognize", files={"file": ("display.png", buffer.getvalue(), "image/png")})
+        data = gateway.request(settings.ocr_base_url, "", "recognize", files={"file": ("display.png", buffer.getvalue(), "image/png")},
+                               **({"timeout": reading_timeout, "data": {"fast_only": "true"}} if reading_timeout else {}))
         raw_text = data.get("text", "")
         if not isinstance(raw_text, str):
             raise DomainError("视觉服务没有返回文本", 503)
@@ -381,19 +389,36 @@ def mount_demo_api(app, settings, store, engine, knowledge, gateway):
         if capture_id:
             candidate.id = "capture_" + capture_id
         polarity_issue = reading_issue(before.plan, candidate.value)
-        if polarity_issue:
+        if polarity_issue and not single_reading:
             candidate.status, candidate.reason = "rejected", polarity_issue
         def apply_reading(state):
+            if burst_start:
+                expire_candidates(state)
             if any(item.id == candidate.id for item in state.candidates):
                 raise DomainError("本次采集已处理，请重新从摄像头取帧", 409)
             if len(state.candidates) >= 100:
                 raise DomainError("本会话候选数量已达上限，请新建实验", 409)
-            expire_candidates(state)
+            if not automatic:
+                expire_candidates(state)
             state.candidates.append(candidate)
             consecutive = state.candidates[-3:]
             if len(consecutive) == 3 and all(c.value is None for c in consecutive):
                 state.status, state.pause_reason = "paused", "连续三次读数不明确，请调整拍摄条件或请求教师介入"
             state.risk = polarity_issue or ("请核对原始负号和表笔极性" if candidate.value is not None and candidate.value < 0 else "")
+            if automatic and single_reading and candidate.value is not None:
+                from .workflow import add_measurement
+                applied = add_measurement(engine, state, candidate.value, "vision_workflow", confidence=0,
+                    reference=candidate.reference, candidate_id=candidate.id,
+                    original_value=candidate.value, check_polarity=False)
+                if applied["accepted"]:
+                    candidate.status, candidate.confirmed_value = "confirmed", candidate.value
+                    candidate.confirmation_method = "single_frame"
+                    state.measurements[-1].supporting_candidate_ids = [candidate.id]
+                    if polarity_issue:
+                        state.risk = "已保留实际读数，请核对接触、极性和档位。"
+                    return {"accepted": True, "auto_recorded": True, "candidate_id": candidate.id,
+                            "message": f"已记录单帧读数 {candidate.value:g} {candidate.unit}，可以移开表笔。" + state.risk}
+                return {**applied, "candidate_id": candidate.id}
             if automatic and candidate.value is not None and confirm_stable_reading(engine, state):
                 return {"accepted": True, "message": "两次独立采集间隔至少1秒，读数相差不超过0.02 V，已自动记录；画面与数值可以相同，采集记录和原始输出均保留。",
                         "candidate_id": candidate.id, "auto_recorded": True}

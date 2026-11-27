@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-27",
+  "source_files": 167,
+  "source_unchanged_since_capture": true,
+  "differences": [],
+  "captured_source_tree_sha256": "392059d21c09e4b457fcc4ad3428f3e05e1c41a2cd3f7e62b9ca6da584de1d94",
+  "additional_model_artifacts": [
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/qwen3-vl-4b-npu/vision.cix",
+      "bytes": 838765852,
+      "sha256": "fd315596a7028cbc649be09576fbe885ec165ae92881df394fd0036869d7e4d0"
+    },
+    {
+      "path": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/models/sensevoice-cix/sense_voice_mask256.cix",
+      "bytes": 495032896,
+      "sha256": "c04770dfac2de836e6a34607b7eb208add13fe82368e4673bb1fd80007ef2209"
+    }
+  ],
+  "npu_device_checks": {
+    "labagent-demo-yolo.service": {
+      "pid": 1744,
+      "npu_device_handles": [
+        "/dev/aipu"
+      ]
+    },
+    "labagent-demo-asr.service": {
+      "pid": 1741,
+      "npu_device_handles": [
+        "/dev/aipu"
+      ]
+    },
+    "labagent-demo-npu-vision.service": {
+      "pid": 6717,
+      "npu_device_handles": [
+        "/dev/aipu"
+      ]
+    }
+  },
+  "model_services_restarted": false
+}

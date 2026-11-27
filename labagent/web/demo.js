@@ -266,7 +266,9 @@ function renderWorkflow(){
   }}else $("workflow-checks").append(elem("p","将自动拍摄并逐项核验，无需先点击人工确认。","muted small"));
  }else if(measurement){
   $("workflow-check-title").textContent="自动读数与稳定性核验";
-  $("workflow-checks").append(elem("p","间隔至少1秒重新采集两次，读数相差不超过0.02 V才自动记录。画面可以相同，两次都是1.34 V也能通过；无需晃动表笔。","muted small"));
+  $("workflow-checks").append(elem("p",s.automation==='agent'&&s.mode==='live'
+   ?"倒计时后定位显示屏，单帧识别到有效数字即记录；定位失败时会继续尝试约10秒。"
+   :"间隔至少1秒采集两次，读数相差不超过0.02 V才自动记录。","muted small"));
  }
  const useManual=s.status==="paused"||g==="equipment"||!automatic||(!visual&&!measurement&&["read_sop","manual_check","meter_setup"].includes(g));
  toggle("confirm-current",["read_sop","manual_check","meter_setup"].includes(g)&&(!visual||!automatic));
@@ -291,7 +293,8 @@ function renderTaskStatus(){
  const s=S.session;if(!s||!$('task-card'))return;
  const pending=[...(s.candidates||[])].reverse().find(c=>c.status==='pending');
  let busy=null,busyMessage=null;
- if(S.actionBusy){busy='submitting';busyMessage='正在记录本步确认并检查后续条件…';}
+ if(S.actionBusy){busy='submitting';busyMessage=s.interaction?.primary_action?.kind==='start_reading'
+  ?'正在定位显示屏并读取单帧数字，请保持接触，完成后会提示移开表笔。':'正在记录本步确认并检查后续条件…';}
  else if(S.agentRunBusy){busy=S.agentStage==='planning'?'planning':S.agentTool==='read_display'?'reading':S.agentTool==='save_measurement'?'saving':'observing';
   if(S.agentStage==='executing'&&['advance','report'].includes(S.agentTool))busy='advancing';
   busyMessage=S.agentStage==='planning'?'Agent 正在根据当前步骤和现场结果选择行动…':S.agentTool==='read_display'?'正在读取显示屏并检查读数稳定性…':S.agentTool==='advance'?'本步已通过，正在进入下一步…':S.agentActionText;}
@@ -301,8 +304,12 @@ function renderTaskStatus(){
  let view=taskView(s,{autoEnabled:S.autoEnabled,manualEdits:S.equipmentDirty,candidate:Boolean(pending),
   hidden:document.hidden,disconnected:S.disconnected,starting:S.starting,error:S.runError,busy,busyMessage,
   replayBlocked:s.mode==='replay'&&!S.autoReplay,meterStep:meterLiveOwnsStep(),meterTried:meterStepEnabled()&&meterWasTried(),meterMessage:meterStepEnabled()?meterLiveMessage():null});
+ if(S.actionBusy&&S.readingCountdown>0&&s.status==='running'&&!document.hidden&&!S.disconnected){
+  view={...view,phase:'countdown',message:`${S.readingCountdown} 秒后自动读数。现在请红接正极、黑接负极，保持接触。`,
+   primary_action:{kind:'cancel_reading',label:'取消本轮'}};
+ }
  if(!busy&&S.autoEnabled&&S.lastRetryReason&&Date.now()<S.nextObserveAt){view={...view,phase:'retrying',message:S.lastRetryReason+'；将自动重试。',primary_action:null};}
- const names={ready:'准备中',planning:'正在决策',observing:'正在识别',reading:'正在读表',saving:'正在保存',
+ const names={ready:'准备中',countdown:'读数倒计时',preparing_reading:'准备读表',planning:'正在决策',observing:'正在识别',reading:'正在读表',saving:'正在保存',
   submitting:'正在提交',advancing:'自动继续',waiting_scene:'等待现场条件',waiting_user:'等待你操作',
   retrying:'稍后重试',paused:'已暂停',background:'后台暂停',error:'需要处理',completed:'已完成',notice:'收尾提示'};
  $('task-card').dataset.phase=view.phase;$('task-phase').textContent=names[view.phase]||'处理中';
@@ -310,7 +317,7 @@ function renderTaskStatus(){
  $('task-position').textContent=`第 ${s.step+1} / ${s.steps.length} 步`;
  $('task-message').textContent=view.message||s.steps[s.step].instruction;
  const button=$('primary-action');button.dataset.action=view.primary_action?.kind||'';
- button.textContent=view.primary_action?.label||'';button.disabled=Boolean(S.actionBusy||S.starting);
+ button.textContent=view.primary_action?.label||'';button.disabled=Boolean((S.actionBusy&&view.primary_action?.kind!=='cancel_reading')||S.starting);
  toggle('primary-action',Boolean(view.primary_action));toggle('pause',s.status==='running');
  $('pause').textContent='暂停';
  const elapsed=busy&&S.agentStartedAt?`已用 ${Math.max(0,Math.floor((Date.now()-S.agentStartedAt)/1000))} 秒 · `:'';
@@ -328,7 +335,10 @@ function renderTaskStatus(){
  sessionStorage.setItem('labagent_auto_'+s.id,String(S.autoEnabled));
 }
 async function primaryAction(){
- const kind=$('primary-action').dataset.action;if(!kind||S.actionBusy||S.starting)return;
+ const kind=$('primary-action').dataset.action;
+ if(kind==='cancel_reading'&&S.readingCountdown>0){cancelAgentRequest();return;}
+ if(!kind||S.actionBusy||S.starting)return;
+ if(kind==='start_reading'){await startReadingBurst();return;}
  if(kind==='inspect_meter'){S.runError=null;await runMeterLive();return;}
  if(kind==='show_results'){document.querySelector('.bottom-panel').scrollIntoView({behavior:'smooth'});return;}
  if(kind==='retry'){

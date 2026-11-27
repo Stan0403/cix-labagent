@@ -1,5 +1,7 @@
 # 复现环境与 O6 部署
 
+2026-11-27代码与环境快照：当前应用采用按键单帧快速读数、器材规则续接及仪表定位重试，见根README。板端应用环境为Python3.11.2、NumPy2.4.6和ONNX Runtime1.31.1；NPU/ASR独立环境为NumPy1.26.4。跨平台依赖锁与实际板端环境分别保存，不将旧性能或双帧说明视为本次入口行为。
+
 2026-11-25 补充：当前 YOLO 与 OCR 模型已从源板导出并上传同仓库 Release。先运行 `python deploy/fetch_models.py` 下载、安装及校验，详见 [MODEL_ARTIFACTS.md](MODEL_ARTIFACTS.md)。下文“当前桌面缺 YOLO”的描述属于原交付时点；完整模型包仍需另外准备 LLM/VLM/ASR。
 
 ## 普通电脑

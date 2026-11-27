@@ -80,7 +80,7 @@ def yolo_health():
         return {"ready": False, "backend": "yolo26n-unavailable"}
 
 
-def inspect_yolo(image, items):
+def inspect_yolo(image, items, timeout=15):
     import secrets
     boundary = "labagent-yolo-" + secrets.token_hex(12)
     buffer = io.BytesIO()
@@ -92,7 +92,7 @@ def inspect_yolo(image, items):
     request = urllib.request.Request(YOLO_SERVER + "/inspect", data=body,
         headers={"Content-Type": "multipart/form-data; boundary=" + boundary})
     try:
-        with OPENER.open(request, timeout=15) as response:
+        with OPENER.open(request, timeout=timeout) as response:
             result = json.load(response)
         if not isinstance(result, dict) or not isinstance(result.get("present"), dict):
             raise ValueError("Invalid equipment response")
@@ -464,7 +464,7 @@ def meter_worker_state():
 
 
 @app.post("/recognize")
-def recognize(file: UploadFile = File(...)):
+def recognize(file: UploadFile = File(...), fast_only: bool = Form(False)):
     image = read_upload(file)
     ocr = None
     if LCD_READER:
@@ -477,6 +477,11 @@ def recognize(file: UploadFile = File(...)):
                         "ocr": ocr, "fallback_used": False}
         except Exception:
             logging.getLogger(__name__).exception("LCD OCR failed; using VLM fallback")
+    if fast_only is True:
+        reason = ocr.get("reason", "fast_ocr_uncertain") if ocr else "fast_ocr_unavailable"
+        return {"text": json.dumps({"reading": None, "unit": None, "reason": reason}),
+                "confidence": 0, "backend": ocr.get("backend", "lcd-ocr") if ocr else "lcd-ocr",
+                "fallback_used": False}
     text = infer(image,
                  'Read only the large LCD digits in this image. Return ONLY JSON: '
                  '{"reading":"exact digit string including sign and decimal point","unit":null}. '
@@ -533,7 +538,7 @@ def recognize(file: UploadFile = File(...)):
 
 
 @app.post("/locate_display")
-def locate_display(file: UploadFile = File(...)):
+def locate_display(file: UploadFile = File(...), fast_only: bool = Form(False)):
     image = read_upload(file)
     if LCD_READER:
         try:
@@ -552,6 +557,23 @@ def locate_display(file: UploadFile = File(...)):
     if roi:
         return {"roi": roi, "backend": "opencv-lcd-region",
                 "raw_text": "自动检测到显示屏区域，随后从原图裁剪读取"}
+    if fast_only is True:
+        meter_present = None
+        if YOLO_SERVER:
+            try:
+                from labagent.lcd_reader import locate_lcd
+                detected = inspect_yolo(image, {"multimeter": "数字万用表"}, timeout=5)
+                meter_present = detected.get("present", {}).get("multimeter")
+                regions = [box for box in detected.get("boxes", []) if box.get("label") == "multimeter"]
+                roi = locate_lcd(image, meter_regions=regions)
+                if roi:
+                    return {"roi": roi, "backend": "yolo-opencv-lcd-region",
+                            "raw_text": "根据仪表检测框快速定位显示屏"}
+            except (HTTPException, ImportError, ValueError, OSError):
+                pass
+        return {"roi": None, "meter_present": meter_present,
+                "raw_text": "快速定位未找到显示屏，请调整构图后重新采集",
+                "backend": "opencv-lcd-region"}
     text = infer(image, 'Locate the multimeter LCD screen only. Return ONLY [left,top,right,bottom] '
                  'normalized to 0-1000 relative to the whole image. Include the LCD digits and sign, '
                  'exclude the dial. If uncertain return null.', tokens=64)

@@ -1,5 +1,7 @@
 # YOLO / OCR 模型下载与板端来源
 
+2026-11-27复核：板端正式YOLO和OCR权重及字典摘要与本页附件一致，本次代码更新继续复用这些文件。新的运行配置和摘要见evidence/board_refresh/2026-11-27/runtime.json及final-source-check.json。
+
 2026-11-25 已从正在运行的 O6 只读导出 YOLO 和液晶 OCR。10 个源文件合计 119,466,957 字节，下载前后板端摘要与本地逐文件 SHA-256 全部相同。未重启服务、替换权重或写入实验记录。
 
 同一公开仓库的 [Release 模型附件](https://github.com/Stan0403/cix-labagent/releases/tag/v0.1.0-delivery)，可直接通过浏览器下载，无需 GitHub 登录：

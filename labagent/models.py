@@ -54,7 +54,7 @@ class ReadingCandidate(StrictModel):
     status: Literal["pending", "confirmed", "rejected", "expired"] = "pending"
     confirmed_value: float | None = None
     step_id: str = ""
-    confirmation_method: Literal["", "manual", "workflow_stability"] = ""
+    confirmation_method: Literal["", "manual", "workflow_stability", "single_frame"] = ""
 
 
 class State(StrictModel):

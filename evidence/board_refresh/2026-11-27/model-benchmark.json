@@ -1,0 +1,1440 @@
+{
+  "date": "2026-11-27",
+  "serial_client": true,
+  "model_services_already_loaded": true,
+  "experiment_session_api_called": false,
+  "accuracy_benchmark": false,
+  "llm": {
+    "short": {
+      "request": {
+        "model": "qwen3-4b-local",
+        "temperature": 0,
+        "seed": 42,
+        "max_tokens": 64,
+        "cache_prompt": false,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "用一句话说明万用表直流电压档的作用。"
+          }
+        ]
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "万用表直流电压档用于测量电路中直流电源的电压大小。"
+                }
+              }
+            ],
+            "created": 1795777606,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 17,
+              "prompt_tokens": 23,
+              "total_tokens": 40
+            },
+            "id": "chatcmpl-NALbLG5u0WB4yl8GgsgtjCBDve6dNHDU",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 23,
+              "prompt_ms": 456.224,
+              "prompt_per_token_ms": 19.835826086956523,
+              "prompt_per_second": 50.413831801921866,
+              "predicted_n": 17,
+              "predicted_ms": 1238.921,
+              "predicted_per_token_ms": 72.87770588235294,
+              "predicted_per_second": 13.721617439691473
+            }
+          },
+          "http_seconds": 1.756510739971418,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "万用表直流电压档用于测量电路中直流电源的电压大小。"
+                }
+              }
+            ],
+            "created": 1795777608,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 17,
+              "prompt_tokens": 23,
+              "total_tokens": 40
+            },
+            "id": "chatcmpl-RsR468P9o54eg9FFTJTNkpC9yT6PgD8C",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 23,
+              "prompt_ms": 435.34,
+              "prompt_per_token_ms": 18.92782608695652,
+              "prompt_per_second": 52.83226903110213,
+              "predicted_n": 17,
+              "predicted_ms": 1186.412,
+              "predicted_per_token_ms": 69.78894117647059,
+              "predicted_per_second": 14.328917778984028
+            }
+          },
+          "http_seconds": 1.6316650859662332,
+          "repeat": 1
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "successful_http": 2,
+        "mean_seconds": 1.6940879129688255,
+        "median_seconds": 1.6940879129688255,
+        "min_seconds": 1.6316650859662332,
+        "max_seconds": 1.756510739971418
+      }
+    },
+    "manual": {
+      "request": {
+        "model": "qwen3-4b-local",
+        "temperature": 0,
+        "seed": 42,
+        "max_tokens": 64,
+        "cache_prompt": false,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "实验说明：测量单节电池电压。黑表笔接COM，红表笔接V/Ω，使用直流电压档。先核对量程与表笔接线，再接触电池两端。若屏幕模糊、数字或小数点不清，应调整光照和相机，不得猜测读数。请用两句话概括读数前要核对什么。"
+          }
+        ]
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "读数前要核对量程与表笔接线是否正确。需确保显示屏清晰，光照和相机调整合适。"
+                }
+              }
+            ],
+            "created": 1795777612,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 28,
+              "prompt_tokens": 91,
+              "total_tokens": 119
+            },
+            "id": "chatcmpl-BlN9uBcz0zHlUWLq3BErf6lirwdthYYb",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 91,
+              "prompt_ms": 1869.208,
+              "prompt_per_token_ms": 20.540747252747252,
+              "prompt_per_second": 48.68372059182284,
+              "predicted_n": 28,
+              "predicted_ms": 2071.536,
+              "predicted_per_token_ms": 73.98342857142858,
+              "predicted_per_second": 13.516540383560798
+            }
+          },
+          "http_seconds": 3.952500073995907,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "stop",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "读数前要核对量程与表笔接线是否正确。需确保显示屏清晰，光照和相机调整合适。"
+                }
+              }
+            ],
+            "created": 1795777616,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 28,
+              "prompt_tokens": 91,
+              "total_tokens": 119
+            },
+            "id": "chatcmpl-g9D8hHPwrwIQA4uwnMchwkmaJc1ZpOHi",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 91,
+              "prompt_ms": 1867.43,
+              "prompt_per_token_ms": 20.521208791208792,
+              "prompt_per_second": 48.730072880911194,
+              "predicted_n": 28,
+              "predicted_ms": 2008.151,
+              "predicted_per_token_ms": 71.71967857142857,
+              "predicted_per_second": 13.943174591950505
+            }
+          },
+          "http_seconds": 3.8860595829901285,
+          "repeat": 1
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "successful_http": 2,
+        "mean_seconds": 3.9192798284930177,
+        "median_seconds": 3.9192798284930177,
+        "min_seconds": 3.8860595829901285,
+        "max_seconds": 3.952500073995907
+      }
+    },
+    "tool": {
+      "request": {
+        "model": "qwen3-4b-local",
+        "temperature": 0,
+        "seed": 42,
+        "max_tokens": 64,
+        "cache_prompt": false,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": "调用get_status查询当前实验状态，不要回答其他内容。"
+          }
+        ],
+        "tools": [
+          {
+            "type": "function",
+            "function": {
+              "name": "get_status",
+              "description": "读取实验状态",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        ],
+        "tool_choice": {
+          "type": "function",
+          "function": {
+            "name": "get_status"
+          }
+        }
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "",
+                  "tool_calls": [
+                    {
+                      "type": "function",
+                      "function": {
+                        "name": "get_status",
+                        "arguments": "{}"
+                      },
+                      "id": "NJnKmwzOI3zV0DEFp4jHI3KX7O6POtwZ"
+                    }
+                  ]
+                }
+              }
+            ],
+            "created": 1795777620,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 16,
+              "prompt_tokens": 153,
+              "total_tokens": 169
+            },
+            "id": "chatcmpl-LHIL1DOnmFJSGXlV5nFtg8CABN5APEAI",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 153,
+              "prompt_ms": 3185.35,
+              "prompt_per_token_ms": 20.819281045751634,
+              "prompt_per_second": 48.03239832357512,
+              "predicted_n": 16,
+              "predicted_ms": 1139.725,
+              "predicted_per_token_ms": 71.2328125,
+              "predicted_per_second": 14.038474193336112
+            }
+          },
+          "http_seconds": 4.363613638968673,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "choices": [
+              {
+                "finish_reason": "tool_calls",
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "",
+                  "tool_calls": [
+                    {
+                      "type": "function",
+                      "function": {
+                        "name": "get_status",
+                        "arguments": "{}"
+                      },
+                      "id": "3PjPZRQGVPQMkynV1KRhVA96kpHLf5dD"
+                    }
+                  ]
+                }
+              }
+            ],
+            "created": 1795777624,
+            "model": "qwen3-4b-local",
+            "system_fingerprint": "b8323-57819b8d4",
+            "object": "chat.completion",
+            "usage": {
+              "completion_tokens": 16,
+              "prompt_tokens": 153,
+              "total_tokens": 169
+            },
+            "id": "chatcmpl-sqM3O3m9E5j8vDZmkB6d2w7vOMZjsOJ4",
+            "timings": {
+              "cache_n": 0,
+              "prompt_n": 153,
+              "prompt_ms": 3162.574,
+              "prompt_per_token_ms": 20.670418300653594,
+              "prompt_per_second": 48.37831462599769,
+              "predicted_n": 16,
+              "predicted_ms": 1131.115,
+              "predicted_per_token_ms": 70.6946875,
+              "predicted_per_second": 14.14533447085398
+            }
+          },
+          "http_seconds": 4.310946587997023,
+          "repeat": 1
+        }
+      ],
+      "summary": {
+        "n": 2,
+        "successful_http": 2,
+        "mean_seconds": 4.337280113482848,
+        "median_seconds": 4.337280113482848,
+        "min_seconds": 4.310946587997023,
+        "max_seconds": 4.363613638968673
+      }
+    }
+  },
+  "ocr_fast_only": {
+    "leading_decimal_419.png": {
+      "input": {
+        "name": "leading_decimal_419.png",
+        "bytes": 29407,
+        "sha256": "2d2f2b0edf33071ffb37b677ceb175f3a0116d7493e27687a4eb5300069ed628"
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": null, \"unit\": null, \"reason\": \"decimal_position_mismatch\"}",
+            "confidence": 0,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "fallback_used": false
+          },
+          "http_seconds": 0.3810461010434665,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": null, \"unit\": null, \"reason\": \"decimal_position_mismatch\"}",
+            "confidence": 0,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "fallback_used": false
+          },
+          "http_seconds": 0.23371862102067098,
+          "repeat": 1
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": null, \"unit\": null, \"reason\": \"decimal_position_mismatch\"}",
+            "confidence": 0,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "fallback_used": false
+          },
+          "http_seconds": 0.23383271298371255,
+          "repeat": 2
+        }
+      ],
+      "summary": {
+        "n": 3,
+        "successful_http": 3,
+        "mean_seconds": 0.28286581168261665,
+        "median_seconds": 0.23383271298371255,
+        "min_seconds": 0.23371862102067098,
+        "max_seconds": 0.3810461010434665
+      }
+    },
+    "negative_zero.png": {
+      "input": {
+        "name": "negative_zero.png",
+        "bytes": 41827,
+        "sha256": "a82cf6efc6ae1e063984318b7a63d071b4a860cf57f8e6582b4d045af6cbfa4a"
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"-0.00\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9999526739120483,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "-0.00",
+              "confidence": 0.9999526739120483,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 3,
+                "minus": true,
+                "decimal_after": 1,
+                "angle": 0.0
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.22992764797527343
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.23461649601813406,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"-0.00\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9999526739120483,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "-0.00",
+              "confidence": 0.9999526739120483,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 3,
+                "minus": true,
+                "decimal_after": 1,
+                "angle": 0.0
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.22741727699758485
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.23163734597619623,
+          "repeat": 1
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"-0.00\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9999526739120483,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "-0.00",
+              "confidence": 0.9999526739120483,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 3,
+                "minus": true,
+                "decimal_after": 1,
+                "angle": 0.0
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.22724697296507657
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.23494248097995296,
+          "repeat": 2
+        }
+      ],
+      "summary": {
+        "n": 3,
+        "successful_http": 3,
+        "mean_seconds": 0.2337321076580944,
+        "median_seconds": 0.23461649601813406,
+        "min_seconds": 0.23163734597619623,
+        "max_seconds": 0.23494248097995296
+      }
+    },
+    "reading_1_353.png": {
+      "input": {
+        "name": "reading_1_353.png",
+        "bytes": 31184,
+        "sha256": "aee71a78b50a3360e2181ed317f4cc2b7872d32fe5f2163e7d84b77cf5a1c424"
+      },
+      "samples": [
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"1.353\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9436044692993164,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "1.353",
+              "confidence": 0.9436044692993164,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 4,
+                "minus": false,
+                "decimal_after": 1,
+                "angle": -10.54
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.2269372190348804
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.2348525000270456,
+          "repeat": 0
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"1.353\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9436044692993164,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "1.353",
+              "confidence": 0.9436044692993164,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 4,
+                "minus": false,
+                "decimal_after": 1,
+                "angle": -10.54
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.22818324901163578
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.23228255700087175,
+          "repeat": 1
+        },
+        {
+          "status": 200,
+          "response": {
+            "text": "{\"reading\": \"1.353\", \"unit\": null, \"ocr_check\": \"source_pixels_consistent\"}",
+            "confidence": 0.9436044692993164,
+            "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+            "ocr": {
+              "text": "1.353",
+              "confidence": 0.9436044692993164,
+              "accepted": true,
+              "reason": "source_pixels_consistent",
+              "evidence": {
+                "certain": true,
+                "digit_count": 4,
+                "minus": false,
+                "decimal_after": 1,
+                "angle": -10.54
+              },
+              "alternate_text": null,
+              "backend": "ppocr-lcd-v3-user81-onnxruntime-cpu",
+              "seconds": 0.227308303990867
+            },
+            "fallback_used": false
+          },
+          "http_seconds": 0.2326853729900904,
+          "repeat": 2
+        }
+      ],
+      "summary": {
+        "n": 3,
+        "successful_http": 3,
+        "mean_seconds": 0.23327347667266926,
+        "median_seconds": 0.2326853729900904,
+        "min_seconds": 0.23228255700087175,
+        "max_seconds": 0.2348525000270456
+      }
+    }
+  },
+  "limits": [
+    "Small latency samples, not an independent accuracy or P95 study.",
+    "HTTP times exclude model loading, browser capture, UI countdown and session/database writes.",
+    "OCR fixtures are development diagnostics; scene image is identified by SHA-256, not published here."
+  ],
+  "scene_input": {
+    "name": "4017346abd93f9916a9f8b1e009be3fb0eb9f1beaffff8ca06340a21ab570218.jpg",
+    "bytes": 197367,
+    "sha256": "46c94c82cd0b09f1c81189c64e4069d3dfd7e0bfdda89d35a58618c9b0e20698"
+  },
+  "yolo_health_before": {
+    "ready": true,
+    "backend": "yolo26n-cix-npu",
+    "input_size": 960,
+    "classes": [
+      "multimeter",
+      "battery",
+      "red_probe",
+      "black_probe"
+    ],
+    "requests": 9588
+  },
+  "yolo_warmup": {
+    "status": 200,
+    "response": {
+      "present": {
+        "multimeter": true,
+        "battery": true,
+        "red_probe": true,
+        "black_probe": true
+      },
+      "boxes": [
+        {
+          "label": "multimeter",
+          "confidence": 0.8915215730667114,
+          "bbox": [
+            0.22529460489749908,
+            0.3309389352798462,
+            0.17753024399280548,
+            0.5583857893943787
+          ],
+          "model_class": "multimeter"
+        },
+        {
+          "label": "battery",
+          "confidence": 0.7518717646598816,
+          "bbox": [
+            0.44432005286216736,
+            0.45939019322395325,
+            0.08535102009773254,
+            0.062211424112319946
+          ],
+          "model_class": "battery"
+        },
+        {
+          "label": "red_probe",
+          "confidence": 0.825212299823761,
+          "bbox": [
+            0.5036622285842896,
+            0.1647762656211853,
+            0.06230628490447998,
+            0.27919289469718933
+          ],
+          "model_class": "red_probe"
+        },
+        {
+          "label": "black_probe",
+          "confidence": 0.825212299823761,
+          "bbox": [
+            0.56264728307724,
+            0.1525549441576004,
+            0.04352903366088867,
+            0.3004358410835266
+          ],
+          "model_class": "black_probe"
+        }
+      ],
+      "coordinate_space": "normalized_xywh",
+      "requires_confirmation": true,
+      "unsupported": [],
+      "inference_ms": 36.99403296923265,
+      "npu_ms": 24.9665739829652,
+      "total_ms": 66.40157900983468,
+      "detections": [
+        {
+          "label": "multimeter",
+          "confidence": 0.8915215730667114,
+          "bbox": [
+            0.22529460489749908,
+            0.3309389352798462,
+            0.17753024399280548,
+            0.5583857893943787
+          ]
+        },
+        {
+          "label": "red_probe",
+          "confidence": 0.825212299823761,
+          "bbox": [
+            0.5036622285842896,
+            0.1647762656211853,
+            0.06230628490447998,
+            0.27919289469718933
+          ]
+        },
+        {
+          "label": "black_probe",
+          "confidence": 0.825212299823761,
+          "bbox": [
+            0.56264728307724,
+            0.1525549441576004,
+            0.04352903366088867,
+            0.3004358410835266
+          ]
+        },
+        {
+          "label": "battery",
+          "confidence": 0.7518717646598816,
+          "bbox": [
+            0.44432005286216736,
+            0.45939019322395325,
+            0.08535102009773254,
+            0.062211424112319946
+          ]
+        }
+      ],
+      "backend": "yolo26n-cix-npu",
+      "input_size": 960,
+      "raw_text": ""
+    },
+    "http_seconds": 0.08599697396857664
+  },
+  "yolo": {
+    "samples": [
+      {
+        "status": 200,
+        "response": {
+          "present": {
+            "multimeter": true,
+            "battery": true,
+            "red_probe": true,
+            "black_probe": true
+          },
+          "boxes": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ],
+              "model_class": "multimeter"
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ],
+              "model_class": "battery"
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ],
+              "model_class": "red_probe"
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ],
+              "model_class": "black_probe"
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "requires_confirmation": true,
+          "unsupported": [],
+          "inference_ms": 36.41030297148973,
+          "npu_ms": 24.936873000115156,
+          "total_ms": 63.36123903747648,
+          "detections": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ]
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ]
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ]
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ]
+            }
+          ],
+          "backend": "yolo26n-cix-npu",
+          "input_size": 960,
+          "raw_text": ""
+        },
+        "http_seconds": 0.08925016899593174
+      },
+      {
+        "status": 200,
+        "response": {
+          "present": {
+            "multimeter": true,
+            "battery": true,
+            "red_probe": true,
+            "black_probe": true
+          },
+          "boxes": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ],
+              "model_class": "multimeter"
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ],
+              "model_class": "battery"
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ],
+              "model_class": "red_probe"
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ],
+              "model_class": "black_probe"
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "requires_confirmation": true,
+          "unsupported": [],
+          "inference_ms": 36.28395200939849,
+          "npu_ms": 24.774350051302463,
+          "total_ms": 63.50695196306333,
+          "detections": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ]
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ]
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ]
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ]
+            }
+          ],
+          "backend": "yolo26n-cix-npu",
+          "input_size": 960,
+          "raw_text": ""
+        },
+        "http_seconds": 0.08892404299695045
+      },
+      {
+        "status": 200,
+        "response": {
+          "present": {
+            "multimeter": true,
+            "battery": true,
+            "red_probe": true,
+            "black_probe": true
+          },
+          "boxes": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ],
+              "model_class": "multimeter"
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ],
+              "model_class": "battery"
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ],
+              "model_class": "red_probe"
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ],
+              "model_class": "black_probe"
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "requires_confirmation": true,
+          "unsupported": [],
+          "inference_ms": 36.49256401695311,
+          "npu_ms": 25.072065007407218,
+          "total_ms": 63.735246018040925,
+          "detections": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ]
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ]
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ]
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ]
+            }
+          ],
+          "backend": "yolo26n-cix-npu",
+          "input_size": 960,
+          "raw_text": ""
+        },
+        "http_seconds": 0.08987876796163619
+      },
+      {
+        "status": 200,
+        "response": {
+          "present": {
+            "multimeter": true,
+            "battery": true,
+            "red_probe": true,
+            "black_probe": true
+          },
+          "boxes": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ],
+              "model_class": "multimeter"
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ],
+              "model_class": "battery"
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ],
+              "model_class": "red_probe"
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ],
+              "model_class": "black_probe"
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "requires_confirmation": true,
+          "unsupported": [],
+          "inference_ms": 36.94539197022095,
+          "npu_ms": 25.310819037258625,
+          "total_ms": 63.97579895565286,
+          "detections": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ]
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ]
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ]
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ]
+            }
+          ],
+          "backend": "yolo26n-cix-npu",
+          "input_size": 960,
+          "raw_text": ""
+        },
+        "http_seconds": 0.089202546980232
+      },
+      {
+        "status": 200,
+        "response": {
+          "present": {
+            "multimeter": true,
+            "battery": true,
+            "red_probe": true,
+            "black_probe": true
+          },
+          "boxes": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ],
+              "model_class": "multimeter"
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ],
+              "model_class": "battery"
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ],
+              "model_class": "red_probe"
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ],
+              "model_class": "black_probe"
+            }
+          ],
+          "coordinate_space": "normalized_xywh",
+          "requires_confirmation": true,
+          "unsupported": [],
+          "inference_ms": 36.42731299623847,
+          "npu_ms": 24.936422996688634,
+          "total_ms": 63.285668031312525,
+          "detections": [
+            {
+              "label": "multimeter",
+              "confidence": 0.8915215730667114,
+              "bbox": [
+                0.22529460489749908,
+                0.3309389352798462,
+                0.17753024399280548,
+                0.5583857893943787
+              ]
+            },
+            {
+              "label": "red_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.5036622285842896,
+                0.1647762656211853,
+                0.06230628490447998,
+                0.27919289469718933
+              ]
+            },
+            {
+              "label": "black_probe",
+              "confidence": 0.825212299823761,
+              "bbox": [
+                0.56264728307724,
+                0.1525549441576004,
+                0.04352903366088867,
+                0.3004358410835266
+              ]
+            },
+            {
+              "label": "battery",
+              "confidence": 0.7518717646598816,
+              "bbox": [
+                0.44432005286216736,
+                0.45939019322395325,
+                0.08535102009773254,
+                0.062211424112319946
+              ]
+            }
+          ],
+          "backend": "yolo26n-cix-npu",
+          "input_size": 960,
+          "raw_text": ""
+        },
+        "http_seconds": 0.08857071696547791
+      }
+    ],
+    "summary": {
+      "n": 5,
+      "successful_http": 5,
+      "mean_seconds": 0.08916524878004566,
+      "median_seconds": 0.089202546980232,
+      "min_seconds": 0.08857071696547791,
+      "max_seconds": 0.08987876796163619
+    }
+  },
+  "yolo_health_after": {
+    "ready": true,
+    "backend": "yolo26n-cix-npu",
+    "input_size": 960,
+    "classes": [
+      "multimeter",
+      "battery",
+      "red_probe",
+      "black_probe"
+    ],
+    "requests": 9594
+  },
+  "meter": {
+    "samples": [
+      {
+        "status": 200,
+        "response": {
+          "checks": {
+            "black_in_com": true,
+            "red_in_voltage": true,
+            "dc_voltage_mode": true
+          },
+          "meter_range": "dc_20v",
+          "inference_ms": 11003.1,
+          "detail_mode": "separate-dial-terminals-v1",
+          "detail_views": [
+            {
+              "part": "dial",
+              "code": "Yv",
+              "roi": [
+                0.22100518107414246,
+                0.4654248433589935,
+                0.1862019109725952,
+                0.32309412875175475
+              ]
+            },
+            {
+              "part": "terminals",
+              "code": "YY",
+              "roi": [
+                0.22100518107414246,
+                0.7153655844688416,
+                0.1862019109725952,
+                0.20117181601524348
+              ]
+            }
+          ],
+          "roi": [
+            0.22100518107414246,
+            0.3069258368015289,
+            0.1862019109725952,
+            0.6096115636825561
+          ],
+          "backend": "qwen3-vl-cix-npu-vision-cpu-text-320-closeup-v1",
+          "model_used": true,
+          "vision_ms": 490.887,
+          "total_ms": 11107.4
+        },
+        "http_seconds": 11.134567679022439
+      },
+      {
+        "status": 200,
+        "response": {
+          "checks": {
+            "black_in_com": true,
+            "red_in_voltage": true,
+            "dc_voltage_mode": true
+          },
+          "meter_range": "dc_20v",
+          "inference_ms": 10742.7,
+          "detail_mode": "separate-dial-terminals-v1",
+          "detail_views": [
+            {
+              "part": "dial",
+              "code": "Yv",
+              "roi": [
+                0.22100518107414246,
+                0.4654248433589935,
+                0.1862019109725952,
+                0.32309412875175475
+              ]
+            },
+            {
+              "part": "terminals",
+              "code": "YY",
+              "roi": [
+                0.22100518107414246,
+                0.7153655844688416,
+                0.1862019109725952,
+                0.20117181601524348
+              ]
+            }
+          ],
+          "roi": [
+            0.22100518107414246,
+            0.3069258368015289,
+            0.1862019109725952,
+            0.6096115636825561
+          ],
+          "backend": "qwen3-vl-cix-npu-vision-cpu-text-320-closeup-v1",
+          "model_used": true,
+          "vision_ms": 491.433,
+          "total_ms": 10847.1
+        },
+        "http_seconds": 10.871205531002488
+      }
+    ],
+    "summary": {
+      "n": 2,
+      "successful_http": 2,
+      "mean_seconds": 11.002886605012463,
+      "median_seconds": 11.002886605012463,
+      "min_seconds": 10.871205531002488,
+      "max_seconds": 11.134567679022439
+    },
+    "npu_worker_before": {
+      "ready": true,
+      "pid": 6717,
+      "socket": "/run/user/1000/labagent-npu-vision.sock",
+      "requests": 950,
+      "errors": 0,
+      "backend": "CIX NPU Qwen3-VL-4B vision",
+      "model": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-npu/vision.cix",
+      "npu_device_handles": [
+        "/dev/aipu"
+      ],
+      "last_duration_ms": 465.426
+    },
+    "npu_worker_after": {
+      "ready": true,
+      "pid": 6717,
+      "socket": "/run/user/1000/labagent-npu-vision.sock",
+      "requests": 954,
+      "errors": 0,
+      "backend": "CIX NPU Qwen3-VL-4B vision",
+      "model": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/models/qwen3-vl-4b-npu/vision.cix",
+      "npu_device_handles": [
+        "/dev/aipu"
+      ],
+      "last_duration_ms": 491.433
+    },
+    "npu_request_delta": 4
+  }
+}

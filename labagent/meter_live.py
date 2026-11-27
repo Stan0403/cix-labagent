@@ -227,6 +227,8 @@ def mount_meter_live(app, settings, store, engine, gateway):
                 "requires_fresh_frame": False,
                 "acceptance_mode": "single_frame_snapshot",
                 "detail_views": detail_views,
+                "diagnostic": response.get("diagnostic"),
+                "model_used": response.get("model_used"),
             }
         finally:
             with previews.lock:

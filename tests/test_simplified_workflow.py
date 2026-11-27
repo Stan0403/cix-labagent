@@ -1,10 +1,11 @@
 import io
+import json
 from datetime import datetime, timedelta, timezone
 
 import pytest
 from PIL import Image
 
-from labagent.models import Evidence, Measurement
+from labagent.models import Action, Evidence, Measurement
 
 
 def create(client):
@@ -76,6 +77,107 @@ def test_two_independent_equipment_frames_are_automatic_evidence(client, camera)
     actual = client.app.state.store.get(s['id'])
     actual.automation = 'agent'
     assert 'advance' in client.app.state.task_agent.available(actual)
+
+
+@pytest.mark.parametrize('second_result', ['complete', 'missing', 'same_image', 'paused'])
+def test_agent_equipment_verification_uses_one_model_decision(client, camera, monkeypatch, second_result):
+    frames, clock = camera
+    app = client.app
+    app.state.agent.settings.llm_base_url = 'http://127.0.0.1:8081/v1'
+    app.state.agent.settings.llm_model = 'test'
+    s = client.post('/api/sessions', json={
+        'plan_id': 'battery-voltage-15v', 'automation': 'agent'}).json()
+    s = action(client, s, 'confirm_step', confirmed=True, advance_after=True)['session']
+    calls = []
+
+    def choose(*args, **kwargs):
+        calls.append(1)
+        return {'content': json.dumps({
+            'tool': 'inspect_equipment', 'arguments': {'mode': 'fast'}, 'reason': '清点器材'})}
+
+    monkeypatch.setattr(app.state.agent.gateway, 'chat', choose)
+
+    def decide(state, request):
+        r = client.post(f"/api/sessions/{s['id']}/agent/decide", json={
+            'expected_revision': state['revision'], 'request_id': request})
+        assert r.status_code == 200, r.text
+        return r.json()['decision']
+
+    def execute(decision, variant):
+        r = client.post(f"/api/sessions/{s['id']}/agent/execute",
+                        data={'decision_id': decision['id']},
+                        files={'file': ('frame.png', image(variant), 'image/png')})
+        assert r.status_code == 200, r.text
+        return r.json()
+
+    first = decide(s, 'equipment-first')
+    assert first['model_used']
+    one = execute(first, 1)
+    assert not one['equipment_verified'] and one['session']['step'] == 1
+    second = decide(one['session'], 'equipment-second')
+    assert second['tool'] == 'inspect_equipment' and not second['model_used']
+    assert decide(one['session'], 'equipment-second-retry')['id'] == second['id']
+    clock['at'] += timedelta(seconds=2)
+    if second_result == 'missing':
+        frames['present']['battery'] = False
+    if second_result == 'paused':
+        perform = app.state.perform_observation
+
+        def pause_after_observation(*args, **kwargs):
+            result = perform(*args, **kwargs)
+            app.state.store.mutate(s['id'], 'test.pause', {}, lambda state:
+                app.state.engine.apply(state, Action(kind='pause')))
+            return result
+
+        monkeypatch.setattr(app.state, 'perform_observation', pause_after_observation)
+    two = execute(second, 1 if second_result == 'same_image' else 2)
+    assert len(calls) == 1
+    if second_result == 'complete':
+        assert two['equipment_verified'] and two['advanced']
+        assert two['session']['step'] == 2
+        again = execute(second, 2)
+        assert again['session']['revision'] == two['session']['revision']
+        assert again['session']['step'] == 2
+    else:
+        assert not two.get('advanced') and two['session']['step'] == 1
+        assert two['session']['status'] == ('paused' if second_result == 'paused' else 'running')
+    if second_result == 'missing':
+        import time
+        waiting = two['session']
+        assert waiting['interaction']['waiting_for_equipment']
+        path = f"/api/sessions/{s['id']}"
+
+        def preview():
+            r = client.post(path + '/equipment-preview', files={'file': ('p.png', image(4), 'image/png')})
+            assert r.status_code == 200, r.text
+            return r.json()['inventory_ready']
+
+        def still_waiting():
+            r = client.post(path + '/agent/decide', json={
+                'expected_revision': waiting['revision'], 'request_id': 'unchanged-scene'})
+            assert r.status_code == 409
+
+        for _ in range(3):
+            assert not preview()
+            still_waiting()
+        frames['present']['battery'] = True
+        assert not preview()
+        still_waiting()
+        frames['present']['battery'] = None
+        assert not preview()
+        frames['present']['battery'] = True
+        assert not preview()
+        time.sleep(.8)
+        still_waiting()  # A single frame cannot become stable merely by aging.
+        assert preview()
+        resumed = decide(waiting, 'inventory-returned')
+        assert not resumed['model_used']
+        first_back = execute(resumed, 4)
+        assert not first_back['equipment_verified']
+        clock['at'] += timedelta(seconds=2)
+        final = execute(decide(first_back['session'], 'inventory-verify'), 5)
+        assert final['advanced'] and final['session']['step'] == 2
+        assert len(calls) == 1
 
 
 @pytest.mark.parametrize('failure', ['same_image', 'too_soon', 'unknown', 'missing', 'expired', 'manual_only'])

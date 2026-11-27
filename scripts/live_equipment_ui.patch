@@ -1,0 +1,640 @@
+diff --git a/labagent/demo_api.py b/labagent/demo_api.py
+--- a/labagent/demo_api.py
++++ b/labagent/demo_api.py
+@@ -208,6 +208,40 @@
+                 except (ValueError, httpx.HTTPError):
+                     services[label] = {"ready": False}
+         return services
++
++    @app.post("/api/sessions/{session_id}/equipment-preview")
++    def equipment_preview(session_id: str, file: UploadFile = File()):
++        # Transient video frames must not change workflow evidence/revision or
++        # save one image and audit event per frame. Confirmation remains explicit.
++        try:
++            before = store.get(session_id)
++            if not before.plan or before.status != "running" or step(before)["gate"] != "equipment":
++                raise DomainError("请在运行中的器材检查步骤开启连续检测", 409)
++            raw = file.file.read(8_000_001)
++        finally:
++            file.file.close()
++        if len(raw) > 8_000_000:
++            raise DomainError("图片上限 8 MB", 413)
++        image = load_image(raw)
++        image.thumbnail((1200, 1200))
++        buffer = io.BytesIO()
++        image.save(buffer, format="JPEG", quality=85)
++        labels = before.plan["object_labels"]
++        result = gateway.request(settings.ocr_base_url, "", "inspect",
++                                 files={"file": ("scene.jpg", buffer.getvalue(), "image/jpeg")},
++                                 data={"labels": json.dumps(labels, ensure_ascii=False)})
++        present = result.get("present", {}) if isinstance(result, dict) else None
++        if (not isinstance(present, dict) or set(present) != set(labels)
++                or any(v is not None and not isinstance(v, bool) for v in present.values())):
++            raise DomainError("器材观察结果无效，请人工核对", 422)
++        after = store.get(session_id)
++        if (after.status != "running" or after.step != before.step or not after.plan
++                or after.plan["object_labels"] != labels):
++            raise DomainError("步骤已变化，请更新画面", 409)
++        return {"present": present, "boxes": valid_boxes(result.get("boxes", []), labels),
++                "backend": result.get("backend", "local-vision"), "preview": True,
++                "requires_confirmation": True, "step_id": step(before)["id"],
++                "inference_ms": result.get("inference_ms"), "total_ms": result.get("total_ms")}
+ 
+     @app.post("/api/sessions/{session_id}/observe")
+     def observe(session_id: str, file: UploadFile = File(), task: str = Form(default="reading"), roi: str = Form(default=""), automatic: bool = Form(default=False)):
+diff --git a/labagent/readings.py b/labagent/readings.py
+--- a/labagent/readings.py
++++ b/labagent/readings.py
+@@ -17,7 +17,11 @@
+         x, y, w, h = box
+         if not (0 <= x < 1 and 0 <= y < 1 and w > 0 and h > 0 and x+w <= 1.00001 and y+h <= 1.00001):
+             continue
+-        result.append({"label": item["label"], "bbox": box})
++        entry = {"label": item["label"], "bbox": box}
++        model_class = item.get("model_class")
++        if isinstance(model_class, str) and model_class in {"multimeter", "battery", "red_probe", "black_probe"}:
++            entry["model_class"] = model_class
++        result.append(entry)
+     return result
+ 
+ 
+diff --git a/labagent/web/demo.js b/labagent/web/demo.js
+--- a/labagent/web/demo.js
++++ b/labagent/web/demo.js
+@@ -1,194 +1,194 @@
+-"use strict";
+-const $=id=>document.getElementById(id);
+-const S={session:null,plan:null,config:null,media:null,stream:null,url:null,roi:null,drag:null,timer:null,
+-  observing:false,polling:false,busy:false,equipmentKey:null,candidateKey:null,candidateUrl:null,recorder:null,audio:null,autoEnabled:true,autoReplay:false,autoRunning:false,autoTimer:null,nextObserveAt:0,autoErrors:0,equipmentDirty:false,equipmentEdited:new Set(),boxes:[],boxTime:0};
+-const sourceNames={manual:"人工核对",vision_workflow:"视觉识别 · 工作流稳定性核验",vision_confirmed:"视觉识别 · 人工核对",ocr:"OCR",serial:"设备采集",replay:"软件演练"};
+-const gateNames={read_sop:"阅读要求",equipment:"器材核对",meter_setup:"仪表设置",manual_check:"现场核对",measurement:"测量",save:"保存",report:"报告"};
+-const eventNames={"session.created":"建立实验目标","user.action":"现场确认与执行","agent.action":"Agent 推进与验证","agent.decision":"Agent 选择感知工具","perception.objects":"器材观察","workflow.visual_check":"工作流视觉检查","perception.reading":"读取显示屏","agent.tool_result":"助手工具反馈","agent.tool":"助手执行","plan.attached":"载入文档计划"};
+-let toastTimer;
+-function toast(text,error=false){clearTimeout(toastTimer);$("toast").textContent=text;$("toast").className="toast"+(error?" error":"");toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),6500);}
+-function headers(){const token=sessionStorage.getItem("labagent_access_token");return token?{Authorization:"Bearer "+token}:{};}
+-async function api(path,options={}){const h={...headers(),...options.headers};if(options.body&&!(options.body instanceof FormData))h["Content-Type"]="application/json";const r=await fetch("/api"+path,{...options,headers:h});if(!r.ok){let message=`请求失败（${r.status}）`;try{const d=(await r.json()).detail;message=typeof d==="string"?d:Array.isArray(d)?d.map(x=>x.msg).join("；"):message;}catch{}if(r.status===401)$("settings-dialog").showModal();const error=new Error(message);error.status=r.status;throw error;}return r.json();}
+-const post=(path,body={})=>api(path,{method:"POST",body:JSON.stringify(body)});
+-async function attempt(fn){try{return await fn();}catch(e){toast(e.message,true);return null;}}
+-function elem(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
+-function gate(){return S.session?.steps[S.session.step]?.gate;}
+-function selected(){if(!S.session)throw new Error("请先启用一个实验计划");return S.session.id;}
+-function human(){if(!$("human-confirm").checked)throw new Error("请先现场核对，并勾选确认信息属实");}
+-function toggle(id,show){$(id).classList.toggle("hidden",!show);}
+-
+-async function loadPlans(preferred){const plans=await api("/plans"),select=$("plan-select");select.replaceChildren();for(const p of plans){const option=elem("option",p.title+(p.approved?" · 已审核":" · 待审核"));option.value=p.id;select.append(option);}select.value=preferred||S.plan?.id||"battery-voltage-15v";if(!select.value&&plans.length)select.value=plans[0].id;if(select.value)await selectPlan(select.value);}
+-async function selectPlan(id){S.plan=await api(`/plans/${id}`);$("approve-plan").checked=false;renderPlan();}
+-function renderPlan(){const p=S.plan;if(!p)return;$("plan-summary").textContent=`${p.title}\n${p.steps.length} 个步骤 · ${p.required_objects.length} 类器材\n${p.objective}\n${p.approved?"已审核计划，可再次核对后开始":"待审核：请对照原文检查拆解结果"}\n${p.review_notes.join("\n")}`;$("plan-title").value=p.title;$("plan-equipment").value=p.required_objects.map(x=>p.object_labels[x]).join("，");const m=p.measurement;$("plan-unit").value=m?.unit||"";$("plan-min").value=m?.min_value??"";$("plan-max").value=m?.max_value??"";$("plan-samples").value=m?.samples||1;for(const id of ["plan-unit","plan-min","plan-max","plan-samples"])$(id).disabled=!m;
+- $("plan-steps").replaceChildren();p.steps.forEach((s,i)=>{const li=elem("li"),title=elem("input"),instruction=elem("textarea"),type=elem("select");title.value=s.title;title.dataset.field="title";instruction.value=s.instruction;instruction.rows=2;instruction.dataset.field="instruction";for(const [key,label]of Object.entries(gateNames)){const o=elem("option",label);o.value=key;type.append(o);}type.value=s.gate;type.dataset.field="gate";li.dataset.index=i;li.append(title,instruction,type,elem("small",s.origin==="platform"?"平台补充的核对步骤":s.source_line?`要求文档第 ${s.source_line} 行`:s.origin==="model_suggestion"?"本地模型提出的建议，需对照原文":"实验计划"));$("plan-steps").append(li);});}
+-async function importPlan(){const file=$("document-file").files[0],text=$("requirements").value.trim();if(!file&&!text)throw new Error("请选择文档或粘贴实验要求");const form=new FormData();if(file)form.append("file",file);form.append("requirements",text);form.append("method",$("compile-method").value);$("import-plan").disabled=true;$("import-status").textContent="正在读取文档并拆解。本地模型处理较长文档时可能需要一至数分钟，请等待结果。";try{const p=await api("/plans/import",{method:"POST",body:form});await loadPlans(p.id);$("plan-details").open=true;$("import-status").textContent=`已生成 ${p.steps.length} 步计划，请审核后开始。`;toast("拆解完成，原文和步骤已保存");}catch(e){$("import-status").textContent=e.message;throw e;}finally{$("import-plan").disabled=false;}}
+-async function savePlan(){const p=structuredClone(S.plan);p.title=$("plan-title").value.trim();const names=$("plan-equipment").value.split(/[,，、]/).map(x=>x.trim()).filter(Boolean);const old=Object.entries(p.object_labels);p.object_labels={};p.required_objects=[];names.forEach((name,i)=>{const existing=old.find(([,v])=>v===name),key=existing?existing[0]:`equipment_${i+1}`;p.object_labels[key]=name;p.required_objects.push(key);});document.querySelectorAll("#plan-steps li").forEach(li=>{const s=p.steps[Number(li.dataset.index)];for(const f of ["title","instruction","gate"])s[f]=li.querySelector(`[data-field=${f}]`).value;});if(p.measurement){p.measurement.unit=$("plan-unit").value.trim();p.measurement.min_value=Number($("plan-min").value);p.measurement.max_value=Number($("plan-max").value);p.measurement.samples=Number($("plan-samples").value);}await api(`/plans/${p.id}`,{method:"PUT",body:JSON.stringify(p)});await loadPlans(p.id);toast("计划已保存，开始前请重新审核");}
+-async function startPlan(){
+- if(!$("approve-plan").checked)throw new Error("请先对照原文审核并勾选确认");
+- await post(`/plans/${S.plan.id}/approve`,{confirmed:true});
+- const s=await post("/sessions",{title:S.plan.title,mode:"live",plan_id:S.plan.id});
+- S.autoEnabled=true;await selectSession(s.id);toggle("plan-setup",false);
+- await action("confirm_step",{confirmed:true,note:"操作人员审核原文并点击开始实验"});
+- toast("计划已确认，Agent 将自动观察现场并推进已满足条件的步骤");
+-}
+-async function refreshList(){const list=await api("/sessions");$("sessions").replaceChildren();for(const s of list){const b=elem("button",undefined,"session-item"+(S.session?.id===s.id?" active":""));b.append(elem("span",s.title,"session-name"),elem("small",`${s.mode==="replay"?"软件演练":"真实会话"} · ${s.status==="completed"?"已完成":`第 ${s.step+1} 步`}`));b.onclick=()=>attempt(()=>selectSession(s.id));$("sessions").append(b);}}
+-async function selectSession(id){
+- stopObservation();clearTimeout(S.autoTimer);S.session=await api(`/sessions/${id}`);
+- S.equipmentKey=null;S.candidateKey=null;S.equipmentDirty=false;S.equipmentEdited.clear();S.boxes=[];S.nextObserveAt=0;
+- $("human-confirm").checked=false;sessionStorage.setItem("labagent_demo_session",id);render();
+- await Promise.all([refreshMessages(),refreshAudit(),refreshList()]);
+-}
+-function sync(s){if(S.session?.id!==s.id||s.revision<S.session.revision)return;if(s.step!==S.session.step){S.nextObserveAt=0;S.autoErrors=0;}S.session=s;render();}
+-function render(){const s=S.session;if(!s)return;toggle("empty",false);toggle("active",true);const current=s.steps[s.step],g=current.gate;$("session-title").textContent=s.title;$("session-description").textContent=`独立计划 · ${s.plan?.source_filename||"兼容流程"} · 证据本地保存`;$("mode").textContent=s.mode==="replay"?"软件演练 · 非真实测量":"真实实验";$("mode").className="pill "+(s.mode==="replay"?"replay":"good");$("safety-text").textContent=s.warning;$("step-summary").textContent=current.title;$("run-status").textContent={running:"进行中",paused:"已暂停，待复核",completed:"实验完成"}[s.status];const m=[...s.measurements].reverse().find(x=>!x.superseded);$("latest-reading").textContent=m?`${m.value} ${m.unit}`:"尚无已确认读数";$("latest-source").textContent=m?sourceNames[m.source]:"—";
+- $("steps").replaceChildren();s.steps.forEach((item,i)=>{const done=i<s.step||s.status==="completed",li=elem("li",undefined,done?"done":i===s.step?"current":"");li.append(elem("span",done?"✓":String(i+1),"step-dot"),elem("span",item.title));$("steps").append(li);});$("step-count").textContent=`${s.step+1} / ${s.steps.length}`;$("current-step").textContent=current.title;$("instruction").textContent=current.instruction;$("blockers").replaceChildren(...s.blockers.map(x=>elem("li",x)));
+- const decisions={read_sop:"先确认文档要求，再开始操作。",equipment:"核对所需器材；缺少器材时保持在本步，补齐后再次检查。",meter_setup:"需要现场核对档位和插孔，视觉模型不能代替此确认。",manual_check:"等待现场操作完成，再验证后续条件。",measurement:"调用读表工具获取候选，核对后才能形成正式测量。",save:"检查已有测量及来源，明确保存后再收尾。",report:"根据真实记录生成报告，保留异常和修正信息。"};$("agent-decision").textContent=s.status==="completed"?"目标已完成。可以导出报告，或保留历史后重新测量。":s.status==="paused"?s.pause_reason:s.blockers.length?decisions[g]||"等待当前条件满足。":"本步条件已满足，建议验证并进入下一步。";
+- $("advance").textContent=g==="report"?"验证并完成实验 →":"验证并进入下一步 →";$("advance").disabled=s.status!=="running"||S.observing;$("pause").disabled=s.status!=="running";toggle("resume",s.status==="paused");toggle("equipment-panel",g==="equipment");toggle("meter-panel",g==="meter_setup");toggle("measurement-panel",g==="measurement");toggle("save-measurement",g==="save");toggle("confirm-current",["read_sop","manual_check","meter_setup"].includes(g));toggle("agent-observe",(["equipment","measurement"].includes(g)||Boolean(s.agent_decision?.visual_rule))&&s.status==="running"&&(g!=="measurement"||s.plan?.measurement?.adapter==="voltage"));$("detect").disabled=g!=="equipment"||S.observing||s.status!=="running";$("ocr").disabled=g!=="measurement"||s.plan?.measurement?.adapter!=="voltage"||S.observing||s.status!=="running";$("confirm-current").disabled=s.status!=="running";$("confirm-equipment").disabled=s.status!=="running";$("manual-measurement").disabled=s.status!=="running";$("save-measurement").disabled=s.status!=="running";$("remeasure").disabled=!s.plan?.measurement||!["save","report","measurement","manual_check"].includes(g);$("manual-label").textContent=`人工读取 ${s.plan?.measurement?.quantity||"数值"} / ${s.plan?.measurement?.unit||"V"}`;$("risk").textContent=s.risk;toggle("risk",Boolean(s.risk));
+- const key=s.id+"/"+(s.plan?.id||"legacy");if(S.equipmentKey!==key){S.equipmentKey=key;$("equipment-checks").replaceChildren();const labels=s.plan?.object_labels||{};for(const [id,name]of Object.entries(labels)){const label=elem("label",undefined,"check"),box=elem("input");box.type="checkbox";box.value=id;box.className="equipment-checkbox";box.checked=(s.facts.objects?.value||[]).includes(id);label.append(box,document.createTextNode(name));const note=elem("small","尚未观察","obs-tag");note.dataset.object=id;label.append(note);$("equipment-checks").append(label);}}const observed=s.facts.observed_objects?.value||{};document.querySelectorAll("[data-object]").forEach(e=>{const v=observed[e.dataset.object];e.textContent=v===true?"观察建议：可见":v===false?"观察建议：未见":"观察建议：待核对";});if(s.facts.meter_range)$("meter-range").value=s.facts.meter_range.value;
+- $("measurement-history").replaceChildren();for(const v of [...s.measurements].reverse()){const tr=elem("tr");for(const text of [`${v.value} ${v.unit}`,sourceNames[v.source],v.superseded?"已被替代":v.saved?"已保存":"已确认，待保存",new Date(v.at).toLocaleTimeString()])tr.append(elem("td",text));$("measurement-history").append(tr);}if(!s.measurements.length){const tr=elem("tr"),td=elem("td","等待真实输入");td.colSpan=4;tr.append(td);$("measurement-history").append(tr);}if(s.agent_decision)$("agent-decision").textContent=S.equipmentDirty&&g==="equipment"?"已保留你的器材修正。请核对后最终确认提交，我再继续。":s.agent_decision.message;
+- if(g!=="equipment")S.boxes=[];drawObjects();
+- $("observe-loop").textContent=S.autoEnabled&&(s.mode==="live"||S.autoReplay)?"暂停自动指导":"恢复自动指导";
+- if(S.autoRunning)$("advance").disabled=true;
+- renderWorkflow();renderCandidate();scheduleAuto();}
+-async function renderCandidate(){const c=[...(S.session?.candidates||[])].reverse().find(x=>x.status==="pending");toggle("candidate-panel",Boolean(c));document.querySelector(".observation").classList.toggle("has-candidate",Boolean(c));if(!c){S.candidateKey=null;return;}const key=c.id+"/"+c.status;if(S.candidateKey===key)return;S.candidateKey=key;$("candidate-value").value=c.value??"";$("candidate-reason").textContent=c.reason;$("candidate-raw").textContent=c.raw_text;$("candidate-status").textContent=c.value===null?"等待自动重拍":S.autoEnabled?"连续读数核验中":"等待人工核对";try{const r=await fetch(`/api/sessions/${S.session.id}/candidates/${c.id}/image`,{headers:headers()});if(!r.ok)throw new Error();const blob=await r.blob();if(S.candidateKey!==key)return;if(S.candidateUrl)URL.revokeObjectURL(S.candidateUrl);S.candidateUrl=URL.createObjectURL(blob);$("candidate-image").src=S.candidateUrl;}catch{$("candidate-image").removeAttribute("src");}}
+-async function action(kind,extra={}){const id=selected();try{const r=await post(`/sessions/${id}/actions`,{kind,expected_revision:S.session.revision,...extra});if(S.session?.id===id)sync(r.session);toast(r.message,!r.accepted);await Promise.all([refreshAudit(),refreshList()]);return r;}catch(e){if(S.session?.id===id)sync(await api(`/sessions/${id}`));throw e;}}
+-async function humanAction(kind,extra={}){
+- human();try{const result=await action(kind,{confirmed:true,...extra});
+- if(kind==="confirm_equipment"&&result.accepted){S.equipmentDirty=false;S.equipmentEdited.clear();}
+- return result;}finally{$("human-confirm").checked=false;render();}
+-}
+-async function refreshAudit(){const id=selected(),events=await api(`/sessions/${id}/events`);if(S.session?.id!==id)return;$("audit").replaceChildren();for(const e of events.slice(-45).reverse()){const result=e.payload.result;const text=result?.message||e.payload.reason||"已记录";$("audit").append(elem("div",`${new Date(e.at).toLocaleTimeString()} · ${eventNames[e.kind]||e.kind} · ${text}`,result?.accepted===false?"denied":""));}}
+-async function refreshMessages(){const id=selected(),items=await api(`/sessions/${id}/messages`);if(S.session?.id!==id)return;$("messages").replaceChildren();for(const m of items){const d=elem("div",undefined,"message "+m.role);d.append(elem("span",m.role==="user"?"你":"LABAGENT","author"),document.createTextNode(m.content));$("messages").append(d);}if(!items.length)$("messages").append(elem("div","我会结合本次实验文档、当前步骤和已记录的现场状态进行指导。可先问‘现在该做什么？’。","message assistant"));$("messages").scrollTop=$("messages").scrollHeight;}
+-async function sendChat(){const id=selected(),message=$("chat-input").value.trim();if(!message||S.busy)return;S.busy=true;$("send-message").disabled=true;$("chat-tools").textContent="正在读取当前步骤和实验依据…";$("chat-input").value="";try{const r=await post(`/sessions/${id}/chat`,{message});if(S.session?.id!==id)return;sync(r.session);$("agent-mode").textContent={api:"本地模型",workflow:"状态指导",rules:"规则与检索",unavailable:"模型暂不可用"}[r.engine]||r.engine;$("chat-tools").replaceChildren(document.createTextNode(r.traces.map(t=>t.tool).join(" → ")));for(const p of r.proposals||[]){const b=elem("button","确认助手建议","secondary");b.onclick=()=>attempt(async()=>{if(S.session.revision!==p.expected_revision)throw new Error("状态已变化，请重新询问");await (p.kind==="save_measurement"?humanAction(p.kind):action(p.kind));});$("chat-tools").append(b);}await Promise.all([refreshMessages(),refreshAudit()]);}catch(e){$("chat-input").value=message;throw e;}finally{S.busy=false;$("send-message").disabled=false;}}
+-
+-function stopObservation(){clearInterval(S.timer);S.timer=null;$("observe-loop").textContent="连续观察";}
+-function stopMedia(){
+- stopObservation();clearTimeout(S.autoTimer);if(S.stream)S.stream.getTracks().forEach(t=>t.stop());S.stream=null;
+- $("camera").pause();$("camera").srcObject=null;S.media=null;S.roi=null;S.boxes=[];
+- if(S.url)URL.revokeObjectURL(S.url);S.url=null;
+- for(const id of ["camera","preview","roi-overlay","object-overlay"])toggle(id,false);
+- toggle("media-placeholder",true);$("roi-label").textContent="等待自动定位";
+-}
+-function overlay(w,h){
+- for(const id of ["roi-overlay","object-overlay"]){$(id).width=w;$(id).height=h;}
+- toggle("roi-overlay",true);toggle("media-placeholder",false);S.roi=null;S.boxes=[];$("roi-label").textContent="等待自动定位";
+-}
+-async function startCamera(){if(!navigator.mediaDevices?.getUserMedia)throw new Error("请在 O6 浏览器打开 http://127.0.0.1:8001，允许相机权限");stopMedia();S.stream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1920},height:{ideal:1080}},audio:false});const v=$("camera");v.srcObject=S.stream;toggle("camera",true);await v.play();S.media=v;overlay(v.videoWidth,v.videoHeight);}
+-async function loadImage(file){if(!file)return;stopMedia();S.url=URL.createObjectURL(file);const img=$("preview");img.src=S.url;await img.decode();toggle("preview",true);S.media=img;overlay(img.naturalWidth,img.naturalHeight);}
+-function point(e){const r=$("roi-overlay").getBoundingClientRect();return{x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))};}
+-function drawROI(){const c=$("roi-overlay"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);if(!S.roi)return;const[x,y,w,h]=S.roi;ctx.strokeStyle="#22a087";ctx.fillStyle="#22a08722";ctx.lineWidth=Math.max(2,c.width/300);ctx.fillRect(x*c.width,y*c.height,w*c.width,h*c.height);ctx.strokeRect(x*c.width,y*c.height,w*c.width,h*c.height);$("roi-label").textContent="显示屏已自动定位";}
+-async function capture(){if(!S.media)throw new Error("请先打开摄像头或载入实拍图");const c=document.createElement("canvas");c.width=S.media.videoWidth||S.media.naturalWidth;c.height=S.media.videoHeight||S.media.naturalHeight;c.getContext("2d").drawImage(S.media,0,0);return new Promise((ok,bad)=>c.toBlob(b=>b?ok(b):bad(new Error("无法截取画面")),"image/jpeg",.92));}
+-async function observe(task,automatic=false){
+- const id=selected();if(S.observing)return;
+- const captured=Date.now(),form=new FormData();form.append("file",await capture(),"frame.jpg");
+- form.append("task",task);form.append("automatic",String(automatic));
+- S.observing=true;render();$("observation-status").textContent=task==="reading"?"正在自动定位显示屏并调用 O6 Qwen3-VL 读取…":task==="step"?"正在调用 O6 Qwen3-VL 检查本步条件，请保持画面稳定…":"正在调用 O6 Qwen3-VL 核验器材…";
+- try{const r=await api(`/sessions/${id}/observe`,{method:"POST",body:form});if(S.session?.id!==id)return;
+- if(r.present){S.boxes=r.boxes||[];S.boxTime=captured;
+- document.querySelectorAll(".equipment-checkbox").forEach(b=>{if(!S.equipmentEdited.has(b.value))b.checked=r.present[b.value]===true;});}
+- if(r.roi){S.roi=r.roi;drawROI();}sync(r.session);drawObjects();
+- $("observation-status").textContent=r.message;await refreshAudit();
+- }finally{S.observing=false;S.nextObserveAt=S.session?.agent_decision?.tool==="advance"?0:Date.now()+8000;render();}
+-}
+-async function toggleObservation(){
+- const active=S.autoEnabled&&(S.session?.mode==="live"||S.autoReplay);
+- S.autoEnabled=!active;if(S.autoEnabled&&S.session?.mode==="replay")S.autoReplay=true;
+- S.nextObserveAt=0;clearTimeout(S.autoTimer);render();
+- toast(S.autoEnabled?"自动指导已恢复，将按当前状态选择工具":"自动指导已暂停，可手动观察或核对");
+-}
+-async function recordAudio(){if(S.recorder?.state==="recording"){S.recorder.stop();return;}if(!navigator.mediaDevices?.getUserMedia)throw new Error("请使用 O6 本机浏览器并允许麦克风权限");S.audio=await navigator.mediaDevices.getUserMedia({audio:true});const parts=[],rec=new MediaRecorder(S.audio);S.recorder=rec;rec.ondataavailable=e=>{if(e.data.size)parts.push(e.data);};let timeout;rec.onstop=()=>attempt(async()=>{clearTimeout(timeout);S.audio.getTracks().forEach(t=>t.stop());$("record-audio").textContent="转写中…";$("record-audio").disabled=true;try{const mime=rec.mimeType||"audio/webm",f=new FormData();f.append("file",new Blob(parts,{type:mime}),"question.webm");const r=await api("/audio/transcribe",{method:"POST",body:f});$("chat-input").value=r.text;toast("已转写，请核对后发送");}finally{$("record-audio").textContent="录音提问";$("record-audio").disabled=false;}});rec.start();$("record-audio").textContent="停止并转写";timeout=setTimeout(()=>{if(rec.state==="recording")rec.stop();},60000);}
+-async function download(format){const r=await fetch(`/api/sessions/${selected()}/export?format=${format}`,{headers:headers()});if(!r.ok)throw new Error("导出失败");const url=URL.createObjectURL(await r.blob()),a=elem("a");a.href=url;a.download=`LabAgent-${S.session.id}.${format}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+-async function services(){const data=await api("/service-status");$("service-status").replaceChildren();for(const[name,s]of Object.entries(data)){const row=elem("div",undefined,"service-row");row.append(elem("span",name),elem("span",s.ready?"已就绪":"未就绪","pill "+(s.ready?"good":"")));$("service-status").append(row);}}
+-async function boot(){S.config=await api("/health");$("connection").textContent="O6 服务在线";$("connection").className="pill good";await loadPlans();await refreshList();const old=sessionStorage.getItem("labagent_demo_session");if(old){try{await selectSession(old);}catch{sessionStorage.removeItem("labagent_demo_session");}}}
+-
+-function drawObjects(){
+- const c=$("object-overlay"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);
+- const stale=S.stream&&Date.now()-S.boxTime>30000;
+- const visible=S.media&&gate()==="equipment"&&S.boxes.length&&!stale;
+- toggle("object-overlay",Boolean(visible));if(!visible)return;
+- const palette=["#13a780","#e4a52b","#5589e7","#bd71df","#e97b62"];
+- ctx.lineWidth=Math.max(3,c.width/300);ctx.font=`600 ${Math.max(16,c.width/55)}px sans-serif`;
+- for(const item of S.boxes){
+- const [x,y,w,h]=item.bbox,keys=S.session.plan.required_objects,index=keys.indexOf(item.label);
+- const color=palette[Math.max(0,index)%palette.length],name=S.session.plan.object_labels[item.label]||item.label;
+- ctx.strokeStyle=color;ctx.strokeRect(x*c.width,y*c.height,w*c.width,h*c.height);
+- const pad=c.width/220,font=Math.max(16,c.width/55),width=ctx.measureText(name).width+pad*2;
+- const tx=Math.max(0,Math.min(x*c.width,c.width-width)),ty=Math.max(font+pad*2,y*c.height);
+- ctx.fillStyle=color;ctx.fillRect(tx,ty-font-pad*2,width,font+pad*2);ctx.fillStyle="#fff";
+- ctx.fillText(name,tx+pad,ty-pad);
+- }
+-}
+-function scheduleAuto(){
+- clearTimeout(S.autoTimer);
+- const s=S.session,d=s?.agent_decision;
+- if(!s||!d?.autorun||!S.autoEnabled||(s.mode!=="live"&&!S.autoReplay)||s.status!=="running"||S.observing||S.autoRunning||document.hidden)return;
+- if(gate()==="equipment"&&S.equipmentDirty)return;
+- S.autoTimer=setTimeout(()=>attempt(runAuto),Math.max(0,S.nextObserveAt-Date.now()));
+-}
+-async function runAuto(){
+- const s=S.session,d=s?.agent_decision;
+- if(!s||!d?.autorun||!S.autoEnabled||S.observing||S.autoRunning||s.status!=="running")return;
+- S.autoRunning=true;
+- try{
+- if(["inspect_equipment","read_display","inspect_step"].includes(d.tool)){
+- if(!S.media)await startCamera();
+- await observe(d.tool==="inspect_equipment"?"objects":d.tool==="inspect_step"?"step":"reading",true);
+- }else if(["advance","report","save_measurement"].includes(d.tool)){
+- await action(d.tool,{automatic:true});S.nextObserveAt=0;
+- }
+- S.autoErrors=0;
+- }catch(e){
+- if(["NotAllowedError","NotFoundError","NotReadableError"].includes(e.name)){
+- S.autoEnabled=false;toast("自动观察需要可用相机及权限，请允许相机后恢复自动指导",true);
+- }else if(e.status===429||/视觉模型忙/.test(e.message)){S.nextObserveAt=Date.now()+8000;$("observation-status").textContent="本地视觉模型忙，我会稍后自动重试。";
+- }else{
+- S.autoErrors++;S.nextObserveAt=Date.now()+10000;
+- $("observation-status").textContent=`本次自动观察未完成：${e.message}。我将再次尝试；请调整镜头或光照。`;
+- if(S.autoErrors>=3){await action("pause",{automatic:true,note:"连续三次自动观察未完成，请复核镜头、模型状态，必要时请教师介入"});S.autoErrors=0;}
+- }
+- }finally{S.autoRunning=false;render();}
+-}
+-document.addEventListener("change",event=>{
+- if(event.target.matches(".equipment-checkbox")){S.equipmentDirty=true;S.equipmentEdited.add(event.target.value);clearTimeout(S.autoTimer);render();}
+-});
+-document.addEventListener("visibilitychange",()=>scheduleAuto());
+-setInterval(drawObjects,1000);
+-
+-function renderWorkflow(){
+- const s=S.session,d=s.agent_decision,g=gate();
+- const automatic=S.autoEnabled&&(s.mode==="live"||S.autoReplay);
+- const visual=Boolean(d?.visual_rule),measurement=g==="measurement"&&s.plan?.measurement?.adapter==="voltage";
+- toggle("workflow-check-panel",visual||measurement);
+- $("workflow-checks").replaceChildren();
+- if(visual){
+-  $("workflow-check-title").textContent=d.checks?.title||"本步自动视觉检查";
+-  const check=d.checks;
+-  if(check){for(const[key,label]of Object.entries(check.labels)){
+-   const value=check.checks[key],row=elem("div",undefined,"workflow-check-row");
+-   row.append(elem("span",label),elem("strong",value===true?"✓ 通过":value===false?"未满足":"待看清",value===true?"check-pass":value===false?"check-fail":"check-unknown"));
+-   $("workflow-checks").append(row);
+-  }}else $("workflow-checks").append(elem("p","将自动拍摄并逐项核验，无需先点击人工确认。","muted small"));
+- }else if(measurement){
+-  $("workflow-check-title").textContent="自动读数与稳定性核验";
+-  $("workflow-checks").append(elem("p","连续采集两张不同画面，读数相差不超过 0.02 V 才自动记录；不稳定或看不清时重拍。","muted small"));
+- }
+- const useManual=s.status==="paused"||g==="equipment"||!automatic||(!visual&&!measurement&&["read_sop","manual_check","meter_setup"].includes(g));
+- toggle("human-confirm-label",useManual);
+- toggle("confirm-current",["read_sop","manual_check","meter_setup"].includes(g)&&(!visual||!automatic));
+- toggle("meter-panel",g==="meter_setup"&&(!visual||!automatic));
+- toggle("manual-takeover",(visual||measurement)&&automatic&&s.status==="running");
+- if(automatic&&s.status==="running"&&["inspect_step","inspect_equipment","read_display"].includes(d?.tool)){
+-  $("advance").textContent="检查通过后将自动继续";$("advance").disabled=true;
+- }
+- $("candidate-value").readOnly=automatic;
+- $("confirm-candidate").disabled=automatic||s.status!=="running";
+-}
+-function manualTakeover(){S.autoEnabled=false;clearTimeout(S.autoTimer);render();toast("已暂停自动检查。现在可以人工核对或修正，完成后可恢复自动指导。");}
+-
+-function bind(id,fn){$(id).addEventListener("click",()=>attempt(fn));}
+-bind("manual-takeover",manualTakeover);bind("show-setup",()=>toggle("plan-setup",true));bind("new-session",()=>{toggle("plan-setup",true);$("plan-setup").scrollIntoView({behavior:"smooth"});});bind("hide-setup",()=>toggle("plan-setup",false));bind("import-plan",importPlan);bind("save-plan",savePlan);bind("start-plan",startPlan);$("plan-select").onchange=()=>attempt(()=>selectPlan($("plan-select").value));bind("edit-plan",()=>{$("plan-details").open=!$("plan-details").open;});bind("view-source",()=>{$("source-text").textContent=S.plan.source_text||"此模板的原文见随项目提供的实验要求文档。";$("source-dialog").showModal();});bind("close-source",()=>$("source-dialog").close());
+-bind("rehearse",async()=>{if(!S.plan.approved)throw new Error("请先审核计划；也可使用已审核的电池示例");const r=await post(`/plans/${S.plan.id}/rehearse`,{scenario:"happy"});await selectSession(r.session.id);toggle("plan-setup",false);toast("独立软件演练完成，所有数据标为回放");});
+-bind("advance",()=>action("advance"));bind("pause",()=>action("pause"));bind("resume",()=>humanAction("resume"));bind("recheck",async()=>{if(confirm("现场档位、接线或器材发生变化，需要暂停并重新核对。继续？"))await action("invalidate_wiring");});bind("confirm-current",()=>humanAction("confirm_step",{meter_range:$("meter-range").value}));bind("confirm-equipment",()=>humanAction("confirm_equipment",{objects:[...document.querySelectorAll(".equipment-checkbox:checked")].map(x=>x.value)}));bind("manual-measurement",()=>{if(!$("manual-value").value.trim()||!Number.isFinite(Number($("manual-value").value)))throw new Error("请输入实际测量值");return humanAction("manual_measurement",{value:Number($("manual-value").value)});});
+-bind("confirm-candidate",()=>{const c=[...S.session.candidates].reverse().find(x=>x.status==="pending");if(!c)throw new Error("没有待核对候选");if(!$("candidate-value").value.trim()||!Number.isFinite(Number($("candidate-value").value)))throw new Error("请核对图片后填写实际读数");return humanAction("confirm_candidate",{candidate_id:c.id,value:Number($("candidate-value").value)});});bind("reject-candidate",()=>{const c=[...S.session.candidates].reverse().find(x=>x.status==="pending");if(c)return humanAction("reject_candidate",{candidate_id:c.id});});bind("save-measurement",()=>humanAction("save_measurement"));bind("remeasure",()=>action("remeasure"));
+-bind("start-camera",startCamera);bind("stop-camera",()=>{S.autoEnabled=false;stopMedia();render();});$("media-file").onchange=e=>attempt(()=>loadImage(e.target.files[0]));bind("detect",()=>observe("objects"));bind("ocr",()=>observe("reading"));bind("agent-observe",()=>observe(gate()==="equipment"?"objects":gate()==="measurement"?"reading":"step"));bind("observe-loop",toggleObservation);$("roi-overlay").onpointerdown=e=>{if(gate()!=="measurement")return;S.drag=point(e);e.target.setPointerCapture(e.pointerId);};$("roi-overlay").onpointermove=e=>{if(!S.drag)return;const p=point(e);S.roi=[Math.min(S.drag.x,p.x),Math.min(S.drag.y,p.y),Math.abs(S.drag.x-p.x),Math.abs(S.drag.y-p.y)];drawROI();};$("roi-overlay").onpointerup=()=>S.drag=null;
+-$("chat-form").onsubmit=e=>{e.preventDefault();attempt(sendChat);};$("chat-input").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();attempt(sendChat);}};document.querySelectorAll("[data-question]").forEach(b=>b.onclick=()=>{$("chat-input").value=b.dataset.question;attempt(sendChat);});bind("record-audio",recordAudio);document.querySelectorAll("[data-export]").forEach(b=>b.onclick=()=>attempt(()=>download(b.dataset.export)));bind("settings-button",async()=>{$("settings-dialog").showModal();await services();});bind("close-settings",()=>$("settings-dialog").close());bind("save-token",async()=>{sessionStorage.setItem("labagent_access_token",$("access-token").value.trim());await boot();$("settings-dialog").close();});
+-window.addEventListener("beforeunload",()=>{stopMedia();if(S.audio)S.audio.getTracks().forEach(t=>t.stop());if(S.candidateUrl)URL.revokeObjectURL(S.candidateUrl);});setInterval(async()=>{if(!S.session||S.polling||document.hidden)return;S.polling=true;const id=S.session.id;try{const s=await api(`/sessions/${id}`);if(S.session?.id===id)sync(s);}catch{}finally{S.polling=false;}},3000);attempt(boot);
++"use strict";
++const $=id=>document.getElementById(id);
++const S={session:null,plan:null,config:null,media:null,stream:null,url:null,roi:null,drag:null,timer:null,
++  liveEquipment:true,liveTimer:null,liveController:null,liveRunning:false,equipmentPreview:null,observing:false,polling:false,busy:false,equipmentKey:null,candidateKey:null,candidateUrl:null,recorder:null,audio:null,autoEnabled:true,autoReplay:false,autoRunning:false,autoTimer:null,nextObserveAt:0,autoErrors:0,equipmentDirty:false,equipmentEdited:new Set(),boxes:[],boxTime:0};
++const sourceNames={manual:"人工核对",vision_workflow:"视觉识别 · 工作流稳定性核验",vision_confirmed:"视觉识别 · 人工核对",ocr:"OCR",serial:"设备采集",replay:"软件演练"};
++const gateNames={read_sop:"阅读要求",equipment:"器材核对",meter_setup:"仪表设置",manual_check:"现场核对",measurement:"测量",save:"保存",report:"报告"};
++const eventNames={"session.created":"建立实验目标","user.action":"现场确认与执行","agent.action":"Agent 推进与验证","agent.decision":"Agent 选择感知工具","perception.objects":"器材观察","workflow.visual_check":"工作流视觉检查","perception.reading":"读取显示屏","agent.tool_result":"助手工具反馈","agent.tool":"助手执行","plan.attached":"载入文档计划"};
++let toastTimer;
++function toast(text,error=false){clearTimeout(toastTimer);$("toast").textContent=text;$("toast").className="toast"+(error?" error":"");toastTimer=setTimeout(()=>$("toast").classList.add("hidden"),6500);}
++function headers(){const token=sessionStorage.getItem("labagent_access_token");return token?{Authorization:"Bearer "+token}:{};}
++async function api(path,options={}){const h={...headers(),...options.headers};if(options.body&&!(options.body instanceof FormData))h["Content-Type"]="application/json";const r=await fetch("/api"+path,{...options,headers:h});if(!r.ok){let message=`请求失败（${r.status}）`;try{const d=(await r.json()).detail;message=typeof d==="string"?d:Array.isArray(d)?d.map(x=>x.msg).join("；"):message;}catch{}if(r.status===401)$("settings-dialog").showModal();const error=new Error(message);error.status=r.status;throw error;}return r.json();}
++const post=(path,body={})=>api(path,{method:"POST",body:JSON.stringify(body)});
++async function attempt(fn){try{return await fn();}catch(e){toast(e.message,true);return null;}}
++function elem(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
++function gate(){return S.session?.steps[S.session.step]?.gate;}
++function selected(){if(!S.session)throw new Error("请先启用一个实验计划");return S.session.id;}
++function human(){if(!$("human-confirm").checked)throw new Error("请先现场核对，并勾选确认信息属实");}
++function toggle(id,show){$(id).classList.toggle("hidden",!show);}
++
++async function loadPlans(preferred){const plans=await api("/plans"),select=$("plan-select");select.replaceChildren();for(const p of plans){const option=elem("option",p.title+(p.approved?" · 已审核":" · 待审核"));option.value=p.id;select.append(option);}select.value=preferred||S.plan?.id||"battery-voltage-15v";if(!select.value&&plans.length)select.value=plans[0].id;if(select.value)await selectPlan(select.value);}
++async function selectPlan(id){S.plan=await api(`/plans/${id}`);$("approve-plan").checked=false;renderPlan();}
++function renderPlan(){const p=S.plan;if(!p)return;$("plan-summary").textContent=`${p.title}\n${p.steps.length} 个步骤 · ${p.required_objects.length} 类器材\n${p.objective}\n${p.approved?"已审核计划，可再次核对后开始":"待审核：请对照原文检查拆解结果"}\n${p.review_notes.join("\n")}`;$("plan-title").value=p.title;$("plan-equipment").value=p.required_objects.map(x=>p.object_labels[x]).join("，");const m=p.measurement;$("plan-unit").value=m?.unit||"";$("plan-min").value=m?.min_value??"";$("plan-max").value=m?.max_value??"";$("plan-samples").value=m?.samples||1;for(const id of ["plan-unit","plan-min","plan-max","plan-samples"])$(id).disabled=!m;
++ $("plan-steps").replaceChildren();p.steps.forEach((s,i)=>{const li=elem("li"),title=elem("input"),instruction=elem("textarea"),type=elem("select");title.value=s.title;title.dataset.field="title";instruction.value=s.instruction;instruction.rows=2;instruction.dataset.field="instruction";for(const [key,label]of Object.entries(gateNames)){const o=elem("option",label);o.value=key;type.append(o);}type.value=s.gate;type.dataset.field="gate";li.dataset.index=i;li.append(title,instruction,type,elem("small",s.origin==="platform"?"平台补充的核对步骤":s.source_line?`要求文档第 ${s.source_line} 行`:s.origin==="model_suggestion"?"本地模型提出的建议，需对照原文":"实验计划"));$("plan-steps").append(li);});}
++async function importPlan(){const file=$("document-file").files[0],text=$("requirements").value.trim();if(!file&&!text)throw new Error("请选择文档或粘贴实验要求");const form=new FormData();if(file)form.append("file",file);form.append("requirements",text);form.append("method",$("compile-method").value);$("import-plan").disabled=true;$("import-status").textContent="正在读取文档并拆解。本地模型处理较长文档时可能需要一至数分钟，请等待结果。";try{const p=await api("/plans/import",{method:"POST",body:form});await loadPlans(p.id);$("plan-details").open=true;$("import-status").textContent=`已生成 ${p.steps.length} 步计划，请审核后开始。`;toast("拆解完成，原文和步骤已保存");}catch(e){$("import-status").textContent=e.message;throw e;}finally{$("import-plan").disabled=false;}}
++async function savePlan(){const p=structuredClone(S.plan);p.title=$("plan-title").value.trim();const names=$("plan-equipment").value.split(/[,，、]/).map(x=>x.trim()).filter(Boolean);const old=Object.entries(p.object_labels);p.object_labels={};p.required_objects=[];names.forEach((name,i)=>{const existing=old.find(([,v])=>v===name),key=existing?existing[0]:`equipment_${i+1}`;p.object_labels[key]=name;p.required_objects.push(key);});document.querySelectorAll("#plan-steps li").forEach(li=>{const s=p.steps[Number(li.dataset.index)];for(const f of ["title","instruction","gate"])s[f]=li.querySelector(`[data-field=${f}]`).value;});if(p.measurement){p.measurement.unit=$("plan-unit").value.trim();p.measurement.min_value=Number($("plan-min").value);p.measurement.max_value=Number($("plan-max").value);p.measurement.samples=Number($("plan-samples").value);}await api(`/plans/${p.id}`,{method:"PUT",body:JSON.stringify(p)});await loadPlans(p.id);toast("计划已保存，开始前请重新审核");}
++async function startPlan(){
++ if(!$("approve-plan").checked)throw new Error("请先对照原文审核并勾选确认");
++ await post(`/plans/${S.plan.id}/approve`,{confirmed:true});
++ const s=await post("/sessions",{title:S.plan.title,mode:"live",plan_id:S.plan.id});
++ S.autoEnabled=true;await selectSession(s.id);toggle("plan-setup",false);
++ await action("confirm_step",{confirmed:true,note:"操作人员审核原文并点击开始实验"});
++ toast("计划已确认，Agent 将自动观察现场并推进已满足条件的步骤");
++}
++async function refreshList(){const list=await api("/sessions");$("sessions").replaceChildren();for(const s of list){const b=elem("button",undefined,"session-item"+(S.session?.id===s.id?" active":""));b.append(elem("span",s.title,"session-name"),elem("small",`${s.mode==="replay"?"软件演练":"真实会话"} · ${s.status==="completed"?"已完成":`第 ${s.step+1} 步`}`));b.onclick=()=>attempt(()=>selectSession(s.id));$("sessions").append(b);}}
++async function selectSession(id){
++ stopEquipmentPreview();S.equipmentPreview=null;stopObservation();clearTimeout(S.autoTimer);S.session=await api(`/sessions/${id}`);
++ S.equipmentKey=null;S.candidateKey=null;S.equipmentDirty=false;S.equipmentEdited.clear();S.boxes=[];S.nextObserveAt=0;
++ $("human-confirm").checked=false;sessionStorage.setItem("labagent_demo_session",id);render();
++ await Promise.all([refreshMessages(),refreshAudit(),refreshList()]);
++}
++function sync(s){if(S.session?.id!==s.id||s.revision<S.session.revision)return;if(s.step!==S.session.step){S.nextObserveAt=0;S.autoErrors=0;}S.session=s;render();}
++function render(){const s=S.session;if(!s)return;toggle("empty",false);toggle("active",true);const current=s.steps[s.step],g=current.gate;$("session-title").textContent=s.title;$("session-description").textContent=`独立计划 · ${s.plan?.source_filename||"兼容流程"} · 证据本地保存`;$("mode").textContent=s.mode==="replay"?"软件演练 · 非真实测量":"真实实验";$("mode").className="pill "+(s.mode==="replay"?"replay":"good");$("safety-text").textContent=s.warning;$("step-summary").textContent=current.title;$("run-status").textContent={running:"进行中",paused:"已暂停，待复核",completed:"实验完成"}[s.status];const m=[...s.measurements].reverse().find(x=>!x.superseded);$("latest-reading").textContent=m?`${m.value} ${m.unit}`:"尚无已确认读数";$("latest-source").textContent=m?sourceNames[m.source]:"—";
++ $("steps").replaceChildren();s.steps.forEach((item,i)=>{const done=i<s.step||s.status==="completed",li=elem("li",undefined,done?"done":i===s.step?"current":"");li.append(elem("span",done?"✓":String(i+1),"step-dot"),elem("span",item.title));$("steps").append(li);});$("step-count").textContent=`${s.step+1} / ${s.steps.length}`;$("current-step").textContent=current.title;$("instruction").textContent=current.instruction;$("blockers").replaceChildren(...s.blockers.map(x=>elem("li",x)));
++ const decisions={read_sop:"先确认文档要求，再开始操作。",equipment:"核对所需器材；缺少器材时保持在本步，补齐后再次检查。",meter_setup:"需要现场核对档位和插孔，视觉模型不能代替此确认。",manual_check:"等待现场操作完成，再验证后续条件。",measurement:"调用读表工具获取候选，核对后才能形成正式测量。",save:"检查已有测量及来源，明确保存后再收尾。",report:"根据真实记录生成报告，保留异常和修正信息。"};$("agent-decision").textContent=s.status==="completed"?"目标已完成。可以导出报告，或保留历史后重新测量。":s.status==="paused"?s.pause_reason:s.blockers.length?decisions[g]||"等待当前条件满足。":"本步条件已满足，建议验证并进入下一步。";
++ $("advance").textContent=g==="report"?"验证并完成实验 →":"验证并进入下一步 →";$("advance").disabled=s.status!=="running"||S.observing;$("pause").disabled=s.status!=="running";toggle("resume",s.status==="paused");toggle("equipment-panel",g==="equipment");toggle("meter-panel",g==="meter_setup");toggle("measurement-panel",g==="measurement");toggle("save-measurement",g==="save");toggle("confirm-current",["read_sop","manual_check","meter_setup"].includes(g));toggle("agent-observe",(["equipment","measurement"].includes(g)||Boolean(s.agent_decision?.visual_rule))&&s.status==="running"&&(g!=="measurement"||s.plan?.measurement?.adapter==="voltage"));$("detect").disabled=g!=="equipment"||S.observing||s.status!=="running";$("ocr").disabled=g!=="measurement"||s.plan?.measurement?.adapter!=="voltage"||S.observing||s.status!=="running";$("confirm-current").disabled=s.status!=="running";$("confirm-equipment").disabled=s.status!=="running";$("manual-measurement").disabled=s.status!=="running";$("save-measurement").disabled=s.status!=="running";$("remeasure").disabled=!s.plan?.measurement||!["save","report","measurement","manual_check"].includes(g);$("manual-label").textContent=`人工读取 ${s.plan?.measurement?.quantity||"数值"} / ${s.plan?.measurement?.unit||"V"}`;$("risk").textContent=s.risk;toggle("risk",Boolean(s.risk));
++ renderEquipmentChecklist(s);if(s.facts.meter_range)$("meter-range").value=s.facts.meter_range.value;
++ $("measurement-history").replaceChildren();for(const v of [...s.measurements].reverse()){const tr=elem("tr");for(const text of [`${v.value} ${v.unit}`,sourceNames[v.source],v.superseded?"已被替代":v.saved?"已保存":"已确认，待保存",new Date(v.at).toLocaleTimeString()])tr.append(elem("td",text));$("measurement-history").append(tr);}if(!s.measurements.length){const tr=elem("tr"),td=elem("td","等待真实输入");td.colSpan=4;tr.append(td);$("measurement-history").append(tr);}if(s.agent_decision)$("agent-decision").textContent=S.equipmentDirty&&g==="equipment"?"已保留你的器材修正。请核对后最终确认提交，我再继续。":s.agent_decision.message;
++ if(g!=="equipment")S.boxes=[];drawObjects();
++ $("observe-loop").textContent=S.autoEnabled&&(s.mode==="live"||S.autoReplay)?"暂停自动指导":"恢复自动指导";
++ if(S.autoRunning)$("advance").disabled=true;
++ renderWorkflow();renderCandidate();scheduleAuto();renderEquipmentLive();}
++async function renderCandidate(){const c=[...(S.session?.candidates||[])].reverse().find(x=>x.status==="pending");toggle("candidate-panel",Boolean(c));document.querySelector(".observation").classList.toggle("has-candidate",Boolean(c));if(!c){S.candidateKey=null;return;}const key=c.id+"/"+c.status;if(S.candidateKey===key)return;S.candidateKey=key;$("candidate-value").value=c.value??"";$("candidate-reason").textContent=c.reason;$("candidate-raw").textContent=c.raw_text;$("candidate-status").textContent=c.value===null?"等待自动重拍":S.autoEnabled?"连续读数核验中":"等待人工核对";try{const r=await fetch(`/api/sessions/${S.session.id}/candidates/${c.id}/image`,{headers:headers()});if(!r.ok)throw new Error();const blob=await r.blob();if(S.candidateKey!==key)return;if(S.candidateUrl)URL.revokeObjectURL(S.candidateUrl);S.candidateUrl=URL.createObjectURL(blob);$("candidate-image").src=S.candidateUrl;}catch{$("candidate-image").removeAttribute("src");}}
++async function action(kind,extra={}){const id=selected();try{const r=await post(`/sessions/${id}/actions`,{kind,expected_revision:S.session.revision,...extra});if(S.session?.id===id)sync(r.session);toast(r.message,!r.accepted);await Promise.all([refreshAudit(),refreshList()]);return r;}catch(e){if(S.session?.id===id)sync(await api(`/sessions/${id}`));throw e;}}
++async function humanAction(kind,extra={}){
++ human();try{const result=await action(kind,{confirmed:true,...extra});
++ if(kind==="confirm_equipment"&&result.accepted){S.equipmentDirty=false;S.equipmentEdited.clear();}
++ return result;}finally{$("human-confirm").checked=false;render();}
++}
++async function refreshAudit(){const id=selected(),events=await api(`/sessions/${id}/events`);if(S.session?.id!==id)return;$("audit").replaceChildren();for(const e of events.slice(-45).reverse()){const result=e.payload.result;const text=result?.message||e.payload.reason||"已记录";$("audit").append(elem("div",`${new Date(e.at).toLocaleTimeString()} · ${eventNames[e.kind]||e.kind} · ${text}`,result?.accepted===false?"denied":""));}}
++async function refreshMessages(){const id=selected(),items=await api(`/sessions/${id}/messages`);if(S.session?.id!==id)return;$("messages").replaceChildren();for(const m of items){const d=elem("div",undefined,"message "+m.role);d.append(elem("span",m.role==="user"?"你":"LABAGENT","author"),document.createTextNode(m.content));$("messages").append(d);}if(!items.length)$("messages").append(elem("div","我会结合本次实验文档、当前步骤和已记录的现场状态进行指导。可先问‘现在该做什么？’。","message assistant"));$("messages").scrollTop=$("messages").scrollHeight;}
++async function sendChat(){const id=selected(),message=$("chat-input").value.trim();if(!message||S.busy)return;S.busy=true;$("send-message").disabled=true;$("chat-tools").textContent="正在读取当前步骤和实验依据…";$("chat-input").value="";try{const r=await post(`/sessions/${id}/chat`,{message});if(S.session?.id!==id)return;sync(r.session);$("agent-mode").textContent={api:"本地模型",workflow:"状态指导",rules:"规则与检索",unavailable:"模型暂不可用"}[r.engine]||r.engine;$("chat-tools").replaceChildren(document.createTextNode(r.traces.map(t=>t.tool).join(" → ")));for(const p of r.proposals||[]){const b=elem("button","确认助手建议","secondary");b.onclick=()=>attempt(async()=>{if(S.session.revision!==p.expected_revision)throw new Error("状态已变化，请重新询问");await (p.kind==="save_measurement"?humanAction(p.kind):action(p.kind));});$("chat-tools").append(b);}await Promise.all([refreshMessages(),refreshAudit()]);}catch(e){$("chat-input").value=message;throw e;}finally{S.busy=false;$("send-message").disabled=false;}}
++
++function stopObservation(){clearInterval(S.timer);S.timer=null;$("observe-loop").textContent="连续观察";}
++function stopMedia(){
++ stopEquipmentPreview();S.equipmentPreview=null;stopObservation();clearTimeout(S.autoTimer);if(S.stream)S.stream.getTracks().forEach(t=>t.stop());S.stream=null;
++ $("camera").pause();$("camera").srcObject=null;S.media=null;S.roi=null;S.boxes=[];
++ if(S.url)URL.revokeObjectURL(S.url);S.url=null;
++ for(const id of ["camera","preview","roi-overlay","object-overlay"])toggle(id,false);
++ toggle("media-placeholder",true);$("roi-label").textContent="等待自动定位";
++}
++function overlay(w,h){
++ for(const id of ["roi-overlay","object-overlay"]){$(id).width=w;$(id).height=h;}
++ toggle("roi-overlay",true);toggle("media-placeholder",false);S.roi=null;S.boxes=[];$("roi-label").textContent="等待自动定位";
++}
++async function startCamera(){if(!navigator.mediaDevices?.getUserMedia)throw new Error("请在 O6 浏览器打开 http://127.0.0.1:8001，允许相机权限");stopMedia();S.stream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1920},height:{ideal:1080}},audio:false});const v=$("camera");v.srcObject=S.stream;toggle("camera",true);await v.play();S.media=v;overlay(v.videoWidth,v.videoHeight);renderEquipmentLive();}
++async function loadImage(file){if(!file)return;stopMedia();S.url=URL.createObjectURL(file);const img=$("preview");img.src=S.url;await img.decode();toggle("preview",true);S.media=img;overlay(img.naturalWidth,img.naturalHeight);}
++function point(e){const r=$("roi-overlay").getBoundingClientRect();return{x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))};}
++function drawROI(){const c=$("roi-overlay"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);if(!S.roi)return;const[x,y,w,h]=S.roi;ctx.strokeStyle="#22a087";ctx.fillStyle="#22a08722";ctx.lineWidth=Math.max(2,c.width/300);ctx.fillRect(x*c.width,y*c.height,w*c.width,h*c.height);ctx.strokeRect(x*c.width,y*c.height,w*c.width,h*c.height);$("roi-label").textContent="显示屏已自动定位";}
++async function capture(){if(!S.media)throw new Error("请先打开摄像头或载入实拍图");const c=document.createElement("canvas");c.width=S.media.videoWidth||S.media.naturalWidth;c.height=S.media.videoHeight||S.media.naturalHeight;c.getContext("2d").drawImage(S.media,0,0);return new Promise((ok,bad)=>c.toBlob(b=>b?ok(b):bad(new Error("无法截取画面")),"image/jpeg",.92));}
++async function observe(task,automatic=false){
++ const id=selected();if(S.observing)return;
++ const captured=Date.now(),form=new FormData();form.append("file",await capture(),"frame.jpg");
++ form.append("task",task);form.append("automatic",String(automatic));
++ S.observing=true;render();$("observation-status").textContent=task==="reading"?"正在自动定位显示屏并调用 O6 Qwen3-VL 读取…":task==="step"?"正在调用 O6 Qwen3-VL 检查本步条件，请保持画面稳定…":"正在调用 YOLO 检测器材…";
++ try{const r=await api(`/sessions/${id}/observe`,{method:"POST",body:form});if(S.session?.id!==id)return;
++ if(r.present)acceptEquipmentPreview(r,captured);
++ if(r.roi){S.roi=r.roi;drawROI();}sync(r.session);drawObjects();
++ $("observation-status").textContent=r.message;await refreshAudit();
++ }finally{S.observing=false;S.nextObserveAt=S.session?.agent_decision?.tool==="advance"?0:Date.now()+8000;render();}
++}
++async function toggleObservation(){
++ const active=S.autoEnabled&&(S.session?.mode==="live"||S.autoReplay);
++ S.autoEnabled=!active;if(S.autoEnabled&&S.session?.mode==="replay")S.autoReplay=true;
++ S.nextObserveAt=0;clearTimeout(S.autoTimer);render();
++ toast(S.autoEnabled?"自动指导已恢复，将按当前状态选择工具":"自动指导已暂停，可手动观察或核对");
++}
++async function recordAudio(){if(S.recorder?.state==="recording"){S.recorder.stop();return;}if(!navigator.mediaDevices?.getUserMedia)throw new Error("请使用 O6 本机浏览器并允许麦克风权限");S.audio=await navigator.mediaDevices.getUserMedia({audio:true});const parts=[],rec=new MediaRecorder(S.audio);S.recorder=rec;rec.ondataavailable=e=>{if(e.data.size)parts.push(e.data);};let timeout;rec.onstop=()=>attempt(async()=>{clearTimeout(timeout);S.audio.getTracks().forEach(t=>t.stop());$("record-audio").textContent="转写中…";$("record-audio").disabled=true;try{const mime=rec.mimeType||"audio/webm",f=new FormData();f.append("file",new Blob(parts,{type:mime}),"question.webm");const r=await api("/audio/transcribe",{method:"POST",body:f});$("chat-input").value=r.text;toast("已转写，请核对后发送");}finally{$("record-audio").textContent="录音提问";$("record-audio").disabled=false;}});rec.start();$("record-audio").textContent="停止并转写";timeout=setTimeout(()=>{if(rec.state==="recording")rec.stop();},60000);}
++async function download(format){const r=await fetch(`/api/sessions/${selected()}/export?format=${format}`,{headers:headers()});if(!r.ok)throw new Error("导出失败");const url=URL.createObjectURL(await r.blob()),a=elem("a");a.href=url;a.download=`LabAgent-${S.session.id}.${format}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
++async function services(){const data=await api("/service-status");$("service-status").replaceChildren();for(const[name,s]of Object.entries(data)){const row=elem("div",undefined,"service-row");row.append(elem("span",name),elem("span",s.ready?"已就绪":"未就绪","pill "+(s.ready?"good":"")));$("service-status").append(row);}}
++async function boot(){S.config=await api("/health");$("connection").textContent="O6 服务在线";$("connection").className="pill good";await loadPlans();await refreshList();const old=sessionStorage.getItem("labagent_demo_session");if(old){try{await selectSession(old);}catch{sessionStorage.removeItem("labagent_demo_session");}}}
++
++function drawObjects(){
++ const c=$("object-overlay"),ctx=c.getContext("2d");ctx.clearRect(0,0,c.width,c.height);
++ const stale=S.stream&&Date.now()-S.boxTime>(S.liveEquipment?2500:30000);
++ const visible=S.media&&gate()==="equipment"&&S.boxes.length&&!stale;
++ toggle("object-overlay",Boolean(visible));if(!visible)return;
++ const palette=["#13a780","#e4a52b","#5589e7","#bd71df","#e97b62"];
++ ctx.lineWidth=Math.max(3,c.width/300);ctx.font=`600 ${Math.max(16,c.width/55)}px sans-serif`;
++ for(const item of S.boxes){
++ const [x,y,w,h]=item.bbox,keys=S.session.plan.required_objects,index=keys.indexOf(item.label);
++ const color=item.model_class==="red_probe"?"#d94b4b":item.model_class==="black_probe"?"#343a46":palette[Math.max(0,index)%palette.length],name=equipmentBoxName(item);
++ ctx.strokeStyle=color;ctx.strokeRect(x*c.width,y*c.height,w*c.width,h*c.height);
++ const pad=c.width/220,font=Math.max(16,c.width/55),width=ctx.measureText(name).width+pad*2;
++ const tx=Math.max(0,Math.min(x*c.width,c.width-width)),ty=Math.max(font+pad*2,y*c.height);
++ ctx.fillStyle=color;ctx.fillRect(tx,ty-font-pad*2,width,font+pad*2);ctx.fillStyle="#fff";
++ ctx.fillText(name,tx+pad,ty-pad);
++ }
++}
++function scheduleAuto(){
++ clearTimeout(S.autoTimer);
++ const s=S.session,d=s?.agent_decision;
++ if(!s||!d?.autorun||!S.autoEnabled||(s.mode!=="live"&&!S.autoReplay)||s.status!=="running"||S.observing||S.autoRunning||document.hidden)return;
++ if(gate()==="equipment"&&S.equipmentDirty)return;
++ S.autoTimer=setTimeout(()=>attempt(runAuto),Math.max(0,S.nextObserveAt-Date.now()));
++}
++async function runAuto(){
++ const s=S.session,d=s?.agent_decision;
++ if(!s||!d?.autorun||!S.autoEnabled||S.observing||S.autoRunning||s.status!=="running")return;
++ S.autoRunning=true;
++ try{
++ if(["inspect_equipment","read_display","inspect_step"].includes(d.tool)){
++ if(!S.media)await startCamera();
++ await observe(d.tool==="inspect_equipment"?"objects":d.tool==="inspect_step"?"step":"reading",true);
++ }else if(["advance","report","save_measurement"].includes(d.tool)){
++ await action(d.tool,{automatic:true});S.nextObserveAt=0;
++ }
++ S.autoErrors=0;
++ }catch(e){
++ if(["NotAllowedError","NotFoundError","NotReadableError"].includes(e.name)){
++ S.autoEnabled=false;toast("自动观察需要可用相机及权限，请允许相机后恢复自动指导",true);
++ }else if(e.status===429||/视觉模型忙/.test(e.message)){S.nextObserveAt=Date.now()+8000;$("observation-status").textContent="本地视觉模型忙，我会稍后自动重试。";
++ }else{
++ S.autoErrors++;S.nextObserveAt=Date.now()+10000;
++ $("observation-status").textContent=`本次自动观察未完成：${e.message}。我将再次尝试；请调整镜头或光照。`;
++ if(S.autoErrors>=3){await action("pause",{automatic:true,note:"连续三次自动观察未完成，请复核镜头、模型状态，必要时请教师介入"});S.autoErrors=0;}
++ }
++ }finally{S.autoRunning=false;render();}
++}
++document.addEventListener("change",event=>{
++ if(event.target.matches(".equipment-part")){syncProbeAggregates();S.equipmentDirty=true;S.equipmentEdited.add(event.target.dataset.parent);clearTimeout(S.autoTimer);render();}
++ if(event.target.matches(".equipment-checkbox")){S.equipmentDirty=true;S.equipmentEdited.add(event.target.value);clearTimeout(S.autoTimer);render();}
++});
++document.addEventListener("visibilitychange",()=>{scheduleAuto();scheduleEquipmentPreview();});
++setInterval(drawObjects,1000);
++
++function renderWorkflow(){
++ const s=S.session,d=s.agent_decision,g=gate();
++ const automatic=S.autoEnabled&&(s.mode==="live"||S.autoReplay);
++ const visual=Boolean(d?.visual_rule),measurement=g==="measurement"&&s.plan?.measurement?.adapter==="voltage";
++ toggle("workflow-check-panel",visual||measurement);
++ $("workflow-checks").replaceChildren();
++ if(visual){
++  $("workflow-check-title").textContent=d.checks?.title||"本步自动视觉检查";
++  const check=d.checks;
++  if(check){for(const[key,label]of Object.entries(check.labels)){
++   const value=check.checks[key],row=elem("div",undefined,"workflow-check-row");
++   row.append(elem("span",label),elem("strong",value===true?"✓ 通过":value===false?"未满足":"待看清",value===true?"check-pass":value===false?"check-fail":"check-unknown"));
++   $("workflow-checks").append(row);
++  }}else $("workflow-checks").append(elem("p","将自动拍摄并逐项核验，无需先点击人工确认。","muted small"));
++ }else if(measurement){
++  $("workflow-check-title").textContent="自动读数与稳定性核验";
++  $("workflow-checks").append(elem("p","连续采集两张不同画面，读数相差不超过 0.02 V 才自动记录；不稳定或看不清时重拍。","muted small"));
++ }
++ const useManual=s.status==="paused"||g==="equipment"||!automatic||(!visual&&!measurement&&["read_sop","manual_check","meter_setup"].includes(g));
++ toggle("human-confirm-label",useManual);
++ toggle("confirm-current",["read_sop","manual_check","meter_setup"].includes(g)&&(!visual||!automatic));
++ toggle("meter-panel",g==="meter_setup"&&(!visual||!automatic));
++ toggle("manual-takeover",(visual||measurement)&&automatic&&s.status==="running");
++ if(automatic&&s.status==="running"&&["inspect_step","inspect_equipment","read_display"].includes(d?.tool)){
++  $("advance").textContent="检查通过后将自动继续";$("advance").disabled=true;
++ }
++ $("candidate-value").readOnly=automatic;
++ $("confirm-candidate").disabled=automatic||s.status!=="running";
++}
++function manualTakeover(){S.autoEnabled=false;clearTimeout(S.autoTimer);render();toast("已暂停自动检查。现在可以人工核对或修正，完成后可恢复自动指导。");}
++
++function bind(id,fn){$(id).addEventListener("click",()=>attempt(fn));}
++bind("manual-takeover",manualTakeover);bind("show-setup",()=>toggle("plan-setup",true));bind("new-session",()=>{toggle("plan-setup",true);$("plan-setup").scrollIntoView({behavior:"smooth"});});bind("hide-setup",()=>toggle("plan-setup",false));bind("import-plan",importPlan);bind("save-plan",savePlan);bind("start-plan",startPlan);$("plan-select").onchange=()=>attempt(()=>selectPlan($("plan-select").value));bind("edit-plan",()=>{$("plan-details").open=!$("plan-details").open;});bind("view-source",()=>{$("source-text").textContent=S.plan.source_text||"此模板的原文见随项目提供的实验要求文档。";$("source-dialog").showModal();});bind("close-source",()=>$("source-dialog").close());
++bind("rehearse",async()=>{if(!S.plan.approved)throw new Error("请先审核计划；也可使用已审核的电池示例");const r=await post(`/plans/${S.plan.id}/rehearse`,{scenario:"happy"});await selectSession(r.session.id);toggle("plan-setup",false);toast("独立软件演练完成，所有数据标为回放");});
++bind("advance",()=>action("advance"));bind("pause",()=>action("pause"));bind("resume",()=>humanAction("resume"));bind("recheck",async()=>{if(confirm("现场档位、接线或器材发生变化，需要暂停并重新核对。继续？"))await action("invalidate_wiring");});bind("confirm-current",()=>humanAction("confirm_step",{meter_range:$("meter-range").value}));bind("confirm-equipment",()=>humanAction("confirm_equipment",{objects:[...document.querySelectorAll(".equipment-checkbox:checked")].map(x=>x.value)}));bind("manual-measurement",()=>{if(!$("manual-value").value.trim()||!Number.isFinite(Number($("manual-value").value)))throw new Error("请输入实际测量值");return humanAction("manual_measurement",{value:Number($("manual-value").value)});});
++bind("confirm-candidate",()=>{const c=[...S.session.candidates].reverse().find(x=>x.status==="pending");if(!c)throw new Error("没有待核对候选");if(!$("candidate-value").value.trim()||!Number.isFinite(Number($("candidate-value").value)))throw new Error("请核对图片后填写实际读数");return humanAction("confirm_candidate",{candidate_id:c.id,value:Number($("candidate-value").value)});});bind("reject-candidate",()=>{const c=[...S.session.candidates].reverse().find(x=>x.status==="pending");if(c)return humanAction("reject_candidate",{candidate_id:c.id});});bind("save-measurement",()=>humanAction("save_measurement"));bind("remeasure",()=>action("remeasure"));
++bind("toggle-equipment-live",()=>{S.liveEquipment=!S.liveEquipment;renderEquipmentLive();});bind("start-camera",startCamera);bind("stop-camera",()=>{S.autoEnabled=false;stopMedia();render();});$("media-file").onchange=e=>attempt(()=>loadImage(e.target.files[0]));bind("detect",()=>observe("objects"));bind("ocr",()=>observe("reading"));bind("agent-observe",()=>observe(gate()==="equipment"?"objects":gate()==="measurement"?"reading":"step"));bind("observe-loop",toggleObservation);$("roi-overlay").onpointerdown=e=>{if(gate()!=="measurement")return;S.drag=point(e);e.target.setPointerCapture(e.pointerId);};$("roi-overlay").onpointermove=e=>{if(!S.drag)return;const p=point(e);S.roi=[Math.min(S.drag.x,p.x),Math.min(S.drag.y,p.y),Math.abs(S.drag.x-p.x),Math.abs(S.drag.y-p.y)];drawROI();};$("roi-overlay").onpointerup=()=>S.drag=null;
++$("chat-form").onsubmit=e=>{e.preventDefault();attempt(sendChat);};$("chat-input").onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();attempt(sendChat);}};document.querySelectorAll("[data-question]").forEach(b=>b.onclick=()=>{$("chat-input").value=b.dataset.question;attempt(sendChat);});bind("record-audio",recordAudio);document.querySelectorAll("[data-export]").forEach(b=>b.onclick=()=>attempt(()=>download(b.dataset.export)));bind("settings-button",async()=>{$("settings-dialog").showModal();await services();});bind("close-settings",()=>$("settings-dialog").close());bind("save-token",async()=>{sessionStorage.setItem("labagent_access_token",$("access-token").value.trim());await boot();$("settings-dialog").close();});
++window.addEventListener("beforeunload",()=>{stopMedia();if(S.audio)S.audio.getTracks().forEach(t=>t.stop());if(S.candidateUrl)URL.revokeObjectURL(S.candidateUrl);});setInterval(async()=>{if(!S.session||S.polling||document.hidden)return;S.polling=true;const id=S.session.id;try{const s=await api(`/sessions/${id}`);if(S.session?.id===id)sync(s);}catch{}finally{S.polling=false;}},3000);attempt(boot);
+diff --git a/labagent/web/demo.html b/labagent/web/demo.html
+--- a/labagent/web/demo.html
++++ b/labagent/web/demo.html
+@@ -1,36 +1,36 @@
+-<!doctype html>
+-<html lang="zh-CN">
+-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LabAgent · 从实验要求到现场指导</title><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/demo.css?v=workflow-1"><script src="/static/demo.js?v=workflow-1" defer></script></head>
+-<body>
+-<header class="topbar"><a class="brand" href="/"><span class="brand-icon">L<span>·</span></span><span>LabAgent<small>DOCUMENT → PLAN → OBSERVE → GUIDE</small></span></a><div class="top-status"><span id="connection" class="pill">连接中</span><a class="secondary" href="/static/training-photos.html">ѵ������</a><button id="show-setup" class="secondary">实验计划</button><button id="settings-button" class="ghost">运行状态</button></div></header>
+-<div class="workspace"><aside class="sidebar"><div class="section-label">EXPERIMENTS <span>实验记录</span></div><button id="new-session" class="primary full">＋ 从实验要求开始</button><nav id="sessions" aria-label="实验记录"></nav><div class="sidebar-bottom"><p class="muted small">模型在 O6 本地运行。每次实验保留独立计划、现场确认和测量来源。</p></div></aside>
+-<main>
+-<section id="plan-setup" class="panel setup-panel">
+- <div class="panel-title"><div><div class="eyebrow">START WITH YOUR EXPERIMENT</div><h1>把实验要求，变成现场指导</h1></div><button id="hide-setup" class="ghost">收起</button></div>
+- <div class="setup-grid"><div><label for="document-file">上传实验要求文档</label><input id="document-file" type="file" accept=".pdf,.docx,.txt,.md"><p class="muted small">支持文字 PDF、Word、TXT、Markdown，最多 8 MB。扫描件请先转换为文字。</p><label for="requirements">或粘贴实验流程与补充要求</label><textarea id="requirements" rows="7" placeholder="实验名称、器材、操作步骤、测量要求、注意事项…"></textarea><div class="action-row wrap"><select id="compile-method" aria-label="拆解方式"><option value="auto">自动拆解</option><option value="rules">按文档编号拆解</option><option value="llm">由本地模型拆解</option></select><button id="import-plan" class="primary">读取并拆解流程</button></div><p id="import-status" class="muted small" role="status"></p></div>
+- <div><label for="plan-select">已有实验计划</label><select id="plan-select"></select><p class="muted small">默认提供 1.5 V 干电池示例；导入其他文档后生成独立计划。</p><div id="plan-summary" class="plan-summary"></div><div class="action-row wrap"><button id="edit-plan" class="secondary">查看与调整步骤</button><button id="view-source" class="ghost">查看原文</button></div><label class="check"><input id="approve-plan" type="checkbox">我已对照原文，核对器材、步骤、测量要求和现场条件</label><p class="muted small">开始后，工作流会自动使用摄像头检查当前步骤；首次请允许相机权限。</p><button id="start-plan" class="primary full">启用计划并开始自动指导 →</button><button id="rehearse" class="ghost full">运行独立软件演练（非真实测量）</button></div></div>
+- <details id="plan-details"><summary>拆解后的计划</summary><div class="plan-fields"><label>实验名称<input id="plan-title"></label><label>所需器材（用逗号分隔）<input id="plan-equipment"></label><label>测量单位<input id="plan-unit"></label><label>接收下限<input id="plan-min" type="number" step="any"></label><label>接收上限<input id="plan-max" type="number" step="any"></label><label>需要样本数<input id="plan-samples" type="number" min="1" max="10"></label></div><ol id="plan-steps" class="plan-editor"></ol><button id="save-plan" class="secondary">保存调整，重新审核</button></details>
+-</section>
+-<section class="page-heading"><div><div class="eyebrow">OBSERVE · DECIDE · ACT · VERIFY</div><h1 id="session-title">让每一步都有依据</h1><p id="session-description">先导入实验要求，或使用电池测量示例。</p></div><span id="mode" class="pill">未开始</span></section>
+-<div id="empty" class="empty-state"><div class="empty-symbol">⌁</div><h2>从要求文档开始，完成一次真实实验</h2><p>拆解计划 → 核对器材 → 逐步指导 → 观察测量 → 保存报告</p></div>
+-<div id="active" class="hidden">
+-<div class="safety-note"><span>!</span><p id="safety-text"></p></div>
+-<section class="summary-row"><div><small>当前步骤</small><strong id="step-summary">—</strong></div><div><small>流程状态</small><strong id="run-status">—</strong></div><div><small>最近读数</small><strong id="latest-reading">—</strong></div><div><small>数据来源</small><strong id="latest-source">—</strong></div></section>
+-<div class="main-grid">
+-<section class="panel workflow"><div class="panel-title"><h2>执行计划</h2><span id="step-count" class="pill subtle"></span></div><ol id="steps"></ol><div class="current-instruction"><div class="eyebrow">CURRENT TASK</div><h3 id="current-step"></h3><p id="instruction"></p><ul id="blockers"></ul></div><div class="agent-decision"><span class="eyebrow">WORKFLOW · 自动检查</span><p id="agent-decision"></p><button id="agent-observe" class="secondary full hidden">按当前步骤观察现场</button></div><div id="workflow-check-panel" class="gate-panel hidden"><h3 id="workflow-check-title">本步自动检查</h3><div id="workflow-checks" aria-live="polite"></div></div><button id="advance" class="primary full">验证并进入下一步 →</button><div class="action-row wrap"><button id="pause" class="ghost">暂停指导</button><button id="resume" class="secondary hidden">确认恢复</button><button id="recheck" class="danger-text">现场变化 / 重新核对</button></div><p id="risk" class="risk hidden"></p></section>
+-<section class="panel observation"><div class="panel-title"><h2>现场观察与核对</h2><span id="observation-type" class="pill subtle">本地感知</span></div>
+-<div class="media-area"><div id="media-placeholder"><span>◎</span><p>进入检查步骤后，工作流会自动请求相机并采集画面</p></div><video id="camera" class="hidden" autoplay muted playsinline></video><img id="preview" class="hidden" alt="实验画面"><canvas id="object-overlay" class="hidden"></canvas><canvas id="roi-overlay" class="hidden"></canvas></div><p class="muted small">器材框来自最近一次模型观察；显示屏自动定位并裁剪。<span id="roi-label">等待自动定位</span></p>
+-<div class="action-row wrap"><button id="start-camera" class="secondary">打开摄像头</button><button id="stop-camera" class="ghost">关闭</button><label class="file-button compact">载入实拍图<input id="media-file" type="file" accept="image/jpeg,image/png,image/webp"></label></div><div class="action-row wrap"><button id="detect" class="secondary">观察器材</button><button id="ocr" class="secondary">识别显示屏</button><button id="observe-loop" class="ghost">连续观察</button></div><p id="observation-status" class="muted small" role="status"></p>
+-<div id="equipment-panel" class="gate-panel hidden"><h3>对照画面核对器材</h3><p class="muted small">模型会自动勾选；请修改误检和漏检，核对实物后最终提交。</p><div id="equipment-checks" class="equipment-grid"></div><button id="confirm-equipment" class="secondary full">最终确认并提交器材清单</button></div>
+-<div id="meter-panel" class="gate-panel hidden"><h3>核对直流电压档位和插孔</h3><p>黑表笔插 COM；红表笔插 V/Ω；旋钮处于直流电压档。不要使用 A/mA 孔或电流档跨接电池。</p><select id="meter-range"><option value="">请选择现场实际档位</option><option value="dc_2v">直流 2 V</option><option value="dc_20v">直流 20 V</option><option value="dc_200mv">直流 200 mV</option></select></div>
+-<label id="human-confirm-label" class="check"><input id="human-confirm" type="checkbox">我已在现场核对当前操作或测量，确认信息属实</label><button id="confirm-current" class="secondary full">人工确认本步（备用）</button><button id="manual-takeover" class="ghost full hidden">暂停自动检查，改为人工核对 / 修正</button>
+-<div id="candidate-panel" class="candidate-panel hidden"><div class="panel-title"><h3>读数候选 · 连续核验</h3><span id="candidate-status" class="pill"></span></div><img id="candidate-image" alt="候选读数的原始显示屏裁剪"><p id="candidate-reason"></p><label for="candidate-value">核对或修正后的电压 / V</label><input id="candidate-value" type="number" step="any"><div class="action-row wrap"><button id="confirm-candidate" class="primary">确认候选读数</button><button id="reject-candidate" class="ghost">拒绝并重拍</button></div><details><summary>查看模型原始输出</summary><pre id="candidate-raw"></pre></details></div>
+-<div id="measurement-panel" class="gate-panel hidden"><label id="manual-label" for="manual-value">人工读取数值</label><div class="measurement-input"><input id="manual-value" type="number" step="any" placeholder="输入现场实际读数"><button id="manual-measurement" class="secondary">确认人工读数</button></div></div><button id="save-measurement" class="primary full hidden">核对并保存全部测量</button><button id="remeasure" class="ghost full">重新测量 · 保留历史</button>
+-</section>
+-<section class="panel conversation"><div class="panel-title"><h2>实验助手</h2><span id="agent-mode" class="pill subtle">状态与知识</span></div><div class="quick-questions"><button data-question="现在做到哪一步了？">当前进度</button><button data-question="为什么还不能进入下一步？">检查原因</button><button data-question="请结合实验要求解释当前步骤的原理">实验原理</button></div><div id="messages" class="messages" aria-live="polite"></div><div id="chat-tools" class="muted small"></div><form id="chat-form"><label class="sr-only" for="chat-input">向助手提问</label><textarea id="chat-input" rows="3" placeholder="结合当前实验提问，或输入“下一步”“暂停”“重新测量”…"></textarea><div class="action-row"><button id="record-audio" type="button" class="ghost">录音提问</button><button id="send-message" type="submit" class="primary">发送 ↑</button></div></form><p class="muted small">语音在 O6 转写，核对文字后发送。档位、接触与收尾按规则自动检查；看不清时可人工接管。</p></section>
+-</div>
+-<section class="panel bottom-panel"><div class="panel-title"><h2>证据与实验记录</h2><div class="action-row wrap"><button data-export="md" class="secondary">导出实验报告</button><button data-export="csv" class="ghost">测量表 CSV</button><button data-export="json" class="ghost">完整证据 JSON</button></div></div><div class="bottom-grid"><div><h3>测量历史</h3><div class="table-scroll"><table><thead><tr><th>读数</th><th>来源</th><th>状态</th><th>时间</th></tr></thead><tbody id="measurement-history"></tbody></table></div></div><div><h3>观察 → 判断 → 操作 → 反馈</h3><div id="audit" class="audit"></div></div></div></section>
+-</div><footer>LabAgent · O6 本地实验助手<span>文档驱动 · 证据可追溯 · 规则约束执行</span></footer></main></div>
+-<dialog id="source-dialog"><div class="panel-title"><h2>实验要求原文</h2><button id="close-source" class="ghost">关闭</button></div><pre id="source-text"></pre></dialog>
+-<dialog id="settings-dialog"><div class="panel-title"><h2>运行状态</h2><button id="close-settings" class="ghost">关闭</button></div><div id="service-status"></div><p class="muted small">摄像头和麦克风来自打开网页的设备，模型计算在 O6。现场请在 O6 浏览器访问本机地址。</p><label for="access-token">访问令牌（仅启用访问保护时填写）</label><input id="access-token" type="password" autocomplete="off"><button id="save-token" class="secondary full">应用</button></dialog><div id="toast" class="toast hidden" role="status"></div>
+-</body></html>
++<!doctype html>
++<html lang="zh-CN">
++<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LabAgent · 从实验要求到现场指导</title><link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/demo.css?v=workflow-1"><script src="/static/equipment-live.js?v=yolo-live-1" defer></script><script src="/static/demo.js?v=yolo-live-1" defer></script></head>
++<body>
++<header class="topbar"><a class="brand" href="/"><span class="brand-icon">L<span>·</span></span><span>LabAgent<small>DOCUMENT → PLAN → OBSERVE → GUIDE</small></span></a><div class="top-status"><span id="connection" class="pill">连接中</span><a class="secondary" href="/static/training-photos.html">训练拍照</a><button id="show-setup" class="secondary">实验计划</button><button id="settings-button" class="ghost">运行状态</button></div></header>
++<div class="workspace"><aside class="sidebar"><div class="section-label">EXPERIMENTS <span>实验记录</span></div><button id="new-session" class="primary full">＋ 从实验要求开始</button><nav id="sessions" aria-label="实验记录"></nav><div class="sidebar-bottom"><p class="muted small">模型在 O6 本地运行。每次实验保留独立计划、现场确认和测量来源。</p></div></aside>
++<main>
++<section id="plan-setup" class="panel setup-panel">
++ <div class="panel-title"><div><div class="eyebrow">START WITH YOUR EXPERIMENT</div><h1>把实验要求，变成现场指导</h1></div><button id="hide-setup" class="ghost">收起</button></div>
++ <div class="setup-grid"><div><label for="document-file">上传实验要求文档</label><input id="document-file" type="file" accept=".pdf,.docx,.txt,.md"><p class="muted small">支持文字 PDF、Word、TXT、Markdown，最多 8 MB。扫描件请先转换为文字。</p><label for="requirements">或粘贴实验流程与补充要求</label><textarea id="requirements" rows="7" placeholder="实验名称、器材、操作步骤、测量要求、注意事项…"></textarea><div class="action-row wrap"><select id="compile-method" aria-label="拆解方式"><option value="auto">自动拆解</option><option value="rules">按文档编号拆解</option><option value="llm">由本地模型拆解</option></select><button id="import-plan" class="primary">读取并拆解流程</button></div><p id="import-status" class="muted small" role="status"></p></div>
++ <div><label for="plan-select">已有实验计划</label><select id="plan-select"></select><p class="muted small">默认提供 1.5 V 干电池示例；导入其他文档后生成独立计划。</p><div id="plan-summary" class="plan-summary"></div><div class="action-row wrap"><button id="edit-plan" class="secondary">查看与调整步骤</button><button id="view-source" class="ghost">查看原文</button></div><label class="check"><input id="approve-plan" type="checkbox">我已对照原文，核对器材、步骤、测量要求和现场条件</label><p class="muted small">开始后，工作流会自动使用摄像头检查当前步骤；首次请允许相机权限。</p><button id="start-plan" class="primary full">启用计划并开始自动指导 →</button><button id="rehearse" class="ghost full">运行独立软件演练（非真实测量）</button></div></div>
++ <details id="plan-details"><summary>拆解后的计划</summary><div class="plan-fields"><label>实验名称<input id="plan-title"></label><label>所需器材（用逗号分隔）<input id="plan-equipment"></label><label>测量单位<input id="plan-unit"></label><label>接收下限<input id="plan-min" type="number" step="any"></label><label>接收上限<input id="plan-max" type="number" step="any"></label><label>需要样本数<input id="plan-samples" type="number" min="1" max="10"></label></div><ol id="plan-steps" class="plan-editor"></ol><button id="save-plan" class="secondary">保存调整，重新审核</button></details>
++</section>
++<section class="page-heading"><div><div class="eyebrow">OBSERVE · DECIDE · ACT · VERIFY</div><h1 id="session-title">让每一步都有依据</h1><p id="session-description">先导入实验要求，或使用电池测量示例。</p></div><span id="mode" class="pill">未开始</span></section>
++<div id="empty" class="empty-state"><div class="empty-symbol">⌁</div><h2>从要求文档开始，完成一次真实实验</h2><p>拆解计划 → 核对器材 → 逐步指导 → 观察测量 → 保存报告</p></div>
++<div id="active" class="hidden">
++<div class="safety-note"><span>!</span><p id="safety-text"></p></div>
++<section class="summary-row"><div><small>当前步骤</small><strong id="step-summary">—</strong></div><div><small>流程状态</small><strong id="run-status">—</strong></div><div><small>最近读数</small><strong id="latest-reading">—</strong></div><div><small>数据来源</small><strong id="latest-source">—</strong></div></section>
++<div class="main-grid">
++<section class="panel workflow"><div class="panel-title"><h2>执行计划</h2><span id="step-count" class="pill subtle"></span></div><ol id="steps"></ol><div class="current-instruction"><div class="eyebrow">CURRENT TASK</div><h3 id="current-step"></h3><p id="instruction"></p><ul id="blockers"></ul></div><div class="agent-decision"><span class="eyebrow">WORKFLOW · 自动检查</span><p id="agent-decision"></p><button id="agent-observe" class="secondary full hidden">按当前步骤观察现场</button></div><div id="workflow-check-panel" class="gate-panel hidden"><h3 id="workflow-check-title">本步自动检查</h3><div id="workflow-checks" aria-live="polite"></div></div><button id="advance" class="primary full">验证并进入下一步 →</button><div class="action-row wrap"><button id="pause" class="ghost">暂停指导</button><button id="resume" class="secondary hidden">确认恢复</button><button id="recheck" class="danger-text">现场变化 / 重新核对</button></div><p id="risk" class="risk hidden"></p></section>
++<section class="panel observation"><div class="panel-title"><h2>现场观察与核对</h2><span id="observation-type" class="pill subtle">本地感知</span></div>
++<div class="media-area"><div id="media-placeholder"><span>◎</span><p>进入检查步骤后，工作流会自动请求相机并采集画面</p></div><video id="camera" class="hidden" autoplay muted playsinline></video><img id="preview" class="hidden" alt="实验画面"><canvas id="object-overlay" class="hidden"></canvas><canvas id="roi-overlay" class="hidden"></canvas></div><p class="muted small">器材检查时连续更新检测框；红、黑表笔分别识别。显示屏自动定位并裁剪。<span id="roi-label">等待自动定位</span></p>
++<div class="action-row wrap"><button id="start-camera" class="secondary">打开摄像头</button><button id="stop-camera" class="ghost">关闭</button><label class="file-button compact">载入实拍图<input id="media-file" type="file" accept="image/jpeg,image/png,image/webp"></label></div><div class="action-row wrap"><button id="detect" class="secondary">拍照核对一次</button><button id="ocr" class="secondary">识别显示屏</button><button id="observe-loop" class="ghost">连续观察</button></div><div id="live-equipment-controls" class="hidden"><button id="toggle-equipment-live" class="ghost">暂停连续检测</button><span id="live-equipment-status" class="muted small" role="status"></span></div><p id="observation-status" class="muted small" role="status"></p>
++<div id="equipment-panel" class="gate-panel hidden"><h3>对照画面核对器材</h3><p class="muted small">模型会自动勾选；请修改误检和漏检，核对实物后最终提交。</p><div id="equipment-checks" class="equipment-grid"></div><button id="confirm-equipment" class="secondary full">最终确认并提交器材清单</button></div>
++<div id="meter-panel" class="gate-panel hidden"><h3>核对直流电压档位和插孔</h3><p>黑表笔插 COM；红表笔插 V/Ω；旋钮处于直流电压档。不要使用 A/mA 孔或电流档跨接电池。</p><select id="meter-range"><option value="">请选择现场实际档位</option><option value="dc_2v">直流 2 V</option><option value="dc_20v">直流 20 V</option><option value="dc_200mv">直流 200 mV</option></select></div>
++<label id="human-confirm-label" class="check"><input id="human-confirm" type="checkbox">我已在现场核对当前操作或测量，确认信息属实</label><button id="confirm-current" class="secondary full">人工确认本步（备用）</button><button id="manual-takeover" class="ghost full hidden">暂停自动检查，改为人工核对 / 修正</button>
++<div id="candidate-panel" class="candidate-panel hidden"><div class="panel-title"><h3>读数候选 · 连续核验</h3><span id="candidate-status" class="pill"></span></div><img id="candidate-image" alt="候选读数的原始显示屏裁剪"><p id="candidate-reason"></p><label for="candidate-value">核对或修正后的电压 / V</label><input id="candidate-value" type="number" step="any"><div class="action-row wrap"><button id="confirm-candidate" class="primary">确认候选读数</button><button id="reject-candidate" class="ghost">拒绝并重拍</button></div><details><summary>查看模型原始输出</summary><pre id="candidate-raw"></pre></details></div>
++<div id="measurement-panel" class="gate-panel hidden"><label id="manual-label" for="manual-value">人工读取数值</label><div class="measurement-input"><input id="manual-value" type="number" step="any" placeholder="输入现场实际读数"><button id="manual-measurement" class="secondary">确认人工读数</button></div></div><button id="save-measurement" class="primary full hidden">核对并保存全部测量</button><button id="remeasure" class="ghost full">重新测量 · 保留历史</button>
++</section>
++<section class="panel conversation"><div class="panel-title"><h2>实验助手</h2><span id="agent-mode" class="pill subtle">状态与知识</span></div><div class="quick-questions"><button data-question="现在做到哪一步了？">当前进度</button><button data-question="为什么还不能进入下一步？">检查原因</button><button data-question="请结合实验要求解释当前步骤的原理">实验原理</button></div><div id="messages" class="messages" aria-live="polite"></div><div id="chat-tools" class="muted small"></div><form id="chat-form"><label class="sr-only" for="chat-input">向助手提问</label><textarea id="chat-input" rows="3" placeholder="结合当前实验提问，或输入“下一步”“暂停”“重新测量”…"></textarea><div class="action-row"><button id="record-audio" type="button" class="ghost">录音提问</button><button id="send-message" type="submit" class="primary">发送 ↑</button></div></form><p class="muted small">语音在 O6 转写，核对文字后发送。档位、接触与收尾按规则自动检查；看不清时可人工接管。</p></section>
++</div>
++<section class="panel bottom-panel"><div class="panel-title"><h2>证据与实验记录</h2><div class="action-row wrap"><button data-export="md" class="secondary">导出实验报告</button><button data-export="csv" class="ghost">测量表 CSV</button><button data-export="json" class="ghost">完整证据 JSON</button></div></div><div class="bottom-grid"><div><h3>测量历史</h3><div class="table-scroll"><table><thead><tr><th>读数</th><th>来源</th><th>状态</th><th>时间</th></tr></thead><tbody id="measurement-history"></tbody></table></div></div><div><h3>观察 → 判断 → 操作 → 反馈</h3><div id="audit" class="audit"></div></div></div></section>
++</div><footer>LabAgent · O6 本地实验助手<span>文档驱动 · 证据可追溯 · 规则约束执行</span></footer></main></div>
++<dialog id="source-dialog"><div class="panel-title"><h2>实验要求原文</h2><button id="close-source" class="ghost">关闭</button></div><pre id="source-text"></pre></dialog>
++<dialog id="settings-dialog"><div class="panel-title"><h2>运行状态</h2><button id="close-settings" class="ghost">关闭</button></div><div id="service-status"></div><p class="muted small">摄像头和麦克风来自打开网页的设备，模型计算在 O6。现场请在 O6 浏览器访问本机地址。</p><label for="access-token">访问令牌（仅启用访问保护时填写）</label><input id="access-token" type="password" autocomplete="off"><button id="save-token" class="secondary full">应用</button></dialog><div id="toast" class="toast hidden" role="status"></div>
++</body></html>
+diff --git a/labagent/web/equipment-live.js b/labagent/web/equipment-live.js
+--- /dev/null
++++ b/labagent/web/equipment-live.js
+@@ -0,0 +1,108 @@
++"use strict";
++
++// Classic deferred script, loaded before demo.js. Functions use its shared state.
++function probeParts(key,name){
++ const text=(key+" "+name).toLowerCase();
++ if(!/表笔|probes?|test[ _-]?leads?/.test(text))return [];
++ const red=/红|red/.test(text),black=/黑|black/.test(text);
++ return red===black?[['red_probe','红表笔'],['black_probe','黑表笔']]:[];
++}
++function renderEquipmentChecklist(s){
++ const key=s.id+"/"+(s.plan?.id||"legacy"),labels=s.plan?.object_labels||{};
++ if(S.equipmentKey!==key){
++  S.equipmentKey=key;$("equipment-checks").replaceChildren();
++  for(const[id,name]of Object.entries(labels)){
++   const parts=probeParts(id,name),checked=(s.facts.objects?.value||[]).includes(id);
++   const aggregate=elem("input");aggregate.type="checkbox";aggregate.value=id;
++   aggregate.className="equipment-checkbox";aggregate.checked=checked;
++   if(parts.length){
++    const hidden=elem("span",undefined,"hidden");hidden.append(aggregate);$("equipment-checks").append(hidden);
++    aggregate.dataset.parts="true";
++    for(const[modelClass,title]of parts){
++     const label=elem("label",undefined,"check"),box=elem("input"),note=elem("small","尚未观察","obs-tag");
++     box.type="checkbox";box.className="equipment-part";box.dataset.parent=id;box.dataset.modelClass=modelClass;box.checked=checked;
++     note.dataset.object=id;note.dataset.modelClass=modelClass;
++     label.append(box,document.createTextNode(title),note);$("equipment-checks").append(label);
++    }
++   }else{
++    const label=elem("label",undefined,"check"),note=elem("small","尚未观察","obs-tag");note.dataset.object=id;
++    label.append(aggregate,document.createTextNode(name),note);$("equipment-checks").append(label);
++   }
++  }
++ }
++ const observed=S.equipmentPreview||{present:s.facts.observed_objects?.value||{},boxes:s.facts.object_boxes?.value||[]};
++ updateEquipmentSuggestions(observed);
++}
++function updateEquipmentSuggestions(result){
++ const present=result.present||{},boxes=result.boxes||[];
++ document.querySelectorAll('.equipment-checkbox').forEach(box=>{
++  if(!S.equipmentEdited.has(box.value)&&box.dataset.parts!=='true')box.checked=present[box.value]===true;
++ });
++ document.querySelectorAll('.equipment-part').forEach(box=>{
++  if(!S.equipmentEdited.has(box.dataset.parent))box.checked=boxes.some(d=>d.label===box.dataset.parent&&d.model_class===box.dataset.modelClass);
++ });
++ syncProbeAggregates();
++ document.querySelectorAll('[data-object]').forEach(note=>{
++  const key=note.dataset.object,part=note.dataset.modelClass;
++  const value=part?(boxes.some(d=>d.label===key&&d.model_class===part)?true:present[key]===undefined?null:false):present[key];
++  note.textContent=value===true?'观察建议：可见':value===false?'观察建议：未见':'观察建议：待核对';
++ });
++}
++function syncProbeAggregates(){
++ document.querySelectorAll('.equipment-checkbox[data-parts]').forEach(aggregate=>{
++  const parts=[...document.querySelectorAll('.equipment-part')].filter(b=>b.dataset.parent===aggregate.value);
++  aggregate.checked=parts.length===2&&parts.every(b=>b.checked);
++ });
++}
++function acceptEquipmentPreview(result,captured=Date.now()){
++ S.equipmentPreview=result;S.boxes=result.boxes||[];S.boxTime=captured;
++ updateEquipmentSuggestions(result);drawObjects();
++}
++function equipmentBoxName(item){
++ return {red_probe:'红表笔',black_probe:'黑表笔',multimeter:'万用表',battery:'电池'}[item.model_class]
++  ||S.session?.plan?.object_labels[item.label]||item.label;
++}
++function liveEquipmentReady(){
++ return Boolean(S.liveEquipment&&S.stream&&S.media===$("camera")&&$("camera").readyState>=2
++  &&S.session?.mode==='live'&&S.session?.status==='running'&&gate()==='equipment'&&!document.hidden);
++}
++function stopEquipmentPreview(){
++ clearTimeout(S.liveTimer);S.liveTimer=null;S.liveController?.abort();
++}
++function scheduleEquipmentPreview(delay=0){
++ clearTimeout(S.liveTimer);S.liveTimer=null;
++ if(!liveEquipmentReady()){S.liveController?.abort();return;}
++ if(S.liveRunning)return;
++ S.liveTimer=setTimeout(runEquipmentPreview,delay);
++}
++async function runEquipmentPreview(){
++ S.liveTimer=null;
++ if(!liveEquipmentReady()||S.liveRunning)return;
++ if(S.observing||S.autoRunning){scheduleEquipmentPreview(350);return;}
++ const id=S.session.id,stepId=S.session.steps[S.session.step].id,stream=S.stream;
++ const controller=new AbortController();S.liveRunning=true;S.liveController=controller;
++ let delay=250;const start=performance.now(),timeout=setTimeout(()=>controller.abort(),8000);
++ try{
++  const blob=await capture(),form=new FormData();form.append('file',blob,'preview.jpg');
++  if(controller.signal.aborted||!liveEquipmentReady()||S.session.id!==id||S.stream!==stream)return;
++  const result=await api(`/sessions/${id}/equipment-preview`,{method:'POST',body:form,signal:controller.signal});
++  if(controller.signal.aborted||!liveEquipmentReady()||S.session.id!==id||S.stream!==stream
++     ||S.session.steps[S.session.step].id!==stepId||result.step_id!==stepId)return;
++  acceptEquipmentPreview(result);
++  const ms=Math.round(performance.now()-start);
++  $('live-equipment-status').textContent=`连续检测中 · 本次 ${ms} ms · 请核对后最终确认`;
++ }catch(error){
++  delay=1500;
++  if(error.name!=='AbortError')$('live-equipment-status').textContent='连续检测暂不可用，正在重试：'+error.message;
++ }finally{
++  clearTimeout(timeout);S.liveRunning=false;
++  if(S.liveController===controller)S.liveController=null;
++  scheduleEquipmentPreview(delay);
++ }
++}
++function renderEquipmentLive(){
++ const equipment=gate()==='equipment';toggle('live-equipment-controls',equipment);
++ $('toggle-equipment-live').textContent=S.liveEquipment?'暂停连续检测':'恢复连续检测';
++ if(!liveEquipmentReady())$('live-equipment-status').textContent=!S.liveEquipment?'连续检测已暂停':!S.stream?'打开摄像头后自动连续检测':'连续检测等待器材检查步骤或页面恢复';
++ scheduleEquipmentPreview();
++}

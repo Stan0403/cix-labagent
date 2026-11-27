@@ -222,6 +222,8 @@ def build_report(state, spec, events):
         if state.mode == "replay":
             return "软件演练数据"
         if m.source == "vision_workflow":
+            if any(c.id == m.candidate_id and c.confirmation_method == "single_frame" for c in state.candidates):
+                return "单帧显示屏识别"
             return "两帧稳定性核验" if stability(m) else "图像识别（核验帧明细未记录）"
         return {
             "manual": "人工录入",

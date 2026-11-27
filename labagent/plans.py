@@ -89,7 +89,7 @@ class Plan(StrictModel):
         if contacts:
             measure = next(s for s in self.steps if s.gate == "measurement")
             instruction = "\n".join([*(s.instruction for s in contacts), measure.instruction,
-                                      "读出负数时调整红黑表笔连接；正数须通过两帧稳定性核验才记录，零值或读数不清时继续检查。"])
+                                      "实时Agent按键采集采用单帧识别并记录实际数值；零值或负值保留并提示核对接触、极性和档位。"])
             measure.instruction = Step.model_validate({**measure.model_dump(), "instruction": instruction}).instruction
             self.steps = [s for s in self.steps if s not in contacts]
             self.review_notes.append("电池接触与极性检查已合并到读数环节；电压符号不作为无短接或接触位置的视觉证明。")

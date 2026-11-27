@@ -94,7 +94,8 @@ def expire_candidates(state):
             candidate.status = "expired"
 
 
-def add_measurement(engine, state, value, source, confidence=1, reference="", candidate_id="", original_value=None):
+def add_measurement(engine, state, value, source, confidence=1, reference="", candidate_id="", original_value=None,
+                    check_polarity=True):
     if state.status != "running" or step(state)["gate"] != "measurement":
         return {"accepted": False, "message": "只有当前实验的测量阶段才能录入读数"}
     reasons = prior_blockers(engine, state)
@@ -102,7 +103,7 @@ def add_measurement(engine, state, value, source, confidence=1, reference="", ca
         return {"accepted": False, "message": "；".join(reasons)}
     spec = state.plan["measurement"]
     issue = reading_issue(state.plan, value)
-    if issue:
+    if issue and check_polarity:
         state.risk = issue
         return {"accepted": False, "message": issue}
     if not spec["min_value"] <= value <= spec["max_value"]:

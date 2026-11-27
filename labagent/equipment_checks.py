@@ -4,6 +4,20 @@ from datetime import datetime, timezone
 from .models import Evidence
 
 
+def missing_in_equipment_observation(state):
+    """Only a completed inventory observation starts the live wait."""
+    if not state.plan or state.mode != "live" or state.automation != "agent":
+        return []
+    step = state.plan["steps"][state.step]
+    proof = state.facts.get("equipment_stability")
+    observed = state.facts.get("observed_objects")
+    if (step["gate"] != "equipment" or not proof or not observed
+            or proof.value.get("step_id") != step["id"]
+            or proof.reference != observed.reference or "objects" in state.facts):
+        return []
+    return [key for key in state.plan["required_objects"] if observed.value.get(key) is not True]
+
+
 def record_equipment(engine, state, present, reference, captured_at, backend, automatic):
     source = "replay" if state.mode == "replay" else "vision"
     current = state.plan["steps"][state.step]

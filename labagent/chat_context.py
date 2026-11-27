@@ -16,7 +16,12 @@ SYSTEM = (
 
 def question_kind(text):
     text = re.sub(r"\s+", "", text).lower()
-    if not any(word in text for word in ("改", "增加", "减少", "调整")) and re.search(
+    if re.fullmatch(
+        r"(?:请问)?(?:现在|目前|当前)?(?:还)?缺(?:少)?(?:什么|哪些)(?:器材|东西)?[呢吗？?。！!]*"
+        r"|(?:现在|目前)?器材(?:齐了吗|齐全了吗|都齐了吗|缺什么)[？?。！!]*", text
+    ):
+        return "equipment"
+    if not any(word in text for word in ("改", "增加", "减少", "调整", "为什么", "原理", "误差")) and re.search(
         r"测几次|测了多少次|还[要需]测.*次|采样次数.*多少|需要.*多少次", text
     ):
         return "sampling"
@@ -71,10 +76,54 @@ def current_candidates(engine, state):
     return list(reversed(result))
 
 
-def status_summary(engine, state, focus="measurement"):
+def equipment_status(engine, state, preview=None):
+    labels = state.plan["object_labels"]
+    observed = state.facts.get("observed_objects")
+    fresh = False
+    if observed:
+        try:
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(observed.at)).total_seconds()
+            fresh = 0 <= age <= engine.settings.evidence_ttl_seconds
+        except (TypeError, ValueError):
+            pass
+    if preview and preview.get("revision") == state.revision:
+        values = preview["present"]
+    elif observed and fresh and isinstance(observed.value, dict):
+        values = observed.value
+    else:
+        return {"observation": "没有当前有效的器材观察"}
+    return {
+        "visible": [label for key, label in labels.items() if values.get(key) is True],
+        "not_seen": [label for key, label in labels.items() if values.get(key) is False],
+        "unclear": [label for key, label in labels.items() if values.get(key) is None],
+        "verified": not engine.missing_objects(state),
+    }
+
+
+def equipment_answer(engine, state, preview=None):
+    if not state.plan or state.plan["steps"][state.step]["gate"] != "equipment":
+        return "当前不在器材检查步骤，尚需器材清单要通过新的现场观察核对。"
+    info = equipment_status(engine, state, preview)
+    if "observation" in info:
+        return "当前没有有效的器材观察，暂时无法判断缺少哪些。请打开摄像头进行器材检查。"
+    parts = []
+    if info["not_seen"]:
+        parts.append("当前画面未见" + "、".join(info["not_seen"]) + "，请放入镜头。")
+    if info["visible"]:
+        parts.append("已看到" + "、".join(info["visible"]) + "。")
+    if info["unclear"]:
+        parts.append("暂时看不清" + "、".join(info["unclear"]) + "，请调整摆放。")
+    if not info["not_seen"] and not info["unclear"]:
+        parts.append("器材已齐，" + ("核验已通过。" if info["verified"] else "还需两帧正式核验后才能继续。"))
+    return "".join(parts)
+
+
+def status_summary(engine, state, focus="measurement", preview=None):
     spec = engine.spec_for(state)
     current = spec["steps"][state.step]
     result = {"step": current["title"][:80], "status": state.status}
+    if state.plan and current["gate"] == "equipment":
+        result["equipment"] = equipment_status(engine, state, preview)
     if state.mode == "replay":
         result["mode"] = "replay"
     if focus in {"general", "principle"}:
@@ -112,20 +161,22 @@ def status_summary(engine, state, focus="measurement"):
     return result
 
 
-def factual_answer(engine, state, text):
+def factual_answer(engine, state, text, preview=None):
     kind = question_kind(text)
-    if kind not in {"reading", "recording", "progress", "sampling"}:
+    if kind not in {"reading", "recording", "progress", "sampling", "equipment"}:
         return None
     spec = engine.spec_for(state)
     current = spec["steps"][state.step]
     prefix = "软件演练数据：" if state.mode == "replay" else ""
+    if kind == "equipment":
+        return prefix + equipment_answer(engine, state, preview)
     active = [m for m in state.measurements if not m.superseded]
     if kind == "sampling":
         target = (spec.get("measurement") or {}).get("samples")
         if target is not None:
             return (
                 prefix
-                + f"计划测量{target}次，已记录{len(active)}次，还需{max(0, target - len(active))}次；每条自动记录需要两次独立采集核验。"
+                + f"计划测量{target}次，已记录{len(active)}次，还需{max(0, target - len(active))}次。"
             )
         return prefix + "本实验没有设置数值采样次数。"
     readings = current_candidates(engine, state)
@@ -138,6 +189,8 @@ def factual_answer(engine, state, text):
             return prefix + "实验已完成，可查看已保存读数并导出报告。"
         reasons = engine.blockers(state)
         message = f"当前第{state.step + 1}/{len(spec['steps'])}步：{current['title']}。"
+        if current["gate"] == "equipment":
+            return prefix + message + equipment_answer(engine, state, preview)
         if any(word in text for word in ("该做什么", "现在怎么做")):
             message += current.get("instruction", "")[:220]
         return (

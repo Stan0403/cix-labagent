@@ -73,6 +73,8 @@ def latest_issue(state):
     if not state.plan or not state.candidates:
         return ""
     candidate = state.candidates[-1]
+    if candidate.status == "confirmed" and candidate.confirmation_method == "single_frame":
+        return ""
     current = state.plan["steps"][state.step]
     if current["gate"] != "measurement" or candidate.step_id != current["id"]:
         return ""

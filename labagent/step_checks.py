@@ -108,7 +108,7 @@ def reading_progress(engine, state):
     for candidate in reversed(state.candidates):
         if candidate.step_id != current["id"] or candidate.id in consumed:
             break
-        if candidate.status in {"rejected", "confirmed"} or candidate.value is None:
+        if candidate.status != "pending" or candidate.value is None:
             break
         if reading_issue(state.plan, candidate.value):
             break

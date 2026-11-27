@@ -130,7 +130,7 @@ def infer_part(image, part, server, opener):
         data=json.dumps(payload).encode(),
         headers={"Content-Type": "application/json"},
     )
-    with opener.open(request, timeout=12) as response:
+    with opener.open(request, timeout=30) as response:
         result = json.load(response)
     choice = result["choices"][0]
     if choice.get("finish_reason") != "stop":

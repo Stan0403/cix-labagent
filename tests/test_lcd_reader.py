@@ -92,6 +92,22 @@ def test_empty_ocr_returns_unknown_not_zero(adapter, monkeypatch):
     assert json.loads(adapter.recognize(upload())["text"])["reading"] is None
 
 
+def test_fast_burst_uncertain_ocr_returns_without_slow_vlm(adapter, monkeypatch):
+    monkeypatch.setattr(adapter, "LCD_READER", FakeReader("1.34", False))
+    monkeypatch.setattr(adapter, "infer", lambda *a, **kw: pytest.fail("Fast burst must never call VLM"))
+    result = adapter.recognize(upload(), fast_only=True)
+    assert json.loads(result["text"])["reading"] is None
+    assert result["fallback_used"] is False
+
+
+def test_fast_burst_unlocated_display_returns_without_slow_vlm(adapter, monkeypatch):
+    import labagent.vision_regions as regions
+    monkeypatch.setattr(adapter, "LCD_READER", None)
+    monkeypatch.setattr(regions, "lcd_region", lambda image: None)
+    monkeypatch.setattr(adapter, "infer", lambda *a, **kw: pytest.fail("Fast burst must never call VLM"))
+    assert adapter.locate_display(upload(), fast_only=True)["roi"] is None
+
+
 @pytest.mark.parametrize(
     "fallback,expected", [("41.9", None), (".419", 0.419), (",419", 0.419), ("0.419", 0.419)]
 )

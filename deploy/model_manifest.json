@@ -1,5 +1,5 @@
 {
-  "revision_date": "2026-11-25",
+  "revision_date": "2026-11-27",
   "models": [
     {
       "path": "qwen3-4b/Qwen3-4B-Q4_K_M.gguf",
@@ -52,7 +52,7 @@
     },
     {
       "path": "sensevoice-cix/sense_voice_mask256.cix",
-      "sha256": null,
+      "sha256": "c04770dfac2de836e6a34607b7eb208add13fe82368e4673bb1fd80007ef2209",
       "source": "https://modelscope.cn/models/cix/ai_model_hub_26_Q2/tree/f0ee7fef80bd137483da2d988a1c4a2813066036/models/Audio/Speech_Recognition/onnx_sensevoice",
       "role": "NPU ASR; export entire directory including tokenizer/CMVN/config",
       "distribution": "upstream"

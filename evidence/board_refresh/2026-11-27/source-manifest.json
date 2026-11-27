@@ -1,0 +1,1668 @@
+[
+  {
+    "alias": "active",
+    "path": ".env.example",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.env.example",
+    "bytes": 501,
+    "sha256": "99988c02fbe334240bf29d68039e4f9934f4a8fbedd1135617d5509e3f9a6bc6"
+  },
+  {
+    "alias": "active",
+    "path": ".gitignore",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/.gitignore",
+    "bytes": 123,
+    "sha256": "f900921e942196b48624666cf944f43cbd01eb84e2d67d7ed7f00159f03e72ec"
+  },
+  {
+    "alias": "active",
+    "path": "README.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/README.md",
+    "bytes": 6988,
+    "sha256": "6a0c39faf757fdd78239872667163a2ba0d0b049d228ae7bb38a68036c8b4124"
+  },
+  {
+    "alias": "active",
+    "path": "environment-core-status.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/environment-core-status.json",
+    "bytes": 16,
+    "sha256": "124fd50cb6d223cdd18fedc166d00af7254199b6e6dedf9be82f71db87af6d01"
+  },
+  {
+    "alias": "active",
+    "path": "pyproject.toml",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/pyproject.toml",
+    "bytes": 927,
+    "sha256": "06d8370b3413bd0832f5e40d3a1e9fa2862b9dd4c8c22b00c600cb1d561cf295"
+  },
+  {
+    "alias": "active",
+    "path": "configs/battery_plan.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/configs/battery_plan.json",
+    "bytes": 2615,
+    "sha256": "3a0b2f97359ac6f584acbc31aadbb7e82dafc3be572e52509cab1a9771997845"
+  },
+  {
+    "alias": "active",
+    "path": "configs/experiment.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/configs/experiment.json",
+    "bytes": 2114,
+    "sha256": "724e3afcffd7bc77095b291a8804d8d92dd658c4e03cfcd17c2617f934b07990"
+  },
+  {
+    "alias": "active",
+    "path": "docs/AGENT_FLOW.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/AGENT_FLOW.md",
+    "bytes": 11972,
+    "sha256": "96c24ccae3b9d98abb7f1765d391db32af2010740ef03a7c4cb373799ffc6bd8"
+  },
+  {
+    "alias": "active",
+    "path": "docs/AGENT_UI.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/AGENT_UI.md",
+    "bytes": 3254,
+    "sha256": "4f143865e000e8819f48657ecd899e1e2a6cbe2b2cc949b9eec196de6ca9abba"
+  },
+  {
+    "alias": "active",
+    "path": "docs/BATTERY_POLARITY.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/BATTERY_POLARITY.md",
+    "bytes": 2667,
+    "sha256": "e435a6bf54427918e3fa46affc7d7f1725f2f86640d7c020ce4077098d77a2c9"
+  },
+  {
+    "alias": "active",
+    "path": "docs/CHAT_INPUT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/CHAT_INPUT.md",
+    "bytes": 2181,
+    "sha256": "173718ecbe07ebfe042c12652f5ba8e6d7c59ca1e1aaa5d2a1cdddde6ef91e75"
+  },
+  {
+    "alias": "active",
+    "path": "docs/CIX_MODEL_SOURCES.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/CIX_MODEL_SOURCES.json",
+    "bytes": 999,
+    "sha256": "96cadbefe864ed7f98942f6d8c0745df14ad6e7e2f95c1d0fd04522dc00dc434"
+  },
+  {
+    "alias": "active",
+    "path": "docs/CONFIGURATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/CONFIGURATION.md",
+    "bytes": 7351,
+    "sha256": "f4a54ed6c44c8f549bdb93af174a7218d036c8c35aea6ce6ded192bb583c5268"
+  },
+  {
+    "alias": "active",
+    "path": "docs/DEMO_GUIDE.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/DEMO_GUIDE.md",
+    "bytes": 4490,
+    "sha256": "bba499258461ca7a14682d9e3acf6bfc9132b132d50260bafb204fa9497b5770"
+  },
+  {
+    "alias": "active",
+    "path": "docs/EXPERIMENT_REPORT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/EXPERIMENT_REPORT.md",
+    "bytes": 2698,
+    "sha256": "8514114f30304fca1c3ca75df01e6f054530f7a68d930b212be6354715499686"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LCD_CAPTURE.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LCD_CAPTURE.md",
+    "bytes": 3926,
+    "sha256": "22babfd0cfcf8fb2d83fa2c65e795df557315517d09f5ebb48f036dd1713a031"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LCD_READER.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LCD_READER.md",
+    "bytes": 5922,
+    "sha256": "4a6af39256602d32c1f1480341522418989c05669414cabd7112b15d0e84e4e1"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LIVE_METER.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LIVE_METER.md",
+    "bytes": 3047,
+    "sha256": "2ec09065e84ed5ff89c75e218fd199d0c9c156945f12bb4697a2e650ff21c7ed"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LOCAL_ASR.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LOCAL_ASR.md",
+    "bytes": 4953,
+    "sha256": "a51925e1514f12d8ee0e863ce7b1b181c4d99e43f53621693cf284b333957b03"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LOCAL_LLM.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LOCAL_LLM.md",
+    "bytes": 5672,
+    "sha256": "8b8c51f4579103ddf0ca72a4fc0abaddd62b024c909312879ead57fcd1dc1041"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LOCAL_OCR.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LOCAL_OCR.md",
+    "bytes": 2324,
+    "sha256": "006a7a668553247f88f61de4c0ba65808ad32c0496fc8d6ff11ed0e3d084e5c7"
+  },
+  {
+    "alias": "active",
+    "path": "docs/LOCAL_VLM.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/LOCAL_VLM.md",
+    "bytes": 1413,
+    "sha256": "9b347a89b6cb7c930b5fe5ce31ccac5fb136939135c035f4dcfbc7cbed8d5f21"
+  },
+  {
+    "alias": "active",
+    "path": "docs/METER_CLOSEUPS.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/METER_CLOSEUPS.md",
+    "bytes": 2418,
+    "sha256": "94666ab76b85deb97546754fd26dfad3f9990db41ff7e6a06a4991a8c58c3be9"
+  },
+  {
+    "alias": "active",
+    "path": "docs/MODEL_ACCELERATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/MODEL_ACCELERATION.md",
+    "bytes": 8704,
+    "sha256": "df2882241e0df5c0a8b1ec6338a60dbb1d944a95eaee22938df22b3f1570d284"
+  },
+  {
+    "alias": "active",
+    "path": "docs/MODEL_PLACEMENT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/MODEL_PLACEMENT.md",
+    "bytes": 1829,
+    "sha256": "a7fc79059c14dde33a00a0fe0886b85bb1577cb25cd2ab4f61d58018e9943348"
+  },
+  {
+    "alias": "active",
+    "path": "docs/MODEL_SELECTION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/MODEL_SELECTION.md",
+    "bytes": 5361,
+    "sha256": "d1911529dc6e5caac0b48efe6edfbbd6e4e2df68b39171e47fe06c07a3c5334b"
+  },
+  {
+    "alias": "active",
+    "path": "docs/NPU_EQUIPMENT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/NPU_EQUIPMENT.md",
+    "bytes": 9369,
+    "sha256": "94081ddf5fd9d0be6393b8504b640429e5ecbd76927e7c02da41f0d3660653e0"
+  },
+  {
+    "alias": "active",
+    "path": "docs/QWEN3_VL_4B_DEPLOYMENT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/QWEN3_VL_4B_DEPLOYMENT.md",
+    "bytes": 5948,
+    "sha256": "949a62838c1b37e54af3a1ff1b37a8edea7be078179f4f565deb6c5f51223c39"
+  },
+  {
+    "alias": "active",
+    "path": "docs/SESSION_LIFECYCLE.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/SESSION_LIFECYCLE.md",
+    "bytes": 2000,
+    "sha256": "c82fcc68bb2a798a5293ac53d3af0fe26375b182c99f3673c2f14c91d2266b16"
+  },
+  {
+    "alias": "active",
+    "path": "docs/TESTING.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/TESTING.md",
+    "bytes": 4676,
+    "sha256": "29f1a95469669e7d590017989bc50d49d34aad5d27af431048806305d5c7f5d9"
+  },
+  {
+    "alias": "active",
+    "path": "docs/VERIFICATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/VERIFICATION.md",
+    "bytes": 4453,
+    "sha256": "f0ca204df7098d4324b5bccf4084b0779711c59a96fd4cd60813768fa380bb06"
+  },
+  {
+    "alias": "active",
+    "path": "docs/WORKFLOW_GUIDE.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/WORKFLOW_GUIDE.md",
+    "bytes": 3056,
+    "sha256": "1310b203639fdfa76154d5b960b0b4fb9a65f590eecb3f402fc8463db50b8450"
+  },
+  {
+    "alias": "active",
+    "path": "docs/WORKFLOW_VERIFICATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/WORKFLOW_VERIFICATION.md",
+    "bytes": 2529,
+    "sha256": "cc7f41774ecc38426ea888c01092f1f977967605e36654e7600c8b03ea36454e"
+  },
+  {
+    "alias": "active",
+    "path": "docs/yolo26-npu-deployment.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/docs/yolo26-npu-deployment.md",
+    "bytes": 5871,
+    "sha256": "08e4482f56d80fb045a5637a32e4fb6b7bfcccd5b3c7a98255b8e371f7440564"
+  },
+  {
+    "alias": "active",
+    "path": "fixtures/happy_path.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/fixtures/happy_path.json",
+    "bytes": 886,
+    "sha256": "905b5f80ae7e7b37b59e5e62d454f941d64a9909cb75998cd8ab9033ddf83abe"
+  },
+  {
+    "alias": "active",
+    "path": "fixtures/missing_equipment.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/fixtures/missing_equipment.json",
+    "bytes": 360,
+    "sha256": "87713055c633e1d69812de715b30587d12d7cb086ad969ace3d0d6db511f0ebd"
+  },
+  {
+    "alias": "active",
+    "path": "fixtures/unsafe_order.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/fixtures/unsafe_order.json",
+    "bytes": 285,
+    "sha256": "a201691cfdd2f5060ab6fac4e100133b5388111445c125e51931b55e2339b201"
+  },
+  {
+    "alias": "active",
+    "path": "knowledge/battery_voltage.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/knowledge/battery_voltage.md",
+    "bytes": 1648,
+    "sha256": "381703a2fdf0d614caa285a266b20a2b439024e0f1f59b24654b823d5cc73e5c"
+  },
+  {
+    "alias": "active",
+    "path": "knowledge/实验指导.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/knowledge/实验指导.md",
+    "bytes": 2269,
+    "sha256": "900f50950de87a3b6d0092a332a61f5bd4ad9b2486fb7df3e78886d6d13e517d"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/__init__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/__init__.py",
+    "bytes": 106,
+    "sha256": "225bcabf84618d7ecbfc6e455b80d0fae5c848dcf7911542d61f3e7757ee8a4f"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/__main__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/__main__.py",
+    "bytes": 413,
+    "sha256": "548f73bcdb1dea8f37c631391d55ff1e8015773691261baf53b6fe42a68e56ae"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/agent.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/agent.py",
+    "bytes": 17911,
+    "sha256": "ead02350508dccdcd97d2c65465edffe8bbd88aa7df932ff2a9f45f8411eeda3"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/agent_api.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/agent_api.py",
+    "bytes": 10890,
+    "sha256": "b8cc38df828c49f65463d87eeb3bead0bc82298832438fec2d89747a3f7f97e7"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/battery_polarity.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/battery_polarity.py",
+    "bytes": 3757,
+    "sha256": "5d896e592e3a27d28d5ceb3fc222e34badbee38baced094691822d39fbffc12e"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/chat_context.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/chat_context.py",
+    "bytes": 11991,
+    "sha256": "e71997cb7ba00c29c4e8e172ceaf7f3cdce5e95509901c86b7854fa2609b6180"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/completion_notice.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/completion_notice.py",
+    "bytes": 1050,
+    "sha256": "ade4d687dbc91d6b81a8eede69740ba301e0d2c0fefeac1a668a6732b69b8333"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/config.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/config.py",
+    "bytes": 3533,
+    "sha256": "9d51ae214cf9445450fb24742cf8c406dbf10079d22cd923830406ad2a328cc1"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/demo_api.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/demo_api.py",
+    "bytes": 27002,
+    "sha256": "f3a2dad3d2c13fc95b4bc817858e8515bc7606be61f62425f6371b4ce92c48b9"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/equipment_checks.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/equipment_checks.py",
+    "bytes": 3823,
+    "sha256": "5a4748b4daf6627b64558945f3fc2abd5b057a2157e128e2779f5405c12d5077"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/guidance.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/guidance.py",
+    "bytes": 4254,
+    "sha256": "b0b668fae22de39926cb8b17ed4bc2abcab3cf40ccfbc0cb73f2cd097ec62fb1"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/interaction.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/interaction.py",
+    "bytes": 5828,
+    "sha256": "d89cd8c55339e585c2bbb776ca3ff94513688ae5b4f8b9415c41f40624f80cdc"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/knowledge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/knowledge.py",
+    "bytes": 3769,
+    "sha256": "c50b042bee7e0a0543afa95c0a3e66cf3cfa355ca0da89b4775869f901922d27"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/lcd_reader.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/lcd_reader.py",
+    "bytes": 10904,
+    "sha256": "be3ce7c7dcd10baf2ebbafbf203426264dd26812c1a35b3e1d43d73480ce839e"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/local_asr.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/local_asr.py",
+    "bytes": 8665,
+    "sha256": "511b3d1ff3b3e31dbb9f60bb310cbe51124cf2fc008c148dcd0b2fa769a907ba"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/main.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/main.py",
+    "bytes": 17218,
+    "sha256": "a0bde15dd81a1e11e9735ca24eafb9dfa94e045ea6ba7edbbe5596daf0b8ce9a"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/meter_live.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/meter_live.py",
+    "bytes": 13444,
+    "sha256": "ccad352867943102e718ef51da19b645addfc3076b211ceff4bdb4395bfa86fd"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/meter_live_model.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/meter_live_model.py",
+    "bytes": 5935,
+    "sha256": "4a26963e3a70436e7338c219405c1bed3913b237673a90151f0d155c8c10469a"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/models.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/models.py",
+    "bytes": 4285,
+    "sha256": "e56f161c10c31dbff606620eb64e09635c500348e7b21ee894649a70376c6813"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/perception.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/perception.py",
+    "bytes": 15431,
+    "sha256": "b7dcf03f2e6555e8d8f4103ca620c3f322eda6e2917d4cd44c74440b0a78f330"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/planning.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/planning.py",
+    "bytes": 12426,
+    "sha256": "4effd71475407bb6cf80feede0968e72849886574c8aba94ec1b4f245773e883"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/plans.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/plans.py",
+    "bytes": 15040,
+    "sha256": "95164a2663db91e6d76933abf35f38fb97b1519d3f31e57b2ce36a3402c9e756"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/providers.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/providers.py",
+    "bytes": 6196,
+    "sha256": "9b231d8f4741b06818f58fa17de288a9e8b039b20c813df9eb21817253b19c29"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/readings.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/readings.py",
+    "bytes": 8086,
+    "sha256": "a094bde32822f7cce316aaf476f13aeca1097f318513a85b9ed485ccc7db007c"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/replay.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/replay.py",
+    "bytes": 3162,
+    "sha256": "2214253255cf27bff66125edd4855473a913154a0506ff410b24e1d9c70ca3a3"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/report.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/report.py",
+    "bytes": 1071,
+    "sha256": "75d65edd12488c2cb518b71e3b1ec6868ae46fc5f782e293dc89934274090d37"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/report_data.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/report_data.py",
+    "bytes": 27324,
+    "sha256": "6b0994a4a22f63d10ed8dfa64720d69d4e9a85f8adfe9659e18fc3406b076ebe"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/report_rendering.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/report_rendering.py",
+    "bytes": 6829,
+    "sha256": "aabea8e130cde041f870bc57680f7efd46d3b78a2b6e727d200f827a3e57233f"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/rules.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/rules.py",
+    "bytes": 14246,
+    "sha256": "3db2594f649ab34abe27c5d439dbe4c135a5b2f7690dafd68bb21fc44d7fd1a5"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/speech_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/speech_service.py",
+    "bytes": 3348,
+    "sha256": "ca4a2b46bd3fba041194100903db12402d42ac8a2c500ea7f6d820187c57b459"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/step_checks.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/step_checks.py",
+    "bytes": 7579,
+    "sha256": "ee2c85b44d83cfd2377d0101ae4ce4bfa430953d12c03bc9d80eda796b8cafda"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/store.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/store.py",
+    "bytes": 8280,
+    "sha256": "b8d0f05ad7717c69186583428a33a89e56c4ddba903a28fc13e9f6cc626afec4"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/task_agent.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/task_agent.py",
+    "bytes": 35172,
+    "sha256": "003e7107a8046c8c7afe0e6dcafbf1cceb0ebf88d91441c1d4443f640b9a3181"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/training_photos.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/training_photos.py",
+    "bytes": 1868,
+    "sha256": "9212a1c58b8d0085be327d230844b72d7498521f556a9c84ed0ccc77f326a7c9"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/vision_regions.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/vision_regions.py",
+    "bytes": 7255,
+    "sha256": "aa2f5a5778f875f9b8eea3ddb479e2c602fb106ffe581175fab485c93cbecb8f"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/workflow.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/workflow.py",
+    "bytes": 13692,
+    "sha256": "226e3b01ecc8c1200ea008d18ca0bdd4fc4e6b4fd005b2873859641f46eeab8a"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/yolo_equipment.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/yolo_equipment.py",
+    "bytes": 10028,
+    "sha256": "94db608e6396d0c6cbfd2e009bda0c93a635ff7883a8a0720443fa2b320dd96a"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/agent-runner.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/agent-runner.js",
+    "bytes": 9067,
+    "sha256": "7efb1839a964e855d553b96082d8ca7fb4199b6b054bc5e0181464e2f282db45"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/app.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/app.js",
+    "bytes": 22864,
+    "sha256": "733cce7203d862b89fa8a8afe9da767ebc1c1839b1a02109ec9f823a34d17ea5"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/demo.css",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/demo.css",
+    "bytes": 7636,
+    "sha256": "c5f87655bf690fcc3a5e5273b18e937c1b178f7159aedf72be876a118a8c91b1"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/demo.html",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/demo.html",
+    "bytes": 14791,
+    "sha256": "88524f10d4e584f3a077d6e602de06cdcc8b24ca0205353d13d7dd2ff7f79a0c"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/demo.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/demo.js",
+    "bytes": 47153,
+    "sha256": "58388be1dcad3bc282fd02d182b801965385e4fedb403dfab3aa31d45beac706"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/equipment-live.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/equipment-live.js",
+    "bytes": 6834,
+    "sha256": "5762d5b1ac7af28eef2aa2e06c87e79a90b7605194325be2b006d20f637baa46"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/index.html",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/index.html",
+    "bytes": 9800,
+    "sha256": "d7326f4012c4e30cdd69ac70c920d97fab438b67d873f9151936f06024438d88"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/lcd-capture.css",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/lcd-capture.css",
+    "bytes": 2980,
+    "sha256": "024fa5f1549e172690f98e0a927ac8470ea079b7a20eb4b09d2c9caf355c9505"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/lcd-capture.html",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/lcd-capture.html",
+    "bytes": 2855,
+    "sha256": "d5c3c898e347c077cfbf979e136e6e12362efdcbd7c1bccbebaa09ddd374a01b"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/lcd-capture.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/lcd-capture.js",
+    "bytes": 7881,
+    "sha256": "bfe8d924f55bfdfc61234fc846c8bbed933cea8f917f4cf20f67a86ef4af2a99"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/meter-live.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/meter-live.js",
+    "bytes": 7412,
+    "sha256": "c2f1d465a872fb89dabcc6a4cd0084e4c37d051c347560edb8e38484e8770a43"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/session-lifecycle.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/session-lifecycle.js",
+    "bytes": 2640,
+    "sha256": "55140b2037f33a2aa9618f0684e20de708e750e5ed0a1685f723c167272c883b"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/style.css",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/style.css",
+    "bytes": 11197,
+    "sha256": "20f3c92622d247e688a3607dbbb30246f2e9601c4fc4dd2b09a05d279a8e6d1c"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/task-status.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/task-status.js",
+    "bytes": 2779,
+    "sha256": "71d4f686fe0539953dad925d122bbd0ae5a719e7429e1e0a7b37e7537d60b639"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/training-photos.html",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/training-photos.html",
+    "bytes": 1528,
+    "sha256": "ec29b87ba51ba6619d93df6b280296f1cdff670e9488a22f91522adb5b5ded4a"
+  },
+  {
+    "alias": "active",
+    "path": "labagent/web/training-photos.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/labagent/web/training-photos.js",
+    "bytes": 3016,
+    "sha256": "c07a668a7fdd3ccb885ed432f8a93f19a567c21d72302c693276cbc025ceea8a"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/benchmark_agent_decisions.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/benchmark_agent_decisions.py",
+    "bytes": 6162,
+    "sha256": "127894aeda522b2ba950d6f04f815a05520553e142d330f25b173203084c06e2"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/board_runtime.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/board_runtime.py",
+    "bytes": 6869,
+    "sha256": "0fb2caf6791e8a4d02231b606c42845ab8b6e4b08bd020f08f907c97a1d949af"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_board_smoke.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_board_smoke.py",
+    "bytes": 12946,
+    "sha256": "3cfb1ae61bc030feb131fdda6d9615b2172da3fcb60f6948ccb1e0529bec764b"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_bridge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_bridge.py",
+    "bytes": 1600,
+    "sha256": "806d35beb0152cfcda3fd1309813f312359f4fadd25934d9fb543a1cd74da5cf"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_meter_live_smoke.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_meter_live_smoke.py",
+    "bytes": 17844,
+    "sha256": "5d9c58d26a04443600ac14b5fabd066743ba228a2aac8448f57ae4745da9ab02"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_smoke.cjs",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_smoke.cjs",
+    "bytes": 5918,
+    "sha256": "c829baafc79d976e052f19ee5e6fb4ee8e06e5da2e61976faf463615d7c3a98a"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_task_smoke.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_task_smoke.py",
+    "bytes": 26961,
+    "sha256": "e44461c61d1fb86a62bd53426d68f09b315109ba8bb2ab8d47aa0a18414b0903"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/browser_workflow_smoke.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/browser_workflow_smoke.py",
+    "bytes": 8399,
+    "sha256": "71d9a84bae08e6b30f081d19a6b9e817d79607a8e5dd26d14f02f4c58662813c"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/capture_equipment_frame.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/capture_equipment_frame.py",
+    "bytes": 1763,
+    "sha256": "6f286e8f8b14433981654b5d4ada3e540ef3aff97c2d5af1c84996e333459716"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/check_local_llm.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/check_local_llm.py",
+    "bytes": 7075,
+    "sha256": "a187e8b809a18e0d2582a8213f6d4eac6e04fee92d4564366a70c30490aaf1c0"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/cix_npu_vision_worker.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/cix_npu_vision_worker.py",
+    "bytes": 5403,
+    "sha256": "a0497d3f26db7866641e1b6373f1de94775f3f2229e25674a3c775fca3e7de85"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/cix_ocr_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/cix_ocr_service.py",
+    "bytes": 4309,
+    "sha256": "25e6242f5e8092d88cbf38d9da1a4ed369c9bb709b085498f9114c8733c9aa5a"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/deploy_agent_update.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/deploy_agent_update.py",
+    "bytes": 4749,
+    "sha256": "6f603f0cf07fabb0a4d005e83fad12ff40b4670c08d41b75f967f5f84a6ddd5f"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/deploy_workflow.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/deploy_workflow.py",
+    "bytes": 3451,
+    "sha256": "3555ec89893a7d8f2f909c4b2ceaa283a5058db42da958fcce6081f6cdb38786"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/download_local_vlm.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/download_local_vlm.py",
+    "bytes": 5774,
+    "sha256": "917f069e5483f5f1f6ebd35ed474a868155fd8f1095b09663a0e177be3579f9b"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/evaluate.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/evaluate.py",
+    "bytes": 3364,
+    "sha256": "b84a9915e7498baff5a88bb029620283877b99577f947896c54f147ebe8437ed"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/lcd_capture.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/lcd_capture.py",
+    "bytes": 9118,
+    "sha256": "ac9e78c9d60eaaa362a2a852dde27c0a2a60e94b89f62376e6a887e1cfcbc325"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/live_equipment_ui.patch",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/live_equipment_ui.patch",
+    "bytes": 100685,
+    "sha256": "8006a5cf315e8f8f3586ce07eec9c9898b254fe81e23326333da1c35320600e4"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/mnn_vlm_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/mnn_vlm_service.py",
+    "bytes": 7586,
+    "sha256": "8b05c98f476dcbb76e04a2d8cddcb190e4d0b0d8e04ade820a5c638216f379d9"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/open_lcd_capture.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/open_lcd_capture.sh",
+    "bytes": 885,
+    "sha256": "6163e1883fe440c9138835777bb09d597320de0b646115dc883822840504d9ae"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/package_sources.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/package_sources.py",
+    "bytes": 1398,
+    "sha256": "6e20139c2c4f7c8f13d374674dea6ffe886eb51006e391e832f7e06c52cde897"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/qwen3vl_gguf_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/qwen3vl_gguf_service.py",
+    "bytes": 30985,
+    "sha256": "a0e7448f23b78fc643166f2333a48dcb53cd28ba660fb3d13b9b023d119fcf2e"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/remote_sync.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/remote_sync.py",
+    "bytes": 2018,
+    "sha256": "db201b64e7761dce9dbfc26bb03b5267e2dc717ba6fc6c86d1f0a51077670815"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/serial_bridge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/serial_bridge.py",
+    "bytes": 2077,
+    "sha256": "f89bde8a362dd98dbf76a4f6cfe3f3cfc9f6fe2dcd2717b2e31688bef71dc433"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/setup.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/setup.ps1",
+    "bytes": 1312,
+    "sha256": "9668a37d9d7c2a57cb1703d54334b57b71904bd716c5fc17aa65298a558a6464"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/setup.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/setup.sh",
+    "bytes": 331,
+    "sha256": "85852a3f3020ca9ebfa4f87af2cdc214872e7c628aac04fffb90cad68bccbfb0"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start.ps1",
+    "bytes": 281,
+    "sha256": "eb0d62a16cf6087b9bae39bc7368f791dece489cf388d62a50baf0933619b3e7"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start_accelerated_model.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_accelerated_model.sh",
+    "bytes": 2331,
+    "sha256": "546a9c103361f218b5f1054826858a09d62961c685913d964360dacb1cff052d"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start_local_llm.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_local_llm.sh",
+    "bytes": 953,
+    "sha256": "34c4d9cf5603054ef6e42fb6879a3c0b763d779b3c88a2b1d5c4f5b5546754f7"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start_local_ocr.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_local_ocr.sh",
+    "bytes": 210,
+    "sha256": "aaefc428eb124e2a47f19da0bb4cc97ad5a81b03b9e1ba46e47ad41317e8031f"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start_local_vlm.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_local_vlm.sh",
+    "bytes": 210,
+    "sha256": "0f0f8bf4d90145697f48074b755f0c421dd2906e1c223bfa230ccf3f429bbf01"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/start_npu_equipment.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/start_npu_equipment.sh",
+    "bytes": 939,
+    "sha256": "a6131408bd7fbb64bd29e227a2f08df55d82a325ec70d2e8e4f76d35dde072a9"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/test.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/test.ps1",
+    "bytes": 420,
+    "sha256": "4e3fe903b7c14d2c84cebafd928c76f1677a2e7cb9da365282000d65dcef4ec4"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/test_board.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/test_board.py",
+    "bytes": 615,
+    "sha256": "f736b2eaa4d66b8546d2bee660ef49b0455253d6e4e80f302ae7ac6e92ca1411"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/validate_equipment_npu.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/validate_equipment_npu.py",
+    "bytes": 4011,
+    "sha256": "6ea31c05e4153f871d6ea2521ef1d25a095795015ad7eaa9fb8621f676a80950"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_agent_integration.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_agent_integration.py",
+    "bytes": 5971,
+    "sha256": "2ab3faf869b448c0d1fa626062630a2e89ca4e4c0d5b35f7153b94b4cef9a0b4"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_agent_models.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_agent_models.py",
+    "bytes": 4981,
+    "sha256": "2a4b55a039bd688f6f0a68ac57ab776beb0f170a34c2a9e5e94f02eff3f1f7b5"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_direct_vision.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_direct_vision.py",
+    "bytes": 1209,
+    "sha256": "35a1c6475b533751184acbaf341e7160f40d9d25139b346dccb406bfd5c8725a"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_meter_closeups.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_meter_closeups.py",
+    "bytes": 2738,
+    "sha256": "2014f02e0fe81da8455fa7df0a6be9d9089b6d1a0158e7172e7ac5966c02133e"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_readable_report.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_readable_report.py",
+    "bytes": 10251,
+    "sha256": "6e8320b3f1aa9055a7e7d5102b2d7e702291e4d39837219d50a4af9625f746a3"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/verify_workflow_models.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/verify_workflow_models.py",
+    "bytes": 1365,
+    "sha256": "686468d17d183539b0dd39db7b124d94251f7746f18225e3e230c4e53b6d0e94"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/yolo_equipment_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/yolo_equipment_service.py",
+    "bytes": 2642,
+    "sha256": "35c04900f22595944f0df234f17e52616a3ec91de524b45c56061e0923eae602"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/systemd/labagent-demo-equipment-vlm.service",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/systemd/labagent-demo-equipment-vlm.service",
+    "bytes": 548,
+    "sha256": "012d4251821b73843a651e50ad7740735f537bd4bbed03d05853d31e2ef75710"
+  },
+  {
+    "alias": "active",
+    "path": "scripts/systemd/labagent-demo-npu-vision.service",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/scripts/systemd/labagent-demo-npu-vision.service",
+    "bytes": 564,
+    "sha256": "5dd0c3f107d38557dbb413754dc1e2f76f5a9fc937c52c9126afc855bd50e20a"
+  },
+  {
+    "alias": "active",
+    "path": "tests/__init__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "alias": "active",
+    "path": "tests/conftest.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/conftest.py",
+    "bytes": 1449,
+    "sha256": "efcbc9d65c8fdf52eacd06bd9c0e914c9536e0a33b2f43cea64fee88bc721baa"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_adapters.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_adapters.py",
+    "bytes": 6870,
+    "sha256": "5aaa2fa7aa16d36d4a1dac4b59c5d34040156682b616cf70fc4658a429787c62"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_agent_decision_optimization.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_agent_decision_optimization.py",
+    "bytes": 9817,
+    "sha256": "6778c014a305488171e11786c9a5a5f57e63b6e783697204d68560869c52b106"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_api.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_api.py",
+    "bytes": 10210,
+    "sha256": "ab305f42a0cda2b8583cd6aaf82311ca48f7a3fbf42f180d4f769bb07c2615d3"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_battery_polarity.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_battery_polarity.py",
+    "bytes": 8925,
+    "sha256": "3078a35dec01fff8b7ed2c0624f5a9dcad11a4db9ec14e941ac3ed0058ac4b1f"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_chat_input.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_chat_input.py",
+    "bytes": 11368,
+    "sha256": "b8d0bfa71a784a74cfb7f4a915c2e2799b40d2f192143306406637047c40a057"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_completion_and_capture.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_completion_and_capture.py",
+    "bytes": 5326,
+    "sha256": "39ad2f70884c838047d14754e382bc436335049c5f9fcfed2647e56b0a9920c4"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_config.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_config.py",
+    "bytes": 845,
+    "sha256": "3b22c7e79ce32312c77a2044cfb7679466cdb02f3a5cc8b05e1af28bd529f720"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_document_workflow.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_document_workflow.py",
+    "bytes": 18055,
+    "sha256": "edf3a2a7234017fdc0ef5f734f7e4ab1f8c6685b1f17c67692b3009e773e4cbc"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_equipment_live.cjs",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_equipment_live.cjs",
+    "bytes": 4626,
+    "sha256": "829faded955abc84a44f83623061d1490090a117c82ebf2f5a3148417f488f08"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_equipment_npu.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_equipment_npu.py",
+    "bytes": 4444,
+    "sha256": "3b12e6ab36b8b3e3491446f73d976bdb97c5ab3a720713fbd486c1c2bc227cb7"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_lcd_reader.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_lcd_reader.py",
+    "bytes": 7469,
+    "sha256": "73346bd0088d46f30e113984569fb6116ed705c822a4ad1a742c520746a0fec7"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_live_meter.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_live_meter.py",
+    "bytes": 13617,
+    "sha256": "d2dda6cc4eec0ad855c2639c6f3a77467355be965f4a0d50e336fe09aa12ac9b"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_local_asr.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_local_asr.py",
+    "bytes": 3991,
+    "sha256": "b37341d2b158a2c56fe8edbf32fcff2f2e94bffd6a110de35c56d08489a4568f"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_meter_closeups.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_meter_closeups.py",
+    "bytes": 3099,
+    "sha256": "73a282483e15a68323da0e5d762153fc9812eee0f0810e9a04e76d349edb087b"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_meter_npu_route.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_meter_npu_route.py",
+    "bytes": 2533,
+    "sha256": "ec97dee3098c966b42de3bcd91193d5931e7b109d748c8ba466543224df67d31"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_perception.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_perception.py",
+    "bytes": 1492,
+    "sha256": "660f8687fd32807c5d3ce6e7663e815257df05a4fd4dd3faa8a703df525e7e59"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_providers.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_providers.py",
+    "bytes": 4894,
+    "sha256": "80563df35673cfba78e8a13548f4ac25887487367177cff4d1ee62214e2d1524"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_readable_report.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_readable_report.py",
+    "bytes": 11700,
+    "sha256": "aa99804b016338ad9143bf46ce395aec3a935e296c7cc0fdf165092c33c2e3c3"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_reading_burst.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_reading_burst.py",
+    "bytes": 5237,
+    "sha256": "b9f4c844fc2ad52fb6c32d21fc3821305d363ed933b32b1b575817b6856afc6c"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_rules.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_rules.py",
+    "bytes": 5118,
+    "sha256": "b9a9679e2e07a03ea5005e7b8971356a780293d28a4d841ca8965e8acd21943b"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_session_lifecycle.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_session_lifecycle.py",
+    "bytes": 7823,
+    "sha256": "3631e09de4dc6b58eb0f92ada4afd1b2e3e0802cb4fffb9c8877c1932f50164a"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_simplified_workflow.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_simplified_workflow.py",
+    "bytes": 13046,
+    "sha256": "2aeb943c9fc5e5eef5fbbf49bda4b4f273455a193986e72655864673786dc5d4"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_single_reading.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_single_reading.py",
+    "bytes": 2880,
+    "sha256": "e77371a4e0263c07a7a36485ae00cce17f174121ab3191de86eadaf613c2e617"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_store.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_store.py",
+    "bytes": 1318,
+    "sha256": "f5e252efb115a4a0ca8e23a07c97dc5f41269c19fa1f07b3a697f88690c8175c"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_task_status.cjs",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_task_status.cjs",
+    "bytes": 3406,
+    "sha256": "42b38cfe9f80749ea61977b57c42fc2d4764c85df787c6658ed1eba627512491"
+  },
+  {
+    "alias": "active",
+    "path": "tests/test_visual_workflow.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/test_visual_workflow.py",
+    "bytes": 8233,
+    "sha256": "2aa7881c4faec84a7a0a7cbc07489391ccda0945c9f0298cab745582a96e81c9"
+  },
+  {
+    "alias": "active",
+    "path": "tests/fixtures/lcd/leading_decimal_419.png",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/fixtures/lcd/leading_decimal_419.png",
+    "bytes": 29407,
+    "sha256": "2d2f2b0edf33071ffb37b677ceb175f3a0116d7493e27687a4eb5300069ed628"
+  },
+  {
+    "alias": "active",
+    "path": "tests/fixtures/lcd/negative_zero.png",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/fixtures/lcd/negative_zero.png",
+    "bytes": 41827,
+    "sha256": "a82cf6efc6ae1e063984318b7a63d071b4a860cf57f8e6582b4d045af6cbfa4a"
+  },
+  {
+    "alias": "active",
+    "path": "tests/fixtures/lcd/reading_1_353.png",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent-demo/tests/fixtures/lcd/reading_1_353.png",
+    "bytes": 31184,
+    "sha256": "aee71a78b50a3360e2181ed317f4cc2b7872d32fe5f2163e7d84b77cf5a1c424"
+  },
+  {
+    "alias": "legacy",
+    "path": ".env.example",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.env.example",
+    "bytes": 1473,
+    "sha256": "20ca9f99b8ce5c47831cd61e55264838de9718dfce5ea1b278f7f0671e4cd356"
+  },
+  {
+    "alias": "legacy",
+    "path": ".gitignore",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/.gitignore",
+    "bytes": 154,
+    "sha256": "55cfde12befba502441b5064fa0743ed47ef9f6b85bbc5587c69ad96c9aa4634"
+  },
+  {
+    "alias": "legacy",
+    "path": "README.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/README.md",
+    "bytes": 7977,
+    "sha256": "d3bdc1b5f6ca8f44bfbc612c3474a457816a1cc6f9124bf0b3262bcab6134dbb"
+  },
+  {
+    "alias": "legacy",
+    "path": "pyproject.toml",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/pyproject.toml",
+    "bytes": 912,
+    "sha256": "49b588f1a3091ce8da48a1d2a3b517f3754aa636a4971d2b264739426b04eef5"
+  },
+  {
+    "alias": "legacy",
+    "path": "requirements-asr.txt",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/requirements-asr.txt",
+    "bytes": 192,
+    "sha256": "f8f3877b7b0abf910bd738ba01b89fc83ec2a75816d6c5c78524585b82014b34"
+  },
+  {
+    "alias": "legacy",
+    "path": "requirements-lock.txt",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/requirements-lock.txt",
+    "bytes": 894,
+    "sha256": "2a1f2811fdbfe0d3ff74fcdd151a1c3e1c4b06c38ae46fc2ded8e8254bd5d1be"
+  },
+  {
+    "alias": "legacy",
+    "path": "start.cmd",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/start.cmd",
+    "bytes": 254,
+    "sha256": "0b10175bf36482d8f260684989fd1941f4b71f209bf416559adbeb48538ab18b"
+  },
+  {
+    "alias": "legacy",
+    "path": "configs/experiment.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/configs/experiment.json",
+    "bytes": 2114,
+    "sha256": "724e3afcffd7bc77095b291a8804d8d92dd658c4e03cfcd17c2617f934b07990"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/CONFIGURATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/CONFIGURATION.md",
+    "bytes": 7351,
+    "sha256": "f4a54ed6c44c8f549bdb93af174a7218d036c8c35aea6ce6ded192bb583c5268"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/LOCAL_ASR.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/LOCAL_ASR.md",
+    "bytes": 4953,
+    "sha256": "a51925e1514f12d8ee0e863ce7b1b181c4d99e43f53621693cf284b333957b03"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/LOCAL_LLM.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/LOCAL_LLM.md",
+    "bytes": 5366,
+    "sha256": "39b8069fd5be8577b2e9dc2bd1005e799e1c5412cb0ae215473879f029efe7ec"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/LOCAL_OCR.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/LOCAL_OCR.md",
+    "bytes": 1555,
+    "sha256": "ae01c13604e3220b2901541406e562ffc57cbfce9d726949b4ca3a2a8a42801f"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/LOCAL_VLM.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/LOCAL_VLM.md",
+    "bytes": 1413,
+    "sha256": "9b347a89b6cb7c930b5fe5ce31ccac5fb136939135c035f4dcfbc7cbed8d5f21"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/MODEL_PLACEMENT.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/MODEL_PLACEMENT.md",
+    "bytes": 1829,
+    "sha256": "a7fc79059c14dde33a00a0fe0886b85bb1577cb25cd2ab4f61d58018e9943348"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/MODEL_SELECTION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/MODEL_SELECTION.md",
+    "bytes": 5361,
+    "sha256": "d1911529dc6e5caac0b48efe6edfbbd6e4e2df68b39171e47fe06c07a3c5334b"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/TESTING.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/TESTING.md",
+    "bytes": 4676,
+    "sha256": "29f1a95469669e7d590017989bc50d49d34aad5d27af431048806305d5c7f5d9"
+  },
+  {
+    "alias": "legacy",
+    "path": "docs/VERIFICATION.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/docs/VERIFICATION.md",
+    "bytes": 4453,
+    "sha256": "f0ca204df7098d4324b5bccf4084b0779711c59a96fd4cd60813768fa380bb06"
+  },
+  {
+    "alias": "legacy",
+    "path": "fixtures/happy_path.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/fixtures/happy_path.json",
+    "bytes": 886,
+    "sha256": "905b5f80ae7e7b37b59e5e62d454f941d64a9909cb75998cd8ab9033ddf83abe"
+  },
+  {
+    "alias": "legacy",
+    "path": "fixtures/missing_equipment.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/fixtures/missing_equipment.json",
+    "bytes": 360,
+    "sha256": "87713055c633e1d69812de715b30587d12d7cb086ad969ace3d0d6db511f0ebd"
+  },
+  {
+    "alias": "legacy",
+    "path": "fixtures/unsafe_order.json",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/fixtures/unsafe_order.json",
+    "bytes": 285,
+    "sha256": "a201691cfdd2f5060ab6fac4e100133b5388111445c125e51931b55e2339b201"
+  },
+  {
+    "alias": "legacy",
+    "path": "knowledge/实验指导.md",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/knowledge/实验指导.md",
+    "bytes": 2269,
+    "sha256": "900f50950de87a3b6d0092a332a61f5bd4ad9b2486fb7df3e78886d6d13e517d"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/__init__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/__init__.py",
+    "bytes": 106,
+    "sha256": "225bcabf84618d7ecbfc6e455b80d0fae5c848dcf7911542d61f3e7757ee8a4f"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/__main__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/__main__.py",
+    "bytes": 413,
+    "sha256": "548f73bcdb1dea8f37c631391d55ff1e8015773691261baf53b6fe42a68e56ae"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/agent.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/agent.py",
+    "bytes": 10864,
+    "sha256": "d552b08dc45566239fda99b2eb5621be99dd2f6ca6580db3817e8f855d8f0cf1"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/config.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/config.py",
+    "bytes": 3056,
+    "sha256": "d71c016560dfe60616407f94e39567f9bcbdf3b0b90b76bb69d43a2852702c84"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/knowledge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/knowledge.py",
+    "bytes": 3491,
+    "sha256": "81414177c61e23a6b9b568144bfb097b1b4a0c392c608d8cd33d9a6350e637c3"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/local_asr.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/local_asr.py",
+    "bytes": 8665,
+    "sha256": "511b3d1ff3b3e31dbb9f60bb310cbe51124cf2fc008c148dcd0b2fa769a907ba"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/main.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/main.py",
+    "bytes": 12832,
+    "sha256": "4bd311d54dd12e9a92d7673dacb36012f397afbb405b69dc04ca0aa47e633ead"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/models.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/models.py",
+    "bytes": 2680,
+    "sha256": "80c403d288fb6df811f87028c79ec3323bae74dd23631ef01b6e8d02a680ae5c"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/perception.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/perception.py",
+    "bytes": 15431,
+    "sha256": "b7dcf03f2e6555e8d8f4103ca620c3f322eda6e2917d4cd44c74440b0a78f330"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/providers.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/providers.py",
+    "bytes": 4611,
+    "sha256": "b9f84e57b00ff4ae0ff7b7c0ca307a9b28671a3fc0e6cedb359623abc6a46375"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/replay.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/replay.py",
+    "bytes": 3162,
+    "sha256": "2214253255cf27bff66125edd4855473a913154a0506ff410b24e1d9c70ca3a3"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/report.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/report.py",
+    "bytes": 2298,
+    "sha256": "237834bc7464f3a48b896231a6247b0e8438ba1ec888081c02e487fae7e0cb80"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/rules.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/rules.py",
+    "bytes": 12725,
+    "sha256": "1b7166cb0c7dac65bb4cd719f77a9a1c78bc243bddc9139011b635907ce1e55f"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/speech_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/speech_service.py",
+    "bytes": 3348,
+    "sha256": "ca4a2b46bd3fba041194100903db12402d42ac8a2c500ea7f6d820187c57b459"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/store.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/store.py",
+    "bytes": 4924,
+    "sha256": "ccb75f862d864e76ce6b237ecb048c09ec248307e31bea96bccea149ed4a41ef"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/web/app.js",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/web/app.js",
+    "bytes": 21541,
+    "sha256": "da4657e6118aa82e39d0c189fd5ded65dab9a6a89638e89f65d1daf90f8cfa8b"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/web/index.html",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/web/index.html",
+    "bytes": 9541,
+    "sha256": "d264f4c65844d99f2e82adbc309c6cc1ec29bbf2705e6f422b422b6455de9adc"
+  },
+  {
+    "alias": "legacy",
+    "path": "labagent/web/style.css",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/labagent/web/style.css",
+    "bytes": 11197,
+    "sha256": "20f3c92622d247e688a3607dbbb30246f2e9601c4fc4dd2b09a05d279a8e6d1c"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/browser_bridge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/browser_bridge.py",
+    "bytes": 1600,
+    "sha256": "806d35beb0152cfcda3fd1309813f312359f4fadd25934d9fb543a1cd74da5cf"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/browser_smoke.cjs",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/browser_smoke.cjs",
+    "bytes": 5918,
+    "sha256": "c829baafc79d976e052f19ee5e6fb4ee8e06e5da2e61976faf463615d7c3a98a"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/check_candidate_vlm.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/check_candidate_vlm.py",
+    "bytes": 2401,
+    "sha256": "0c3c2dfe38dc04984f4fe84f3063c72b815a91ce7a25181cd381f562db7f9047"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/check_local_llm.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/check_local_llm.py",
+    "bytes": 7004,
+    "sha256": "ecf31e81541057f27851be35db436015d13b5f19f945b442a3164fc88af6c84a"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/cix_ocr_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/cix_ocr_service.py",
+    "bytes": 3663,
+    "sha256": "22d3944954d5d024a5c94462489f7288fabb8f3a0410422e32cb05a6314627e2"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/download_local_vlm.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/download_local_vlm.py",
+    "bytes": 5774,
+    "sha256": "917f069e5483f5f1f6ebd35ed474a868155fd8f1095b09663a0e177be3579f9b"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/download_qwen3vl4b_gguf.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/download_qwen3vl4b_gguf.py",
+    "bytes": 4929,
+    "sha256": "13e96aae4b782fa486e8d66b4bd979a69184045ddf52eb5cf757d5e6838d97dc"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/download_qwen3vl_candidate.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/download_qwen3vl_candidate.py",
+    "bytes": 1249,
+    "sha256": "7416ccf1233b8466b8d38ac6873e32b16d9e26d5b37fa374b13511740ab1eca7"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/evaluate.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/evaluate.py",
+    "bytes": 3364,
+    "sha256": "b84a9915e7498baff5a88bb029620283877b99577f947896c54f147ebe8437ed"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/mnn_vlm_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/mnn_vlm_service.py",
+    "bytes": 2556,
+    "sha256": "2b8b1cee9909960b12f3bd8ea0a89d773153272fdd49657f0d9b9c9ef35a713f"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/package_sources.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/package_sources.py",
+    "bytes": 1398,
+    "sha256": "6e20139c2c4f7c8f13d374674dea6ffe886eb51006e391e832f7e06c52cde897"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/qwen3vl_gguf_service.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/qwen3vl_gguf_service.py",
+    "bytes": 10660,
+    "sha256": "99be9af552ff3ce0d0e1a914120bda161b5b3f6e78b4d9291976f271f5dcb529"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/serial_bridge.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/serial_bridge.py",
+    "bytes": 2077,
+    "sha256": "f89bde8a362dd98dbf76a4f6cfe3f3cfc9f6fe2dcd2717b2e31688bef71dc433"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/setup.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/setup.ps1",
+    "bytes": 1312,
+    "sha256": "9668a37d9d7c2a57cb1703d54334b57b71904bd716c5fc17aa65298a558a6464"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/setup.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/setup.sh",
+    "bytes": 331,
+    "sha256": "85852a3f3020ca9ebfa4f87af2cdc214872e7c628aac04fffb90cad68bccbfb0"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/start.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/start.ps1",
+    "bytes": 281,
+    "sha256": "eb0d62a16cf6087b9bae39bc7368f791dece489cf388d62a50baf0933619b3e7"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/start_local_llm.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/start_local_llm.sh",
+    "bytes": 928,
+    "sha256": "63d86a7fd2319135787a5ed75283c30621ab915dc7eb9fabb090d0f5104f0449"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/start_local_ocr.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/start_local_ocr.sh",
+    "bytes": 210,
+    "sha256": "aaefc428eb124e2a47f19da0bb4cc97ad5a81b03b9e1ba46e47ad41317e8031f"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/start_local_vlm.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/start_local_vlm.sh",
+    "bytes": 210,
+    "sha256": "0f0f8bf4d90145697f48074b755f0c421dd2906e1c223bfa230ccf3f429bbf01"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/start_qwen3vl4b.sh",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/start_qwen3vl4b.sh",
+    "bytes": 503,
+    "sha256": "8efd20378048468073109a644c9c998d0cf5f6b42c8039d708b5dbfd4870fd43"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/test.ps1",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/test.ps1",
+    "bytes": 420,
+    "sha256": "4e3fe903b7c14d2c84cebafd928c76f1677a2e7cb9da365282000d65dcef4ec4"
+  },
+  {
+    "alias": "legacy",
+    "path": "scripts/verify_qwen3vl4b.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/scripts/verify_qwen3vl4b.py",
+    "bytes": 3788,
+    "sha256": "bae1421322dc2cff8adee8191031320f9542ca9009f6a22c7b4bdda08fbe7c38"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/__init__.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/__init__.py",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/conftest.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/conftest.py",
+    "bytes": 1355,
+    "sha256": "5225c1ba9f3d6d199b14f7592640ae7b29a066506076a70e6dbd4d2fed7cf544"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_adapters.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_adapters.py",
+    "bytes": 6870,
+    "sha256": "5aaa2fa7aa16d36d4a1dac4b59c5d34040156682b616cf70fc4658a429787c62"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_api.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_api.py",
+    "bytes": 10210,
+    "sha256": "ab305f42a0cda2b8583cd6aaf82311ca48f7a3fbf42f180d4f769bb07c2615d3"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_config.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_config.py",
+    "bytes": 845,
+    "sha256": "3b22c7e79ce32312c77a2044cfb7679466cdb02f3a5cc8b05e1af28bd529f720"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_local_asr.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_local_asr.py",
+    "bytes": 3991,
+    "sha256": "b37341d2b158a2c56fe8edbf32fcff2f2e94bffd6a110de35c56d08489a4568f"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_perception.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_perception.py",
+    "bytes": 1492,
+    "sha256": "660f8687fd32807c5d3ce6e7663e815257df05a4fd4dd3faa8a703df525e7e59"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_providers.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_providers.py",
+    "bytes": 4894,
+    "sha256": "80563df35673cfba78e8a13548f4ac25887487367177cff4d1ee62214e2d1524"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_rules.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_rules.py",
+    "bytes": 5118,
+    "sha256": "b9a9679e2e07a03ea5005e7b8971356a780293d28a4d841ca8965e8acd21943b"
+  },
+  {
+    "alias": "legacy",
+    "path": "tests/test_store.py",
+    "remote": "/home/radxa/referenced-chatgpt-conversation-this-is-an/LabAgent/tests/test_store.py",
+    "bytes": 1318,
+    "sha256": "f5e252efb115a4a0ca8e23a07c97dc5f41269c19fa1f07b3a697f88690c8175c"
+  }
+]

@@ -116,12 +116,12 @@ def check_numeric(text, evidence):
     return True, "source_pixels_consistent"
 
 
-def locate_lcd(image):
+def locate_lcd(image, meter_regions=None):
     """Contrast-adaptive LCD proposal inside a detected meter, including dim LCDs."""
     from .vision_regions import proposals, _components
 
     rgb = np.asarray(image.convert("RGB"))
-    regions = proposals(image, {"multimeter": "万用表"})
+    regions = meter_regions if meter_regions is not None else proposals(image, {"multimeter": "万用表"})
     for region in regions:
         x, y, w, h = region["bbox"]
         left, top = int(x * image.width), int(y * image.height)
